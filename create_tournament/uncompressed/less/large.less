@@ -1,0 +1,87 @@
+section {
+    max-width: 1136px;
+    margin: 0 auto;
+}
+
+.slim-header {
+    header {
+        min-height: initial;
+
+        nav {
+            padding: 28px 20px;
+        }
+    }
+}
+
+header {
+    nav {
+        padding: 28px 20px 0;
+    }
+}
+
+
+footer {
+    padding: 78px 20px 100px;
+}
+
+.form-container {
+    padding: 60px 20px 70px;
+
+    h2 {
+        line-height: 52px;
+        font-size: 42px;
+    }
+
+    h4 {
+        padding: 0 0 20px;
+    }
+
+    .form-field,
+    .col-12 {
+        max-width: 600px;
+        justify-content: initial;
+
+        &.min-max-hps,
+        &.max-participants,
+        &.payouts {
+            justify-content: space-between;
+
+            .col-4 {
+                max-width: none;
+            }
+        }
+
+        .col-4,
+        .col-6 {
+            margin-right: 10px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        .col-6 {
+            max-width: 200px;
+        }
+
+        .col-4 {
+            max-width: 100px;
+
+            &:nth-child(3n) {
+                flex-break: none;
+            }
+        }
+    }
+
+    .checkbox-field {
+        .col-12 .col-6 {
+            max-width: initial;
+        }
+    }
+}
+
+.page-header {
+    line-height: 52px;
+    font-size: 42px;
+    margin: 0 0 30px;
+}

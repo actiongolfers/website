@@ -1,0 +1,115 @@
+<section>
+    <div class="form-container">
+        <h2 class="page-header">Contact Us</h2>
+        <div class="col-12">
+            <div class="col-6 contact-container">
+                <!-- <p><strong>Phone:</strong> <a href="tel:(049)33XXXXX9">(049) 33X-XXXX9</a></p> -->
+                <p><strong>Support:</strong> <a href="mailto:support@actiongolfers.com">support@actiongolfers.com</a></p>
+
+                <div class="screen-message success-message hide">
+                    Thank you! A member of our staff will contact you within the next 24 hours.
+                </div>
+                <div class="screen-message error-message hide">
+                    Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+                </div>
+            </div>
+            <div class="col-6 input-container">
+                <form id="ajaxForm" data-type="contact">
+                    <div class="col-12">
+                        <div class="col-6">
+                            <div class="styled-input">
+                                <input type="text" name="firstName" required
+                                    data-required="First Name is required."
+                                    data-invalid="Please enter a valid First Name."
+                                />
+                                <label>Frist Name <sup>*</sup></label>
+                                <span class="error-message required">First Name is required.</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="styled-input">
+                                <input type="text" name="lastName" required
+                                    data-required="Last Name is required."
+                                    data-invalid="Please enter a valid Last Name."
+                                />
+                                <label>Last Name <sup>*</sup></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="col-6">
+                            <div class="styled-input">
+                                <input type="text" name="email" required
+                                    data-required="Email Address is required."
+                                    data-invalid="Please enter a valid Email Address."
+                                />
+                                <label>Email Address <sup>*</sup></label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="phone-number">
+                                <label>Phone <sup>*</sup></label>
+                                <div class="col-12">
+                                    <div class="styled-input">
+                                        <input type="text" class="phone-input phone-code" required maxlength="3" />
+                                        <label>(###)</label>
+                                    </div>
+                                    <div class="styled-input">
+                                        <input type="text" class="phone-input phone-prefix" required maxlength="3" />
+                                        <label>###</label>
+                                    </div>
+                                    <div class="styled-input">
+                                        <input type="text" class="phone-input phone-line" required maxlength="4" />
+                                        <label>####</label>
+                                    </div>
+                                    <input type="hidden" name="teleNumber" required
+                                        data-required="Phone Number is required."
+                                        data-invalid="Please enter a valid Phone Number."
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="col-6">
+                            <div class="styled-input">
+                                <input type="text" name="title" required
+                                    data-required="Title is required."
+                                    data-invalid="Please enter a valid Title."
+                                />
+                                <label>Title <sup>*</sup></label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="styled-input select-box">
+                                <select name="problemType">
+                                    <option value="Profile">Profile</option>
+                                    <option value="Golf Course">Golf Course</option>
+                                    <option value="Payments">Payments</option>
+                                    <option value="Tournament">Tournament</option>
+                                    <option value="Score">Score</option>
+                                    <option value="Handicap">Handicap</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <label>Problem Type <sup>*</sup></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="styled-input last">
+                            <textarea name="message" required
+                                data-required="Message is required."
+                                data-invalid="Please enter a valid message."
+                            ></textarea>
+                            <label>Message <sup>*</sup></label>
+                        </div>
+                    </div>
+                    <div class="button-wrapper">
+                        <button class="demo-submit-btn">Submit</button>
+                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

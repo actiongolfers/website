@@ -1,0 +1,65 @@
+@import (reference) 'variables.less';
+@import url( 'small.less' );
+@import url( 'medium.less' ) screen and ( min-width:768px );
+@import url( 'large.less' ) screen and ( min-width:1024px );
+
+@media screen and (min-width:1156px) {
+    header nav,
+    header .header-banner,
+    section .steps .content,
+    .form-container,
+    .content-container,
+    .slim-header header nav,
+    footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    header .header-banner h1 {
+        font-size: 80px;
+    }
+
+    section .steps.reverse .mobile-frame-wrapper {
+        margin-right: 71px;
+    }
+}
+
+@media screen and (min-width:1200px) {
+    section .steps .mobile-frame-wrapper {
+        margin-left: 0;
+        margin-right: 104px;
+    }
+
+    .organiser-blocks {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media screen and (min-width:1440px) {
+    header {
+        background-position: 0 center;
+    }
+}
+
+@media screen and (min-width:1024px) and (min-height:738px) {
+    header {
+        min-height: calc(100vh - 10px);
+
+        .header-banner {
+            padding-top: calc(50vh - 280px);
+        }
+    }
+
+    .slim-header header{
+        min-height: initial;
+    }
+}
+
+@media screen and (max-width:359px) {
+    body {
+        footer .footer-links .page-links li {
+            font-size: 12px;
+        }
+    }
+}

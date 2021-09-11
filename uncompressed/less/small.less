@@ -1,0 +1,1700 @@
+blockquote,
+body,
+button,
+code,
+dd,
+div,
+dl,
+dt,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+legend,
+li,
+ol,
+p,
+pre,
+td,
+textarea,
+th,
+ul {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+a,
+a:active,
+a:hover,
+a:visited {
+    outline: 0;
+    text-decoration: none;
+}
+a:focus,
+button:focus {
+    outline: 1px solid;
+    transform: scale(1.05);
+}
+a:focus:hover,
+a:focus:active,
+button:focus:hover,
+button:focus:active {
+    outline: 0;
+}
+.clear {
+    clear: both;
+}
+.hide {
+    display: none !important;
+}
+strong {
+    font-family: @actionGolfSemiBold;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'SFProDisplayRegular';
+    src :  url('../../fonts/SFProDisplay-Regular.woff') format("woff");
+    font-weight: 100;
+    font-style: normal;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+@font-face {
+    font-family: 'SFProDisplaySemibold';
+    src :  url('../../fonts/SFProDisplay-Semibold.woff') format("woff");
+    font-weight: 100;
+    font-style: normal;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+@actionGolfRegular: SFProDisplayRegular, sans-serif;
+@actionGolfSemiBold: SFProDisplaySemibold, sans-serif;
+
+html {
+    background: @headerBg;
+}
+body{
+    overflow-y: scroll;
+    background: @white;
+}
+body,
+html {
+    min-height: 100%;
+    min-width: 100%;
+    height: 100%;
+    font-size: 16px;
+    line-height: 22px;
+    color: @black;
+    font-family: @actionGolfRegular;
+    font-weight: 300;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+main {
+    background: @white;
+}
+.logo {
+    font-size: 18px;
+    line-height: 44px;
+    color: @white;
+    font-family: @actionGolfSemiBold;
+    display: flex;
+    align-items: center;
+
+    &::before {
+        width: 44px;
+        height: 44px;
+        margin-right: 8px;
+        display: inline-block;
+        vertical-align: middle;
+        content: '';
+        background: url(@logo) no-repeat 0 0;
+        background-size: cover;
+    }
+
+    &:focus {
+        outline: 0;
+        text-decoration: underline;
+    }
+}
+
+.slim-header{
+    background: @brandColor;
+
+    header{
+        background: @brandColor;
+    }
+}
+
+body.menu-active {
+    &::after {
+        content: '';
+        background-color: @grey;
+        opacity: 0.5;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 8;
+    }
+    header nav .menu {
+        .hamburger {
+            position: fixed;
+            top: 14px;
+            right: 20px;
+            z-index: 10;
+
+            &:focus {
+                outline: none;
+            }
+
+            .line {
+                background-color: @brandColor;
+            }
+        }
+
+        .menu-links {
+            z-index: 9;
+            display: block;
+            width: 70%;
+            position: fixed;
+            height: 100%;
+            background: @white;
+            right: 0;
+            top: 0;
+
+            animation: hamburgermenu 0.6s 1;
+
+            a {
+                display: block;
+
+                &:first-child {
+                    margin-top: 50px;
+                }
+            }
+        }
+    }
+}
+
+header {
+    background: url(../../images/bg.jpg) no-repeat 74% center @headerBg;
+    background-size: cover;
+    overflow: hidden;
+
+    nav {
+        padding: 12px 20px;
+        display: flex;
+        justify-content: space-between;
+
+        .menu {
+            display: flex;
+
+            .hamburger {
+                cursor: pointer;
+                display: block;
+                height: 30px;
+                width: 30px;
+                margin-top: 7px;
+
+                .line{
+                    width: 100%;
+                    height: 3px;
+                    background-color: @white;
+                    display: block;
+                    margin: 5px auto;
+                    transition: all 0.3s ease-in-out;
+                }
+
+                &.is-active .line:nth-child(2){
+                    opacity: 0;
+                }
+
+                &.is-active .line:nth-child(1){
+                    transform: translateY(6px) rotate(45deg);
+                }
+
+                &.is-active .line:nth-child(3){
+                    transform: translateY(-10px) rotate(-45deg);
+                }
+            }
+
+            .menu-links {
+                display: flex;
+
+                &.s-hide {
+                    display: none;
+                }
+
+                a {
+                    border-radius: 4px;
+                    padding: 10px 20px;
+                    background: @white;
+                    color: @brandColor;
+                    font-family: @actionGolfSemiBold;
+                    font-size: 16px;
+                    cursor: pointer;
+
+                    &:hover,
+                    &:focus {
+                        opacity: 0.8;
+                        transform: scale(1);
+                    }
+                }
+            }
+        }
+    }
+
+    .header-banner {
+        padding: 32px 20px 73px;
+        min-height: 507px;
+        text-align: center;
+        color: @white;
+        position: relative;
+
+        h1 {
+            padding: 0 0 24px;
+            line-height: 40px;
+            font-family: @actionGolfSemiBold;
+            font-size: 32px;
+            font-weight: 100;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        figure {
+            position: relative;
+            margin: 14px auto 48px;
+
+            span {
+                background: url(../../images/banner_mobile.png) no-repeat center center transparent;
+                background-size: cover;
+                height: 277px;
+                width: 138px;
+                position: relative;
+                display: block;
+                margin: 0 auto;
+                z-index: 1;
+            }
+
+            &::before {
+                background: url(@dots) no-repeat center center transparent;
+                width: 47px;
+                height: 72px;
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: 10px;
+                left: calc(50% - 109px);
+                background-size: cover;
+            }
+
+            &::after {
+                width: 284px;
+                height: 244px;
+                content: '';
+                position: absolute;
+                top: 47px;
+                left: calc(50% - 60px);
+                background-color: @headerShade;
+                opacity: 0.1;
+            }
+        }
+
+        .header-buttons {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            z-index: 2;
+            bottom: 35px;
+            width: 280px;
+            height: 40px;
+            left: calc(50% - 140px);
+
+            .app-store,
+            .google-play {
+                width: 134px;
+                height: 40px;
+            }
+
+            a {
+                &:first-child {
+                    margin-right: 6px;
+                }
+
+                &:last-child {
+                    margin-left: 6px;
+                }
+            }
+        }
+    }
+}
+
+.header-buttons,
+.download-buttons {
+    .app-store,
+    .google-play {
+        cursor: pointer;
+        text-indent: -9999px;
+    }
+
+    .app-store {
+        background: url(@appStore) no-repeat 0 0;
+        background-size: cover;
+    }
+
+    .google-play {
+        background: url(@googlePlay) no-repeat 0 0;
+        background-size: cover;
+    }
+}
+
+section {
+    .clearfix();
+
+    .steps {
+        padding: 48px 0;
+
+        .mobile-frame-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 420px;
+
+            &::before {
+                width: 100%;
+                height: 338px;
+                top: 34px;
+                left: 0;
+                background-color: @stepsBg;
+                position: absolute;
+                z-index: 0;
+                content: '';
+            }
+
+            &::after {
+                width: 59px;
+                height: 90px;
+                background: url(@dotsGreen) no-repeat center center transparent;
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: 52px;
+                right: -22px;
+                background-size: cover;
+                z-index: 2;
+            }
+
+            .media {
+                width: 175px;
+                height: 368px;
+                overflow: hidden;
+                position: absolute;
+                top: 26px;
+                left: calc(50% - 88px);
+
+                .slick-list,
+                .slick-track,
+                .slick-slide {
+                    background-color: @white;
+                    text-align: center;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                img {
+                    max-width: 100%;
+                }
+            }
+
+            .arrow-container {
+                position: relative;
+                margin: 0 auto;
+                width: 288px;
+
+                .slick-arrow {
+                    position: absolute;
+                    width: 40px;
+                    height: 40px;
+                    bottom: 183px;
+                    background: no-repeat;
+                    border: 0;
+                    z-index: 3;
+                    overflow: hidden;
+                    cursor: pointer;
+
+                    &:hover,
+                    &:active,
+                    &:focus {
+                        outline: 0;
+
+                        &::before {
+                            opacity: .2;
+                        }
+                    }
+
+                    &::before {
+                        content: '';
+                        width: 100%;
+                        height: 100%;
+                        background: @brandColor;
+                        display: block;
+                        border-radius: 100%;
+                        opacity: 0.1;
+                    }
+
+                    &::after {
+                        content: '';
+                        background: url(@carouselArrow) no-repeat center center transparent;
+                        width: 10px;
+                        height: 10px;
+                        display: block;
+                        position: absolute;
+                        .center-center();
+                    }
+
+                    &.slick-prev {
+                        left: 0;
+                    }
+
+                    &.slick-next {
+                        right: 0;
+
+                        &::after {
+                            transform: rotate(180deg) translate(-50%,-50%);
+                            transform-origin: left top;
+                        }
+                    }
+                }
+            }
+
+            .mobile-frame {
+                width: 204px;
+                height: 406px;
+                margin: 0 auto;
+                position: relative;
+                background: url(../../images/frame.png) no-repeat center center transparent;
+                background-size: cover;
+                z-index: 0;
+            }
+
+            .mobile-frame-top {
+                width: 204px;
+                height: 50px;
+                top: 0;
+                left: calc(50% - 102px);
+                position: absolute;
+                background: url(../../images/frame.png) no-repeat 0 0 transparent;
+                background-size: cover;
+                z-index: 2;
+            }
+
+            .mobile-frame-bottom {
+                width: 204px;
+                height: 50px;
+                bottom: 14px;
+                left: calc(50% - 102px);
+                position: absolute;
+                background: url(../../images/frame.png) no-repeat 0 bottom transparent;
+                background-size: cover;
+                z-index: 2;
+            }
+        }
+
+        .content {
+            padding: 10px 20px 0;
+            color: @black;
+
+            h2 {
+                font-size: 22px;
+                line-height: 32px;
+                font-family: @actionGolfSemiBold;
+                padding: 0 0 12px;
+                font-weight: 100;
+            }
+
+            p {
+                font-size: 14px;
+                line-height: 24px;
+                color: @grey;
+                padding: 0 0 16px;
+            }
+
+            ul {
+                font-size: 20px;
+                padding: 0 20px;
+
+                li {
+                    div {
+                        font-size: 14px;
+                        position: relative;
+                        top: -1px;
+                        padding: 0 0 16px;
+                        color: @black;
+
+                        &:last-child {
+                            padding-bottom: 0;
+                        }
+                    }
+
+                    padding: 0 0 16px;
+
+                    &:last-child {
+                        padding-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.testimonial {
+    padding: 69px 20px 40px;
+    background: @testimonialBg;
+
+    .slick-slider.slick-initialized .slick-slide {
+        display: flex;
+        flex-direction: column;
+    }
+
+    h3 {
+        font-size: 18px;
+        line-height: 28px;
+        font-family: @actionGolfSemiBold;
+        color: @black;
+        padding: 0 0 32px;
+        font-weight: 100;
+        display: flex;
+        align-items: center;
+    }
+
+    p {
+        padding: 0 0 18px;
+        font-size: 14px;
+        line-height: 16px;
+        color: @brandColor;
+    }
+}
+
+.organiser-blocks {
+    padding: 56px 20px 20px;
+    background: @testimonialBg;
+
+    .organiser-block {
+        padding: 0 0 36px;
+
+        p {
+            font-size: 16px;
+            line-height: 24px;
+            color: @black;
+        }
+
+        &::before {
+            content: '';
+            display: block;
+            width: 44px;
+            height: 44px;
+            margin: 0 0 18px;
+            background-color: transparent;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        &.block1::before {
+            background-image: url(@orgBlock1);
+        }
+
+        &.block2::before {
+            background-image: url(@orgBlock2);
+        }
+
+        &.block3::before {
+            background-image: url(@orgBlock3);
+        }
+
+        &.block4::before {
+            background-image: url(@orgBlock4);
+        }
+    }
+}
+
+.slick-slider {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    user-select: none;
+    touch-action: pan-y;
+
+    .slick-track,
+    .slick-list {
+        transform: translate3d(0, 0, 0);
+        position: relative;
+        display: block;
+    }
+
+    .slick-prev,
+    .slick-next {
+        display: block;
+        width: 42px;
+        height: 42px;
+        overflow: hidden;
+        padding: 0;
+        cursor: pointer;
+        color: transparent;
+        border: none;
+        outline: none;
+        background: transparent;
+        position: relative;
+
+        &::before {
+            content: '';
+            width: 100%;
+            height: 100%;
+            background: @brandColor;
+            display: block;
+            border-radius: 100%;
+        }
+
+        &:hover,
+        &:focus {
+            &::before {
+                opacity: 0.9;
+            }
+        }
+
+        &::after {
+            content: '';
+            background: url(@arrowWhite) no-repeat center center transparent;
+            width: 10px;
+            height: 10px;
+            display: block;
+            position: absolute;
+            .center-center();
+        }
+
+        &.slick-disabled {
+            cursor: default;
+            pointer-events: none;
+
+            &::before {
+                opacity: 0.1;
+            }
+
+
+            &::after {
+                content: '';
+                background: url(@arrowGreen) no-repeat center center transparent;
+            }
+        }
+    }
+
+    .slick-next {
+        margin-left: 57px;
+    }
+
+    .slick-prev {
+        position: absolute;
+        bottom: 0;
+
+        &::after {
+            transform: rotate(180deg) translate(-50%,-50%);
+            transform-origin: left top;
+        }
+    }
+
+    .slick-list {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+
+        .slick-track {
+            top: 0;
+            left: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+        }
+    }
+
+    .slick-slide {
+        display: none;
+        float: left;
+        height: 100%;
+        min-height: 1px;
+    }
+
+    &.slick-initialized .slick-slide {
+        display: block;
+    }
+}
+
+.download-app-section {
+    padding: 32px 20px 40px;
+    background: url(@downloadBg) no-repeat -80px 0 @black;
+    background-size: contain;
+    text-align: center;
+
+    h3 {
+        font-size: 32px;
+        line-height: 44px;
+        font-family: @actionGolfSemiBold;
+        padding: 0 0 47px;
+        color: @white;
+        font-weight: 100;
+    }
+
+    .download-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .app-store,
+        .google-play {
+            width: 197px;
+            height: 58px;
+        }
+
+        a {
+            margin-bottom: 24px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+footer {
+    .clearfix();
+
+    padding: 48px 20px 43px;
+
+    .logo {
+        color: @brandColor;
+        font-size: 18px;
+        margin-bottom: 18px;
+
+        &::before {
+            width: 44px;
+            height: 44px;
+            background-image: url(@logoGreen);
+        }
+    }
+
+    h4,
+    h5 {
+        font-family: @actionGolfSemiBold;
+        color: @black;
+        font-weight: 100;
+    }
+
+    h4 {
+        font-size: 30px;
+        line-height: 44px;
+        padding: 0 0 25px;
+    }
+
+    h5 {
+        font-size: 18px;
+        line-height: 32px;
+        padding: 0 0 12px;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 24px;
+        color: @grey;
+        padding: 0 0 18px;
+    }
+
+    .footer-right {
+        margin: 0 0 19px;
+
+        .subscribe-box {
+            padding: 5px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            background: @subscribeBgGrey;
+            position: relative;
+
+            .subscribe-box-text {
+                color: @bgrey;
+                padding: 0 0 0 11px;
+                background: @subscribeBgGrey;
+                border: none;
+                width: 66%;
+                font-size: 14px;
+
+                &::placeholder {
+                    color: @bgrey;
+                }
+            }
+
+            .subscribe-box-button {
+                border-radius: 4px;
+                padding: 0 13px;
+                line-height: 33px;
+                height: 33px;
+                background: @greyButton;
+                color: @white;
+                font-family: @actionGolfSemiBold;
+                font-size: 14px;
+                border: none;
+                pointer-events: none;
+
+                &.active {
+                    background: @brandColor;
+                    pointer-events: initial;
+                    cursor: pointer;
+
+                    &:hover,
+                    &:focus {
+                        opacity: 0.9;
+                        transform: scale(1.05);
+                    }
+                }
+            }
+        }
+
+        .subscribe-error {
+            visibility: hidden;
+            clear: both;
+            color: red;
+            padding: 5px 0 0 0;
+            height: 30px;
+            font-style: italic;
+            width: 100%;
+            font-size: 14px;
+            position: relative;
+        }
+    }
+
+    .footer-links {
+        .social-links {
+            list-style-type: none;
+            display: flex;
+
+            li {
+                padding-right: 14px;
+
+                a {
+                    display: block;
+                    width: 42px;
+                    height: 42px;
+                    cursor: pointer;
+
+                    span {
+                        display: none;
+                    }
+
+                    &::before {
+                        content: '';
+                        width: 100%;
+                        height: 100%;
+                        background: @brandColor;
+                        display: block;
+                        border-radius: 100%;
+                        opacity: 0.1;
+                    }
+
+                    &:hover,
+                    &:active,
+                    &:focus {
+                        outline: 0;
+
+                        &::before {
+                            opacity: 0.2;
+                            transform: scale(1.05);
+                        }
+                    }
+
+                    &::after {
+                        content: '';
+                        width: 16px;
+                        height: 16px;
+                        display: block;
+                        position: absolute;
+                        .center-center();
+                    }
+
+                    &.facebook {
+                        background: url(@facebook) no-repeat center center transparent;
+                    }
+
+                    &.instagram {
+                        background: url(@instagram) no-repeat center center transparent;
+                    }
+
+                    &.twitter {
+                        background: url(@twitter) no-repeat center center transparent;
+                    }
+
+                    &.youtube {
+                        background: url(@youtube) no-repeat center center transparent;
+                    }
+                }
+            }
+        }
+
+        .page-links {
+            list-style-type: none;
+            padding: 18px 0 0;
+
+            li {
+                display: inline-block;
+                padding-right: 12px;
+                font-size: 14px;
+
+                &:last-child {
+                    padding-right: 0;
+                }
+
+                a {
+                    color: @brandColor;
+
+                    &:hover,
+                    &:focus {
+                        outline: none;
+                        text-decoration: underline;
+                        transform: scale(1.05);
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+.form-container {
+    padding: 30px 20px 40px;
+
+    h2 {
+        padding: 0 0 2px;
+        line-height: 40px;
+        font-family: @actionGolfSemiBold;
+        font-size: 32px;
+        font-weight: 100;
+    }
+
+    h4 {
+        font-size: 14px;
+        line-height: 20px;
+        font-family: @actionGolfRegular;
+    }
+
+    .contact-container {
+        padding: 20px 0;
+
+        p {
+            padding: 10px 0;
+        }
+
+        a {
+            color: @brandColor;
+
+            &:hover,
+            &:focus {
+                outline: none;
+                text-decoration: underline;
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    .input-container {
+        padding: 20px 0 0;
+
+        .styled-input {
+            position: relative;
+            margin: 0 0 50px;
+            border-radius: 4px;
+            border: 2px solid @brandColor;
+
+            &.last {
+                margin-bottom: 30px;
+            }
+
+            label {
+                color: @bgrey;
+                padding: 0 4px;
+                position: absolute;
+                top: 14px;
+                left: 10px;
+                -webkit-transition: all 0.25s ease;
+                transition: all 0.25s ease;
+                pointer-events: none;
+
+                sup {
+                    position: absolute;
+                    top: -2px;
+                    right: -3px;
+                    margin-left: 2px;
+                    color: @red;
+                }
+            }
+
+            input, textarea, select {
+                padding: 14px;
+                border: 0;
+                width: calc(100% - 2px);
+                margin: 0;
+                font-size: 16px;
+                background-color: @white;
+                color: @black;
+                font-family: @actionGolfRegular;
+                background: none;
+
+                &:focus,
+                &:valid {
+                    ~ label {
+                        color: @bgrey;
+                        top: -24px;
+                        left: 0;
+                        -webkit-transition: all 0.225s ease;
+                        transition: all 0.225s ease;
+                    }
+                }
+
+                &:valid ~ label {
+                    font-size: 12px;
+                }
+
+                &:focus ~ label {
+                    color: @brandColor;
+                }
+            }
+
+            select {
+                width: 100%;
+                -webkit-appearance: none;
+                height: 47px;
+                background: transparent;
+                position: relative;
+                z-index: 2;
+
+                &:focus {
+                    outline: none;
+
+                    ~ label {
+                        color: @brandColor;
+                    }
+                }
+
+                ~ label {
+                    font-size: 12px;
+                    color: @bgrey;
+                    top: -24px;
+                    left: 0;
+                    -webkit-transition: all 0.225s ease;
+                    transition: all 0.225s ease;
+                }
+            }
+
+            textarea {
+                min-height: 100px;
+                resize: vertical;
+            }
+
+            .error-message {
+                display: none;
+                position: absolute;
+                right: 1px;
+                bottom: -22px;
+                background: @red;
+                font-size: 12px;
+                padding: 0 10px;
+                color: @white;
+                border-radius: 0 0 4px 4px;
+            }
+
+            &.error {
+                border-color: @red;
+
+                label {
+                    color: @red;
+                }
+
+                input, textarea, select {
+                    &:focus,
+                    &:valid {
+                        ~ label {
+                            color: @red;
+                        }
+                    }
+                }
+
+                .error-message {
+                    display: block;
+                }
+            }
+
+            &.select-box::after {
+                background: url(@selectArrow) no-repeat 0 0;
+                width: 25px;
+                height: 25px;
+                content: '';
+                position: absolute;
+                background-size: cover;
+                top: 12px;
+                right: 12px;
+                z-index: 0;
+            }
+        }
+
+        .phone-number {
+            position: relative;
+
+            .col-12 {
+                display: flex;
+                flex-direction: row;
+                justify-content: normal;
+            }
+
+            label {
+                font-size: 12px;
+                color: @bgrey;
+                position: absolute;
+                top: -22px;
+                left: 0;
+                padding: 0 4px;
+
+                &.focus {
+                    color: @brandColor;
+                }
+
+                sup {
+                    position: absolute;
+                    top: -2px;
+                    right: -3px;
+                    margin-left: 2px;
+                    color: @red;
+                }
+            }
+
+            .styled-input {
+                width: 72px;
+                margin: 0 15px 50px 0;
+
+                label {
+                    top: 14px;
+                    left: 0;
+                    text-align: center;
+                    width: 100%;
+                    padding: 0;
+                }
+
+                input {
+                    text-align: center;
+
+                    &:focus,
+                    &:valid {
+                        ~ label {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            .error-message {
+                display: none;
+                position: absolute;
+                left: 90px;
+                bottom: 30px;
+                background: @red;
+                font-size: 12px;
+                padding: 0 10px;
+                color: @white;
+                border-radius: 0 0 4px 4px;
+            }
+
+            &.error {
+                .styled-input {
+                    border-color: @red;
+                }
+
+                label {
+                    color: @red;
+                }
+
+                .error-message {
+                    display: block;
+                }
+            }
+
+            &.invalid-error .error-message {
+                left: 47px;
+            }
+        }
+
+        .demo-submit-btn {
+            border-radius: 4px;
+            padding: 0 20px;
+            line-height: 38px;
+            height: 38px;
+            background: @brandColor;
+            color: @white;
+            font-family: @actionGolfSemiBold;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+
+            &:hover,
+            &:focus {
+                opacity: 0.9;
+                transform: scale(1.05);
+            }
+        }
+    }
+}
+
+.screen-message {
+    padding: 20px 15px 20px 50px;
+    margin: 20px 0;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        width: 60px;
+        height: 60px;
+        content: '';
+        display: block;
+        position: absolute;
+        background-size: cover;
+        top: -12px;
+        left: -12px;
+        opacity: 0.1;
+    }
+
+    &.success-message {
+        background-color: @successBg;
+        border-color: @successBorder;
+        color: @green;
+
+        &::after {
+            background-image: url(@successMessage);
+        }
+    }
+
+
+    &.error-message {
+        background-color: @errorBg;
+        border-color: @errorBorder;
+        color: @red;
+
+        &::after {
+            background-image: url(@errorMessage);
+        }
+    }
+}
+
+.page-header {
+    margin: 0 0 20px;
+    line-height: 40px;
+    font-family: @actionGolfSemiBold;
+    font-size: 32px;
+    font-weight: 100;
+
+    &:after {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        content: '';
+        border-radius: 50%;
+        margin-left: 8px;
+        border-radius: 50%;
+        background: @brandColor;
+    }
+}
+
+.content-container {
+    padding: 30px 20px 40px;
+    line-height: 24px;
+    font-size: 16px;
+
+    a {
+        color: @brandColor;
+        text-decoration: none;
+
+        &:focus,
+        &:hover {
+            outline: 0;
+            text-decoration: underline;
+            transform: scale(1.05);
+        }
+    }
+
+    .underline {
+        text-decoration: underline;
+    }
+
+    .marginless {
+        margin-bottom: 10px;
+    }
+
+    img {
+        max-width: 100%;
+        margin: 0 0 20px;
+    }
+
+    table {
+        text-align: center;
+
+        img {
+            margin: 0;
+        }
+    }
+
+    h2 {
+        margin: 0 0 20px;
+        line-height: 40px;
+        font-family: @actionGolfSemiBold;
+        font-size: 32px;
+        font-weight: 100;
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+        line-height: 20px;
+        font-family: @actionGolfSemiBold;
+        margin: 0 0 16px;
+    }
+
+    h4 {
+        font-size: 20px;
+    }
+
+    h5 {
+        font-size: 16px;
+    }
+
+    hr {
+        margin: 30px 0;
+        border: 0;
+        border-bottom: 1px solid @brandColor;
+    }
+
+    p {
+        margin: 0 0 20px;
+
+        &.marginless {
+            margin-bottom: 10px;
+        }
+    }
+
+    ol {
+        list-style-position: outside;
+        margin-left: 22px;
+
+        li {
+            font-family: @actionGolfSemiBold;
+            color: @brandColor;
+            font-size: 20px;
+
+            > h4,
+            > h5 {
+                display: inline;
+            }
+
+            > div {
+                font-family: @actionGolfRegular;
+                font-size: 16px;
+                color: @black;
+                margin: 16px 0 24px;
+            }
+
+            ul,
+            ol {
+                li {
+                    font-size: 16px;
+                    color: @black;
+                    padding-left: 6px;
+
+                    > div {
+                        margin: 10px 0 24px;
+                    }
+                }
+            }
+        }
+
+        &.lower-alpha {
+            list-style-type: lower-alpha;
+        }
+
+        &.lower-roman {
+            list-style-type: lower-roman;
+            margin-left: 10px !important;
+        }
+    }
+
+    ol,
+    ul {
+        margin-bottom: 16px;
+
+        &.no-title {
+            list-style-position: outside;
+            margin-left: 22px;
+
+            li {
+                font-size: 16px;
+                color: @black;
+                font-family: @actionGolfRegular;
+                margin: 0 0 6px;
+            }
+        }
+
+        &.margin-top {
+            margin-top: 16px;
+        }
+    }
+
+    ul {
+        list-style-position: outside;
+        margin-left: 22px;
+
+        &.disc {
+            list-style-type: disc;
+        }
+    }
+}
+
+.upcoming-tournaments {
+    ul li {
+        list-style-type: none;
+
+        &:last-child .title-head {
+            border-bottom: 0;
+        }
+
+        .title-head {
+            border-left: 4px solid @brandColor;
+            border-bottom: 1px solid @brandColor;
+            padding: 10px 0 10px 20px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+
+            h5 {
+                margin-bottom: 4px;
+            }
+
+            .subdetails {
+                max-width: calc(100% - 110px);
+                min-height: 50px;
+            }
+
+            p {
+                font-size: 12px;
+                line-height: 14px;
+                margin: 0 0 4px;
+                color: @bgrey;
+            }
+
+            a {
+                font-size: 14px;
+            }
+
+            .image {
+                position: absolute;
+                text-align: right;
+                width: 100px;
+                right: 0;
+                bottom: 12px;
+
+                img {
+                    margin: 0;
+                }
+            }
+        }
+        .details {
+            display: none;
+            padding: 40px 0 0 40px;
+            border-left: 4px solid @greyButton;
+            margin: 0;
+
+            ul li {
+                list-style-type: disc;
+            }
+        }
+    }
+}
+
+@media screen and (min-width:472px) {
+    .download-app-section .download-buttons {
+        flex-direction: row;
+        justify-content: center;
+
+        a {
+            margin-bottom: 0;
+
+            &:first-child {
+                margin-right: 16px;
+            }
+
+            &:last-child {
+                margin-left: 16px;
+            }
+        }
+    }
+}
+
+#modal-shade {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    top: 0;
+    left: 0;
+    z-index: 998;
+}
+
+.modal {
+    display: none;
+
+    .center-center();
+
+    position: fixed;
+    width: calc(100% - 20px);
+    background: @white;
+    border-radius: 8px;
+    max-width: 616px;
+    z-index: 999;
+
+    .modal-dialog {
+
+        .close-modal {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            display: block;
+            background: url(@close) no-repeat 0 0;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+        }
+
+        .modal-dialog-content {
+            display: block;
+            text-align: center;
+            padding: 40px 40px 30px;
+
+            h4 {
+                padding: 10px 0 0;
+                font-size: 16px;
+                line-height: 20px;
+                color: @brandColor;
+            }
+        }
+    }
+}
+
+.button-wrapper {
+    position: relative;
+
+    &.loading {
+        .demo-submit-btn {
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .lds-ellipsis {
+            display: block;
+            left: 5px;
+            top: -2px;
+        }
+    }
+}
+
+.lds-ellipsis {
+    display: none;
+    position: absolute;
+    width: 86px;
+    height: 43px;
+    top: 0;
+    right: 0;
+
+    div {
+        position: absolute;
+        top: 18px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: @brandColor;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+
+        &:nth-child(1) {
+            left: 8px;
+            animation: lds-ellipsis1 0.6s infinite;
+        }
+
+        &:nth-child(2) {
+            left: 8px;
+            animation: lds-ellipsis2 0.6s infinite;
+        }
+
+        &:nth-child(3) {
+            left: 32px;
+            animation: lds-ellipsis2 0.6s infinite;
+        }
+
+        &:nth-child(4) {
+            left: 56px;
+            animation: lds-ellipsis3 0.6s infinite;
+        }
+    }
+}
+
+@keyframes hamburgermenu {
+    0% {
+        right: -70%;
+    }
+    100% {
+        right: 0
+    }
+}
+
+@keyframes lds-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+@keyframes lds-ellipsis3 {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+@keyframes lds-ellipsis2 {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(24px, 0);
+    }
+}

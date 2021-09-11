@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>ActionGolfers | Schedule a Demo</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/actiongolf.css" />
+    </head>
+    <body>
+        <main>
+            <section>
+                <div class="form-container">
+                    <h2 class="page-header">Schedule a Demo</h2>
+                    <div class="col-12">
+                        <div class="col-6 contact-container">
+                            <!-- <p><strong>Phone:</strong> <a href="tel:(049)33XXXXX9">(049) 33X-XXXX9</a></p> -->
+                            <p><strong>Sales:</strong> <a href="mailto:sales@actiongolfers.com">sales@actiongolfers.com</a></p>
+                            <p><strong>Support:</strong> <a href="mailto:support@actiongolfers.com">support@actiongolfers.com</a></p>
+            
+                            <div class="screen-message success-message hide">
+                                Thank you! A member of our staff will contact you within the next 24 hours.
+                            </div>
+                            <div class="screen-message error-message hide">
+                                Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+                            </div>
+                        </div>
+                        <div class="col-6 input-container">
+                            <form id="ajaxForm">
+                                <div class="col-12">
+                                    <div class="col-6">
+                                        <div class="styled-input">
+                                            <input type="text" name="firstName" required 
+                                                data-required="First Name is required."
+                                                data-invalid="Please enter a valid First Name."
+                                            />
+                                            <label>Frist Name <sup>*</sup></label> 
+                                            <span class="error-message required">First Name is required.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="styled-input">
+                                            <input type="text" name="lastName" required 
+                                                data-required="Last Name is required."
+                                                data-invalid="Please enter a valid Last Name."
+                                            />
+                                            <label>Last Name <sup>*</sup></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="col-6">
+                                        <div class="styled-input">
+                                            <input type="text" name="email" required 
+                                                data-required="Email Address is required."
+                                                data-invalid="Please enter a valid Email Address."
+                                            />
+                                            <label>Email Address <sup>*</sup></label> 
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="phone-number">
+                                            <label>Phone <sup>*</sup></label> 
+                                            <div class="col-12">
+                                                <div class="styled-input">
+                                                    <input type="text" class="phone-input phone-code" required maxlength="3" />
+                                                    <label>(###)</label> 
+                                                </div>
+                                                <div class="styled-input">
+                                                    <input type="text" class="phone-input phone-prefix" required maxlength="3" />
+                                                    <label>###</label> 
+                                                </div>
+                                                <div class="styled-input">
+                                                    <input type="text" class="phone-input phone-line" required maxlength="4" />
+                                                    <label>####</label> 
+                                                </div>
+                                                <input type="hidden" name="teleNumber" required 
+                                                    data-required="Phone Number is required."
+                                                    data-invalid="Please enter a valid Phone Number."
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="col-6">
+                                        <div class="styled-input">
+                                            <input type="text" name="orgName" required 
+                                                data-required="Organization Name is required."
+                                                data-invalid="Please enter a valid Organization Name."
+                                            />
+                                            <label>Organization Name <sup>*</sup></label> 
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="styled-input select-box">
+                                            <select name="orgType">
+                                                <option value="Nonprofit/charity">Nonprofit/charity</option>
+                                                <option value="Golf facility">Golf facility</option>
+                                                <option value="Business">Business</option>
+                                                <option value="Interested sponsor">Interested sponsor</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                            <label>Organization Type <sup>*</sup></label> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="styled-input last">
+                                        <textarea name="message" required 
+                                            data-required="Message is required."
+                                            data-invalid="Please enter a valid message."
+                                        ></textarea>
+                                        <label>Message <sup>*</sup></label>
+                                    </div>
+                                </div>
+                                <div class="button-wrapper">
+                                    <button class="demo-submit-btn">Submit</button>
+                                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <script  src="library/js/actiongolf.js"></script>
+    </body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>ActionGolfers | Terms of Use</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/actiongolf.css" />
+    </head>
+    <body>
+        <main>
+            <header>
+                <section>
+                    <nav>
+                        <a class="logo" href="./" title="ActionGolfers">ActionGolfers</a>
+                    </nav>
+                </section>
+            </header>
+            <section>
+                <div class="form-container">
+                    <h2 class="page-header">Create Tournament</h2>
+                    <div class="col-6 input-container">
+                        <form id="ajaxForm" data-type="">
+                            <div class="form-field">
+                                <label>Tournament Name <sup>*</sup></label>
+                                <div class="styled-input">
+                                    <input type="text" name="tournamentName" required
+                                        data-required="Tournament Name is required."
+                                        data-invalid="Please enter a valid Tournament Name."
+                                    />
+                                    <span class="error-message required">Tournament Name is required.</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="col-6">
+                                    <div class="form-field">
+                                        <label>Start Date <sup>*</sup></label>
+                                        <div class="styled-input select-box">
+                                            <input id="startdatepicker" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-field">
+                                        <label>End Date <sup>*</sup></label>
+                                        <div class="styled-input select-box">
+                                            <input id="enddatepicker" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>Course <sup>*</sup></label>
+                                <div class="styled-input select-box">
+                                    <select name="course">
+                                        <option>Select Course</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <span class="label bold">Number of Holes</span>
+                                <div class="col-12">
+                                    <div class="col-4">
+                                        <div class="styled-input radio-button">
+                                            <input id="front9" type="radio" name="holes" checked />
+                                            <label for="front9">Front 9</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="styled-input radio-button">
+                                            <input id="back9" type="radio" name="holes" />
+                                            <label for="back9">Back 9</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="styled-input radio-button">
+                                            <input id="18holes" type="radio" name="holes" />
+                                            <label for="18holes">18 Holes</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>Tee <sup>*</sup></label>
+                                <div class="styled-input select-box">
+                                    <select name="tee">
+                                        <option>Select Tee</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <span class="label bold">Scoring</span>
+                                <div class="col-12">
+                                    <div class="col-6">
+                                        <div class="styled-input radio-button">
+                                            <input id="net" type="radio" name="scoring" checked />
+                                            <label for="net">Net</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="styled-input radio-button">
+                                            <input id="gross" type="radio" name="scoring" />
+                                            <label for="gross">Gross</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <span class="label bold">Entry Fee</span>
+                                <div class="col-12">
+                                    <div class="col-4">
+                                        <div class="styled-input radio-button">
+                                            <input id="$0" type="radio" name="entryfee" checked />
+                                            <label for="$0">$0</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="styled-input radio-button">
+                                            <input id="$5" type="radio" name="entryfee" />
+                                            <label for="$5">$5</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="styled-input radio-button">
+                                            <input id="$10" type="radio" name="entryfee" />
+                                            <label for="$10">$10</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="styled-input radio-button">
+                                            <input id="custom" type="radio" name="entryfee" />
+                                            <label for="custom">Custom</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-field">
+                                <span class="label bold">Payouts</span>
+                                <div class="col-12 payouts">
+                                    <label id="p1">1st Position</label>
+                                    <div>
+                                        <div class="styled-input">
+                                            <input id="p1" type="number" name="" maxlength="3" />
+                                        </div>
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 payouts">
+                                    <label id="p2">2nd Position</label>
+                                    <div>
+                                        <div class="styled-input">
+                                            <input id="p2" type="number" name="" maxlength="3" />
+                                        </div>
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 payouts">
+                                    <label id="p3">3rd Position</label>
+                                    <div>
+                                        <div class="styled-input">
+                                            <input id="p3" type="number" name="" maxlength="3" />
+                                        </div>
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-field checkbox-field disabled">
+                                <div class="col-12">
+                                    <div class="col-6">
+                                        <label class="bold">Leaderboard Watch</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="slider-checkbox">
+                                            <input type="checkbox" id="leaderboard" name="leaderboardWatch" checked />
+                                            <label class="label" for="leaderboard"> </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-field checkbox-field">
+                                <div class="col-12">
+                                    <div class="col-6">
+                                        <label class="bold">Flight</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="slider-checkbox">
+                                            <input type="checkbox" id="flight" name="flight" checked />
+                                            <label class="label" for="flight"> </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <div class="col-12 min-max-hps">
+                                    <div class="col-4">
+                                        <label for="min-hps">Minimum:</label>
+                                        <div class="styled-input">
+                                            <input id="min-hps" type="number" name="minHcp" maxlength="2" />
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        -
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="max-hps">Maximum:</label>
+                                        <div class="styled-input">
+                                            <input id="max-hps" type="number" name="maxHcp" maxlength="2" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-field">
+                                <div class="col-12 max-participants">
+                                    <label for="max-participants">Maximum number of participants:</label>
+                                    <div class="styled-input">
+                                        <input id="max-participants" type="number" name="maxPct" maxlength="2" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="button-wrapper">
+                                <button class="demo-submit-btn">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                <section>
+                    <div>
+                        <p>© Copyright 2021 ActionGolfers LLC <br/>All Rights Reserved.</p>
+                    </div>
+                </section>
+            </footer>
+        </main>
+        <script  src="library/js/actiongolf.js"></script>
+    </body>
+</html>
