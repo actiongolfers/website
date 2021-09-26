@@ -395,3 +395,48 @@ footer {
 .modal .modal-dialog .modal-dialog-content h4 {
     padding-top: 20px;
 }
+
+.create-form-container .input-container {
+    .form-field,
+    .col-12 {
+        max-width: 600px;
+        justify-content: initial;
+
+        &.min-max-hps,
+        &.max-participants,
+        &.payouts {
+            justify-content: space-between;
+
+            .col-4 {
+                max-width: none;
+            }
+        }
+
+        .col-4,
+        .col-6 {
+            margin-right: 10px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        .col-6 {
+            max-width: 200px;
+        }
+
+        .col-4 {
+            max-width: 100px;
+
+            &:nth-child(3n) {
+                flex-break: none;
+            }
+        }
+    }
+
+    .checkbox-field {
+        .col-12 .col-6 {
+            max-width: initial;
+        }
+    }
+}

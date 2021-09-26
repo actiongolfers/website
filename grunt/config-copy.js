@@ -13,6 +13,11 @@ module.exports = function( grunt ) {
                 {expand: true,  src: '*.html', dest: '../ActionGolfWebApplication/', filter: 'isFile'}
               ],
         },
+        prodSource: {
+            files: [
+                {expand: true,  src: '**', dest: '../../actiongolfers/website/'}
+              ],
+        },
         stage: {
             files: [
                 {expand: true,  src: 'library/**', dest: '../pramithprakash.github.io/actiongolf/'},

@@ -4,9 +4,11 @@
  * See all options: https://github.com/gruntjs/grunt-contrib-uglify
  */
 module.exports = function( grunt ) {
-    var distFiles = {};
+    var distFiles = {},
+        distCTFiles = {};
 
     distFiles[ 'library/js/actiongolf.js' ] = ['library/js/actiongolf.js'];
+    distCTFiles[ 'library/js/create-tournament.js' ] = ['library/js/create-tournament.js'];
 
     grunt.config( 'uglify', {
         options: {
@@ -17,6 +19,9 @@ module.exports = function( grunt ) {
         },
         live: {
             files: distFiles
+        },
+        createtournament: {
+            files: distCTFiles
         }
     });
 

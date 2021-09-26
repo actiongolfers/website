@@ -311,7 +311,7 @@ var actiongolf = {
     },
 
     isValidMessageField: function(userinput) {
-        var pattern = /^[a-zA-Z \(\)\[\]\{\}.,-_\n]{6,999}$/i;
+        var pattern = /^[a-zA-Z \(\)\[\]\{\}.,-_\n`~!@#$%^&*()_+{}|":?><?';=]{6,2000}$/i;
 
         return pattern.test(userinput);
     },

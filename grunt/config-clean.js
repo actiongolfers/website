@@ -20,6 +20,9 @@ module.exports = function ( grunt ) {
         prod: [
             '../ActionGolfWebApplication/*', '!../ActionGolfWebApplication/.git'
         ],
+        prodSource: [
+            '../../actiongolfers/website/*', '!../../actiongolfers/website/.git'
+        ],
         stage: [
             '../pramithprakash.github.io/actiongolf/'
         ]

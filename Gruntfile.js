@@ -26,17 +26,24 @@ module.exports = function ( grunt ) {
        'requirejs:live',
        'uglify:live',
        'concat:live',
+       'uglify:createtournament',
+       'concat:createtournament',
        'clean:vendor',
        'handlebarslayouts'
     ]);
 
-    // grunt.registerTask( 'stage', 'Deploy for integration handoff.', [
-    //     'clean:stage',
-    //     'copy:stage'
-    //  ]);
+    grunt.registerTask( 'stage', 'Deploy for integration handoff.', [
+        'clean:stage',
+        'copy:stage'
+     ]);
 
-    // grunt.registerTask( 'prod', 'Deploy for integration handoff.', [
-    //     'clean:prod',
-    //     'copy:prod'
-    //  ]);
+    grunt.registerTask( 'prod', 'Deploy for integration handoff.', [
+        'clean:prod',
+        'copy:prod'
+     ]);
+
+    grunt.registerTask( 'prodSource', 'Deploy for integration handoff.', [
+        'clean:prodSource',
+        'copy:prodSource'
+     ]);
 };
