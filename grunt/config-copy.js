@@ -15,7 +15,15 @@ module.exports = function( grunt ) {
         },
         prodSource: {
             files: [
-                {expand: true,  src: '**', dest: '../../actiongolfers/website/'}
+                {expand: true,  src: 'fonts/**', dest: '../../actiongolfers/website/'},
+                {expand: true,  src: 'grunt/**', dest: '../../actiongolfers/website/'},
+                {expand: true,  src: 'images/**', dest: '../../actiongolfers/website/'},
+                {expand: true,  src: 'library/**', dest: '../../actiongolfers/website/'},
+                {expand: true,  src: 'pages/**', dest: '../../actiongolfers/website/'},
+                {expand: true,  src: 'uncompressed/**', dest: '../../actiongolfers/website/'},
+                {expand: true,  src: '*.html', dest: '../../actiongolfers/website/', filter: 'isFile'},
+                {expand: true,  src: '*.json', dest: '../../actiongolfers/website/', filter: 'isFile'},
+                {expand: true,  src: '*.js', dest: '../../actiongolfers/website/', filter: 'isFile'}
               ],
         },
         stage: {

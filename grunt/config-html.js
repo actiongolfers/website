@@ -123,6 +123,17 @@ module.exports = function ( grunt ) {
                 ],
                 basePath: '/'
             }
+        },
+        TCA: {
+            files: {
+                'TCA.html': 'pages/TCA.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
         }
     });
 

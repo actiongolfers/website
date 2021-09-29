@@ -1825,6 +1825,70 @@ footer {
     }
 }
 
+.landing-tournaments {
+    .title-head {
+        padding: 10px 0;
+        position: relative;
+        cursor: pointer;
+        text-align: center;
+
+        .learn-more {
+            border-radius: 4px;
+            padding: 0 30px;
+            line-height: 46px;
+            height: 46px;
+            background: @brandColor;
+            color: @white;
+            font-family: @actionGolfSemiBold;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            margin: 10px 0 0;
+
+            &:hover {
+                text-decoration: none;
+                transform: scale(1.05);
+            }
+        }
+
+        .content {
+            background: @black;
+            color: @white;
+            padding: 50px 0;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h5 {
+            font-size: 20px;
+            line-height: 28px;
+            max-width: 83%;
+            margin: 0 auto 4px;
+        }
+
+        p {
+            font-size: 12px;
+            line-height: 14px;
+            margin: 0 0 4px;
+            color: @bgrey;
+        }
+
+        a {
+            font-size: 14px;
+        }
+    }
+    .details {
+        padding: 40px 0 0;
+        margin: 0;
+
+        ul li {
+            list-style-type: disc;
+        }
+    }
+}
+
+
 @media screen and (min-width:472px) {
     .download-app-section .download-buttons {
         flex-direction: row;
@@ -1890,6 +1954,7 @@ footer {
                 font-size: 16px;
                 line-height: 20px;
                 color: @brandColor;
+                text-align: center;
             }
         }
     }
