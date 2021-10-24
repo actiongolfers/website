@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>Upload</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/actiongolf.css" />
+    </head>
+    <body>
+        <main>
+            <header>
+                <section>
+                    <nav>
+                        <a class="logo" href="./" title="ActionGolfers">ActionGolfers</a>
+                    </nav>
+                </section>
+            </header>
+            <section>
+                <div class="create-form-container">
+                    <div class="status">
+
+                    </div>
+                </div>
+            </section>
+
+            <script
+                src="https://code.jquery.com/jquery-3.6.0.min.js"
+                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+                crossorigin="anonymous"></script>
+            <script>
+                var requestData,
+                    auth = btoa("agdev:password"),
+                    ajaxUrl= 'https://api.actiongolfers.com/media/upload';
+
+                requestData = {
+                    "image": $('#fileToUpload').val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: ajaxUrl,
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify(requestData),
+                    beforeSend: function (xhr, status) {
+                        xhr.setRequestHeader ("Authorization", "Basic " + auth);
+                    },
+                    success: function(status) {
+                        $('.status').html('Success');
+                    }.bind(this),
+                    error:  function(xhr, status, error) {
+                        $('.status').html('Failed - check console for details');
+                    }.bind(this)
+                });
+            </script>
+        </main>
+    </body>
+</html>
