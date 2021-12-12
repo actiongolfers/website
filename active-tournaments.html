@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>Active Tournaments </title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/admin.css" />
+    </head>
+    <body>
+        <main>
+            <header>
+                <section>
+                    <nav>
+                        <a class="logo" href="./" title="ActionGolfers">ActionGolfers</a>
+                    </nav>
+                </section>
+            </header>
+            <section>
+                <div class="admin-container create-form-container">
+                    <h2 class="page-header">Active Tournaments</h2>
+                    <div class="screen-message error-message hide">
+                        Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+                    </div>
+
+                    <div class="list-tournaments">
+                        <div class="tournament-item loading">
+                            <div class="tournament-id"># Tournament Id</div>
+                            <div class="item">Friendly Name</div><br />
+                            <div class="item">City</div><br />
+                            <div class="item">Creator Name</div><br />
+                            <div class="item">Golf Course Name</div><br />
+                            <div class="item">Tee Name</div><br />
+
+                            <div class="tournament-item-btm">
+                                <div>Start Date</div>
+                                <div>End Date</div>
+                            </div>
+                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                <section>
+                    <div class="footer-right">
+            
+                    </div>
+                    <div class="footer-left">
+                        <span class="logo">ActionGolfers</span>
+                        <h5>Tournament Golf On-Demand</h5>
+                        <p>© Copyright 2021 ActionGolfers LLC <br/>All Rights Reserved.</p>
+                        <div class="footer-links">
+                            <ul class="social-links">
+                                <li><a class="facebook" title="Facebook" href="https://www.facebook.com/ActionGolfers/" target="_blank"><span>facebook</span></a></li>
+                                <li><a class="instagram" title="Instagram" href="https://www.instagram.com/actiongolfers/
+                                    " target="_blank"><span>instagram</span></a></li>
+                                <li><a class="twitter" title="Twitter" href="https://twitter.com/action_golfers" target="_blank"><span>twitter</span></a></li>
+                                <li><a class="youtube" title="Youtube" href="https://www.youtube.com/channel/UCOJRzam4OGFvEYxtKW27JbA" target="_blank"><span>youtube</span></a></li>
+                            </ul>
+                            <ul class="page-links">
+                                <li><a href="terms-of-use.html" title="Terms of Use">Terms of Use</a></li>
+                                <li><a href="privacy-policy.html" title="Privacy Policy">Privacy Policy</a></li>
+                                <li><a href="contact-us.html" title="Contact Us">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </footer>
+        </main>
+        <script type="text/x-handlebars-template" data-template="listTournamentsTemplate">
+            {{#if ownerTournaments}}
+                {{#each ownerTournaments}}
+                    <div class="tournament-item">
+                        {{#if tournamentInfo.tournamentId}}
+                        <a class="create-website" data-tournament-id="{{tournamentInfo.tournamentId}}" data-friendly-name="{{tournamentInfo.friendlyName}}"
+                        data-start-date="{{tournamentInfo.startDate}}"
+                        data-end-date="{{tournamentInfo.endDate}}"></a>
+                        <div class="tournament-id"># {{tournamentInfo.tournamentId}}</div>
+                        {{/if}}
+                        {{#if tournamentInfo.friendlyName}}
+                        <div class="item">{{tournamentInfo.friendlyName}}<span>Friendly Name</span></div>
+                        <br />
+                        {{/if}}
+                        {{#if tournamentInfo.city}}
+                        <div class="item">{{tournamentInfo.city}}<span>City</span></div>
+                        <br />
+                        {{/if}}
+                        {{#if tournamentInfo.creatorFirstName}}
+                        <div class="item">{{tournamentInfo.creatorFirstName}} {{tournamentInfo.creatorLastName}}<span>Creator Name</span></div>
+                        <br />
+                        {{/if}}
+                        {{#if tournamentInfo.golfCourseName}}
+                        <div class="item">{{tournamentInfo.golfCourseName}}<span>Golf Course Name</span></div>
+                        <br />
+                        {{/if}}
+                        {{#if tournamentInfo.teeName}}
+                        <div class="item">{{tournamentInfo.teeName}}<span>Tee Name</span></div>
+                        <br />
+                        {{/if}}
+
+                        <div class="tournament-item-btm">
+                            {{#if tournamentInfo.startDate}}
+                            <div>{{tournamentInfo.startDate}}</div>
+                            {{/if}}
+                            {{#if tournamentInfo.endDate}}
+                            <div>{{tournamentInfo.endDate}}</div>
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/each}}
+            {{else}}
+                No active tournaments available..
+            {{/if}}
+        </script>
+        <script type="text/javascript" src="library/js/active-tournaments.js"></script>
+    </body>
+</html>

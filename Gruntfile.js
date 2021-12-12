@@ -21,13 +21,22 @@ module.exports = function ( grunt ) {
 
     grunt.registerTask( 'build', 'Build for integration handoff.', [
        'clean:live',
-       'less:live',
+       'less:actiongolf',
+       'less:admin',
        'cssmin:live',
        'requirejs:live',
-       'uglify:live',
-       'concat:live',
+       'uglify:actiongolf',
+       'concat:actiongolf',
+       'uglify:landing',
+       'concat:landing',
+       'uglify:activetournaments',
+       'concat:activetournaments',
        'uglify:createtournament',
        'concat:createtournament',
+       'uglify:createlanding',
+       'concat:createlanding',
+       'uglify:login',
+       'concat:login',
        'clean:vendor',
        'handlebarslayouts'
     ]);

@@ -366,13 +366,22 @@ footer {
     }
 }
 
-.form-container {
+.admin-container {
     padding: 40px 40px 50px;
 
     h4 {
         padding: 0 0 10px;
     }
 
+    &.create-landing-form {
+        .tournament-details-head {
+            margin: -30px 0 0px;
+        }
+    }
+}
+
+.form-container,
+.create-form-container {
     .col-12 {
         flex-direction: row-reverse;
     }
@@ -399,7 +408,7 @@ footer {
     padding: 40px 40px 50px;
 }
 
-.screen-message {
+.contact-container .screen-message {
     margin-top: 120px;
 }
 
@@ -411,8 +420,3 @@ footer {
     }
 }
 
-.landing-tournaments .title-head {
-    .content {
-        margin: 0 -40px;
-    }
-}

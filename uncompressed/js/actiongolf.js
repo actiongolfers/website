@@ -172,7 +172,7 @@ var actiongolf = {
             this.formValidation();
         }.bind(this));
 
-        $('.demo-submit-btn').on('click', function(event) {
+        $('#form-submit').on('click', function(event) {
             event.preventDefault();
 
             if (!event.originalEvent) {

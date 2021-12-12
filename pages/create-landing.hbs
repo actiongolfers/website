@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>Create Landing page</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/admin.css" />
+    </head>
+    <body>
+        <main>
+            {{> landing-header }}
+
+            <section id="create-landing-edit">
+                <div class="admin-container create-form-container create-landing-form">
+                    <h2 class="page-header">Create Landing page
+                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    </h2>
+                    <div class="tournament-details-head"></div>
+                    <div id="previous-data-load-error" class="screen-message error-message hide">
+                        Error loading the details of already saved data. All previously saved data will be overridden if submitting this form.
+                    </div>
+
+                    <div class="full-width input-container">
+                        <div class="col-12">
+                            <div class="col-6">
+                                <div class="form-field">
+                                    <label>Banner Title <sup></sup> </label>
+                                    <div class="styled-input">
+                                        <input type="text" name="webPageTitle" required
+                                            data-required="Banner Title is required."
+                                            data-invalid="Please enter a valid Banner Title."
+                                        />
+                                        <span class="error-message required">Banner Title is required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                Placeholders - <br>
+                                <code>[[STARTDATE]] [[ENDDATE]]</code> Jan 01
+                                <br>
+                                <code>[[STARTDATEYEAR]] [[ENDDATEYEAR]]</code> Jan 01, 2022
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-6">
+                                <div class="form-field">
+                                    <label>Friendly Name <sup></sup> </label>
+                                    <div class="styled-input">
+                                        <input type="text" name="friendlyName" required
+                                            data-required="Friendly Name is required."
+                                            data-invalid="Please enter a valid Friendly Name."
+                                        />
+                                        <span class="error-message required">Friendly Name is required.</span>
+                                    </div>
+                                    <div class="helptext">For User friendly Page URL- (This value will be appended with Tournament Start Date)</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-field">
+                                    <label>Banner Background Image <sup></sup></label>
+                                    <div class="styled-input">
+                                        <input type="file" accept="image/*" name="bg_landingimages" id="fileToUpload" />
+                                    </div>
+
+                                    <img id="thumbnil" style="width:20%; margin-top:10px;display:none"  src="" alt="image"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-4">
+                                <div class="form-field">
+                                    <label>Logo image 1 <sup></sup></label>
+                                    <div class="styled-input">
+                                        <input type="file" data-index="0" enctype="multipart/form-data" name="logo_image1" id="fileToUpload1" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-field">
+                                    <label>Logo image 2</label>
+                                    <div class="styled-input">
+                                        <input type="file" data-index="1" name="logo_image2" id="fileToUpload2" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-field">
+                                    <label>Logo image 3</label>
+                                    <div class="styled-input">
+                                        <input type="file" data-index="2" name="logo_image3" id="fileToUpload3" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label>Page Content <sup></sup></label>
+                            <div class="styled-input" id="div_webPageBlob"></div>
+                        </div>
+                        <div class="button-wrapper">
+                            <button id="preview-btn" class="secondary-btn">Preview</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {{> landing-template }}
+
+            <section id="create-landing-preview" style="display: none;">
+                <div class="landing-content">
+                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                </div>
+                <div class="button-wrapper">
+                    <div id="publish-error" class="screen-message error-message hide">
+                        Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+                    </div>
+
+                    <div id="publish-success" class="screen-message success-message hide">
+                        Page published successfully
+                    </div>
+                    <button id="publish-btn" class="primary-btn">Publish</button>
+                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                </div>
+
+            </section>
+
+            {{> landing-footer }}
+        </main>
+        <script type="text/javascript" src="library/js/create-landing.js"></script>
+    </body>
+</html>

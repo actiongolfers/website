@@ -6,7 +6,7 @@
 module.exports = function( grunt ) {
 
     grunt.config( 'less', {
-        live: {
+        actiongolf: {
             options: {
                 sourceMap: true,
                 strictMath: true,
@@ -21,10 +21,10 @@ module.exports = function( grunt ) {
                     ],
                     dest: 'library',
                     ext: '.css',
-                    
+
                     // Set the destination to a directory named "css"
                     rename: function( dest, src ) {
-                        
+
                         var path = require( 'path' ),
                             splitDirs = src.split( '/' )
                             ;
@@ -34,9 +34,39 @@ module.exports = function( grunt ) {
                         return path.join( dest, splitDirs.join( '/' ) );
                     }
                 }
-            ] 
+            ]
+        },
+        admin: {
+            options: {
+                sourceMap: true,
+                strictMath: true,
+                relativeUrls: true
+            },
+            files: [
+                {
+                    expand: true,
+                    cwd: 'uncompressed',
+                    src: [
+                        '**/admin.less'
+                    ],
+                    dest: 'library',
+                    ext: '.css',
+
+                    // Set the destination to a directory named "css"
+                    rename: function( dest, src ) {
+
+                        var path = require( 'path' ),
+                            splitDirs = src.split( '/' )
+                            ;
+
+                        splitDirs[ splitDirs.indexOf( 'less' ) ] = 'css';
+
+                        return path.join( dest, splitDirs.join( '/' ) );
+                    }
+                }
+            ]
         }
     });
-    
+
     grunt.loadNpmTasks( 'grunt-contrib-less' );
 };

@@ -31,7 +31,7 @@
                 </section>
             </header>
             <section>
-                <div class="form-container">
+                <div class="admin-container form-container">
                     <h2 class="page-header">Schedule a Demo</h2>
                     <div class="col-12">
                         <div class="col-6 contact-container">
@@ -51,17 +51,17 @@
                                 <div class="col-12">
                                     <div class="col-6">
                                         <div class="styled-input">
-                                            <input type="text" name="firstName" required 
+                                            <input type="text" name="firstName" required
                                                 data-required="First Name is required."
                                                 data-invalid="Please enter a valid First Name."
                                             />
-                                            <label>Frist Name <sup>*</sup></label> 
+                                            <label>Frist Name <sup>*</sup></label>
                                             <span class="error-message required">First Name is required.</span>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="styled-input">
-                                            <input type="text" name="lastName" required 
+                                            <input type="text" name="lastName" required
                                                 data-required="Last Name is required."
                                                 data-invalid="Please enter a valid Last Name."
                                             />
@@ -72,30 +72,30 @@
                                 <div class="col-12">
                                     <div class="col-6">
                                         <div class="styled-input">
-                                            <input type="text" name="email" required 
+                                            <input type="text" name="email" required
                                                 data-required="Email Address is required."
                                                 data-invalid="Please enter a valid Email Address."
                                             />
-                                            <label>Email Address <sup>*</sup></label> 
+                                            <label>Email Address <sup>*</sup></label>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="phone-number">
-                                            <label>Phone <sup>*</sup></label> 
+                                            <label>Phone <sup>*</sup></label>
                                             <div class="col-12">
                                                 <div class="styled-input">
                                                     <input type="text" class="phone-input phone-code" required maxlength="3" />
-                                                    <label>(###)</label> 
+                                                    <label>(###)</label>
                                                 </div>
                                                 <div class="styled-input">
                                                     <input type="text" class="phone-input phone-prefix" required maxlength="3" />
-                                                    <label>###</label> 
+                                                    <label>###</label>
                                                 </div>
                                                 <div class="styled-input">
                                                     <input type="text" class="phone-input phone-line" required maxlength="4" />
-                                                    <label>####</label> 
+                                                    <label>####</label>
                                                 </div>
-                                                <input type="hidden" name="teleNumber" required 
+                                                <input type="hidden" name="teleNumber" required
                                                     data-required="Phone Number is required."
                                                     data-invalid="Please enter a valid Phone Number."
                                                 />
@@ -106,11 +106,11 @@
                                 <div class="col-12">
                                     <div class="col-6">
                                         <div class="styled-input">
-                                            <input type="text" name="orgName" required 
+                                            <input type="text" name="orgName" required
                                                 data-required="Organization Name is required."
                                                 data-invalid="Please enter a valid Organization Name."
                                             />
-                                            <label>Organization Name <sup>*</sup></label> 
+                                            <label>Organization Name <sup>*</sup></label>
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -122,13 +122,13 @@
                                                 <option value="Interested sponsor">Interested sponsor</option>
                                                 <option value="Other">Other</option>
                                             </select>
-                                            <label>Organization Type <sup>*</sup></label> 
+                                            <label>Organization Type <sup>*</sup></label>
                                         </div>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="styled-input last">
-                                        <textarea name="message" required 
+                                        <textarea name="message" required
                                             data-required="Message is required."
                                             data-invalid="Please enter a valid message."
                                         ></textarea>
@@ -136,7 +136,7 @@
                                     </div>
                                 </div>
                                 <div class="button-wrapper">
-                                    <button class="demo-submit-btn">Submit</button>
+                                    <button id="form-submit" class="primary-btn">Submit</button>
                                     <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                                 </div>
                             </form>

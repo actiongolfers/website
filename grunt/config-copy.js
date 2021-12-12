@@ -10,7 +10,8 @@ module.exports = function( grunt ) {
                 {expand: true,  src: 'library/**', dest: '../ActionGolfWebApplication/'},
                 {expand: true,  src: 'images/**', dest: '../ActionGolfWebApplication/'},
                 {expand: true,  src: 'fonts/**', dest: '../ActionGolfWebApplication/'},
-                {expand: true,  src: '*.html', dest: '../ActionGolfWebApplication/', filter: 'isFile'}
+                {expand: true,  src: '*.html', dest: '../ActionGolfWebApplication/', filter: 'isFile'},
+                {expand: true,  src: '*.htm', dest: '../ActionGolfWebApplication/', filter: 'isFile'}
               ],
         },
         prodSource: {
@@ -23,7 +24,9 @@ module.exports = function( grunt ) {
                 {expand: true,  src: 'uncompressed/**', dest: '../../actiongolfers/website/'},
                 {expand: true,  src: '*.html', dest: '../../actiongolfers/website/', filter: 'isFile'},
                 {expand: true,  src: '*.json', dest: '../../actiongolfers/website/', filter: 'isFile'},
-                {expand: true,  src: '*.js', dest: '../../actiongolfers/website/', filter: 'isFile'}
+                {expand: true,  src: '*.js', dest: '../../actiongolfers/website/', filter: 'isFile'},
+                {expand: true,  src: '*.htm', dest: '../../actiongolfers/website/', filter: 'isFile'}
+
               ],
         },
         stage: {
@@ -31,7 +34,8 @@ module.exports = function( grunt ) {
                 {expand: true,  src: 'library/**', dest: '../pramithprakash.github.io/actiongolf/'},
                 {expand: true,  src: 'images/**', dest: '../pramithprakash.github.io/actiongolf/'},
                 {expand: true,  src: 'fonts/**', dest: '../pramithprakash.github.io/actiongolf/'},
-                {expand: true,  src: '*.html', dest: '../pramithprakash.github.io/actiongolf/', filter: 'isFile'}
+                {expand: true,  src: '*.html', dest: '../pramithprakash.github.io/actiongolf/', filter: 'isFile'},
+                {expand: true,  src: '*.htm', dest: '../pramithprakash.github.io/actiongolf/', filter: 'isFile'}
               ],
         }
     });

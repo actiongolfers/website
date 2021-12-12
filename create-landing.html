@@ -1,0 +1,207 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>Create Landing page</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/admin.css" />
+    </head>
+    <body>
+        <main>
+            <header>
+                <section>
+                    <nav>
+                        <a class="logo" href="./" title="ActionGolfers">ActionGolfers</a>
+                    </nav>
+                </section>
+            </header>
+            <section id="create-landing-edit">
+                <div class="admin-container create-form-container create-landing-form">
+                    <h2 class="page-header">Create Landing page
+                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    </h2>
+                    <div class="tournament-details-head"></div>
+                    <div id="previous-data-load-error" class="screen-message error-message hide">
+                        Error loading the details of already saved data. All previously saved data will be overridden if submitting this form.
+                    </div>
+
+                    <div class="full-width input-container">
+                        <div class="col-12">
+                            <div class="col-6">
+                                <div class="form-field">
+                                    <label>Banner Title <sup></sup> </label>
+                                    <div class="styled-input">
+                                        <input type="text" name="webPageTitle" required
+                                            data-required="Banner Title is required."
+                                            data-invalid="Please enter a valid Banner Title."
+                                        />
+                                        <span class="error-message required">Banner Title is required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                Placeholders - <br>
+                                <code>[[STARTDATE]] [[ENDDATE]]</code> Jan 01
+                                <br>
+                                <code>[[STARTDATEYEAR]] [[ENDDATEYEAR]]</code> Jan 01, 2022
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-6">
+                                <div class="form-field">
+                                    <label>Friendly Name <sup></sup> </label>
+                                    <div class="styled-input">
+                                        <input type="text" name="friendlyName" required
+                                            data-required="Friendly Name is required."
+                                            data-invalid="Please enter a valid Friendly Name."
+                                        />
+                                        <span class="error-message required">Friendly Name is required.</span>
+                                    </div>
+                                    <div class="helptext">For User friendly Page URL- (This value will be appended with Tournament Start Date)</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-field">
+                                    <label>Banner Background Image <sup></sup></label>
+                                    <div class="styled-input">
+                                        <input type="file" accept="image/*" name="bg_landingimages" id="fileToUpload" />
+                                    </div>
+
+                                    <img id="thumbnil" style="width:20%; margin-top:10px;display:none"  src="" alt="image"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-4">
+                                <div class="form-field">
+                                    <label>Logo image 1 <sup></sup></label>
+                                    <div class="styled-input">
+                                        <input type="file" data-index="0" enctype="multipart/form-data" name="logo_image1" id="fileToUpload1" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-field">
+                                    <label>Logo image 2</label>
+                                    <div class="styled-input">
+                                        <input type="file" data-index="1" name="logo_image2" id="fileToUpload2" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-field">
+                                    <label>Logo image 3</label>
+                                    <div class="styled-input">
+                                        <input type="file" data-index="2" name="logo_image3" id="fileToUpload3" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label>Page Content <sup></sup></label>
+                            <div class="styled-input" id="div_webPageBlob"></div>
+                        </div>
+                        <div class="button-wrapper">
+                            <button id="preview-btn" class="secondary-btn">Preview</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <script type="text/x-handlebars-template" data-template="landingTemplate">
+                <div class="content-container">
+                    <div class="landing-tournaments">
+                        <div class="title-head">
+                            <div class="logo-images">
+                            {{#if logoImages}}
+                                {{#each logoImages}}
+                                    <img class="logoimages" src="{{image}}" />
+                                {{/each}}
+                            {{/if}}
+                            </div>
+                            <div class="content">
+                                <h5>{{webPageTitle}}</h5>
+                                <div class="subdetails">
+                                    <p>{{startDate}} - {{endDate}}</p>
+                                    <a>{{golfCourseName}}</a>
+                                </div>
+                                <a href="./" class="learn-more">{{learnMore}}</a>
+                            </div>
+                        </div>
+                        <div class="details">
+                            {{{webPageBlob}}}
+                        </div>
+                        <div class="landing-download">
+                            <h3>Download the ActionGolfers app to enroll in the tournament here!</h3>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <img src="images/qr-android.jpg" />
+                                    </td>
+                                    <td>
+                                        <img src="images/qr-ios.jpg" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Android
+                                    </td>
+                                    <td>
+                                        iOS
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </script>
+
+            <section id="create-landing-preview" style="display: none;">
+                <div class="landing-content">
+                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                </div>
+                <div class="button-wrapper">
+                    <div id="publish-error" class="screen-message error-message hide">
+                        Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+                    </div>
+
+                    <div id="publish-success" class="screen-message success-message hide">
+                        Page published successfully
+                    </div>
+                    <button id="publish-btn" class="primary-btn">Publish</button>
+                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                </div>
+
+            </section>
+
+            <footer>
+                <section>
+                    <div class="footer-right">
+            
+                    </div>
+                    <div class="footer-left">
+                        <span class="logo">ActionGolfers</span>
+                        <h5>Tournament Golf On-Demand</h5>
+                        <p>© Copyright 2021 ActionGolfers LLC <br/>All Rights Reserved.</p>
+                        <div class="footer-links">
+                            <ul class="social-links">
+                                <li><a class="facebook" title="Facebook" href="https://www.facebook.com/ActionGolfers/" target="_blank"><span>facebook</span></a></li>
+                                <li><a class="instagram" title="Instagram" href="https://www.instagram.com/actiongolfers/
+                                    " target="_blank"><span>instagram</span></a></li>
+                                <li><a class="twitter" title="Twitter" href="https://twitter.com/action_golfers" target="_blank"><span>twitter</span></a></li>
+                                <li><a class="youtube" title="Youtube" href="https://www.youtube.com/channel/UCOJRzam4OGFvEYxtKW27JbA" target="_blank"><span>youtube</span></a></li>
+                            </ul>
+                            <ul class="page-links">
+                                <li><a href="terms-of-use.html" title="Terms of Use">Terms of Use</a></li>
+                                <li><a href="privacy-policy.html" title="Privacy Policy">Privacy Policy</a></li>
+                                <li><a href="contact-us.html" title="Contact Us">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </footer>        </main>
+        <script type="text/javascript" src="library/js/create-landing.js"></script>
+    </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>Landing</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/actiongolf.css" />
+    </head>
+    <body>
+        <main>
+            {{> landing-header }}
+
+            <section>
+                <div class="landing-content">
+                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                </div>
+
+                {{> landing-template }}
+
+                <div class="screen-message error-message hide">
+                    Request page not available. Please check the URL. Thanks
+                </div>
+
+            </section>
+
+            {{> download}}
+
+            {{> landing-footer }}
+
+            <script  src="library/js/landing.js"></script>
+        </main>
+    </body>
+</html>

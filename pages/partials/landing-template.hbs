@@ -1,0 +1,47 @@
+<script type="text/x-handlebars-template" data-template="landingTemplate">
+    <div class="content-container">
+        <div class="landing-tournaments">
+            <div class="title-head">
+                <div class="logo-images">
+                \{{#if logoImages}}
+                    \{{#each logoImages}}
+                        <img class="logoimages" src="\{{image}}" />
+                    \{{/each}}
+                \{{/if}}
+                </div>
+                <div class="content">
+                    <h5>\{{webPageTitle}}</h5>
+                    <div class="subdetails">
+                        <p>\{{startDate}} - \{{endDate}}</p>
+                        <a>\{{golfCourseName}}</a>
+                    </div>
+                    <a href="./" class="learn-more">\{{learnMore}}</a>
+                </div>
+            </div>
+            <div class="details">
+                \{{{webPageBlob}}}
+            </div>
+            <div class="landing-download">
+                <h3>Download the ActionGolfers app to enroll in the tournament here!</h3>
+                <table>
+                    <tr>
+                        <td>
+                            <img src="images/qr-android.jpg" />
+                        </td>
+                        <td>
+                            <img src="images/qr-ios.jpg" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Android
+                        </td>
+                        <td>
+                            iOS
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</script>

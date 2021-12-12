@@ -134,6 +134,61 @@ module.exports = function ( grunt ) {
                 ],
                 basePath: '/'
             }
+        },
+        login: {
+            files: {
+                'login.html': 'pages/login.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
+        },
+        activetournaments: {
+            files: {
+                'active-tournaments.html': 'pages/active-tournaments.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
+        },
+        createlanding: {
+            files: {
+                'create-landing.html': 'pages/create-landing.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
+        },
+        createtournament: {
+            files: {
+                'create-tournament.html': 'pages/create-tournament.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
+        },
+        landing: {
+            files: {
+                'landing.html': 'pages/landing.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
         }
     });
 

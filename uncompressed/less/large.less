@@ -292,7 +292,7 @@ footer {
     }
 }
 
-.form-container {
+.admin-container {
     padding: 60px 20px 70px;
 
     h2 {
@@ -303,9 +303,16 @@ footer {
     h4 {
         padding: 0 0 20px;
     }
+}
 
+.form-container,
+.create-form-container {
     .input-container {
         width: calc(50% + 50px);
+
+        &.full-width {
+            width: 100%;
+        }
 
         .col-12 {
             display: flex;
@@ -387,6 +394,10 @@ footer {
     }
 }
 
+.landing-content {
+    min-height: 500px;
+}
+
 .landing-tournaments {
     .title-head {
         .content {
@@ -448,6 +459,18 @@ footer {
 
             &:nth-child(3n) {
                 flex-break: none;
+            }
+        }
+    }
+
+    &.full-width {
+        .col-12,
+        .form-field {
+            max-width: 100%;
+
+            .col-6,
+            .col-4 {
+                max-width: 100%;
             }
         }
     }

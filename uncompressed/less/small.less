@@ -982,7 +982,7 @@ footer {
     }
 }
 
-.form-container {
+.admin-container {
     padding: 30px 20px 40px;
 
     h2 {
@@ -999,6 +999,32 @@ footer {
         font-family: @actionGolfRegular;
     }
 
+    &.create-landing-form {
+        .tournament-details-head {
+            margin: -20px 0 0px;
+            font-size: 12px;
+            color: @brandColor;
+        }
+
+        .form-field {
+            position: relative;
+
+            .helptext {
+                position: absolute;
+                bottom: -18px;
+                font-size: 10px;
+                font-style: italic;
+            }
+
+            &.error .helptext {
+                display: none;
+            }
+        }
+    }
+}
+
+.form-container,
+.create-form-container {
     .contact-container {
         padding: 20px 0;
 
@@ -1079,6 +1105,10 @@ footer {
                 &:focus ~ label {
                     color: @brandColor;
                 }
+            }
+
+            input[type="file"] {
+                height: 47px;
             }
 
             select {
@@ -1242,25 +1272,6 @@ footer {
                 left: 47px;
             }
         }
-
-        .demo-submit-btn {
-            border-radius: 4px;
-            padding: 0 20px;
-            line-height: 38px;
-            height: 38px;
-            background: @brandColor;
-            color: @white;
-            font-family: @actionGolfSemiBold;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
-
-            &:hover,
-            &:focus {
-                opacity: 0.9;
-                transform: scale(1.05);
-            }
-        }
     }
 }
 
@@ -1281,6 +1292,15 @@ footer {
             &:nth-child(3n) {
                 flex-break: after;
             }
+        }
+    }
+
+    &.full-width {
+        width: 100%;
+
+        .col-6,
+        .col-4 {
+            width: 100%;
         }
     }
 
@@ -1335,6 +1355,20 @@ footer {
             textarea {
                 min-height: 100px;
                 resize: vertical;
+            }
+
+            &.login-phone {
+                display: flex;
+
+                input[name="callingCode"] {
+                    width: 80px;
+                    text-align: right;
+                    border-right: 1px solid @brandColor;
+                }
+
+                input[name="phoneNumber"] {
+                    width: calc(100% - 80px);
+                }
             }
 
             .error-message {
@@ -1408,6 +1442,10 @@ footer {
 
         &.error {
             border-color: @red;
+
+            .styled-input {
+                border-color: @red;
+            }
 
             label {
                 color: @red;
@@ -1547,6 +1585,42 @@ footer {
                 }
             }
         }
+
+        &.otp {
+            display: none;
+            margin-bottom: 8px;
+            max-width: 240px !important;
+            position: relative;
+
+            .otp-error-message {
+                display: none;
+                background: @red;
+                font-size: 12px;
+                padding: 0 10px;
+                color: @white;
+                border-radius: 0 0 4px 4px;
+                position: absolute;
+                right: 14px;
+                top: 71px;
+            }
+
+            &.error .otp-error-message {
+                display: block
+            }
+
+            .verification-code {
+                display: flex;
+
+                .styled-input {
+                    width: 50px;
+                    margin-right: 10px;
+
+                    input {
+                        text-align: center;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -1622,7 +1696,7 @@ footer {
         &:focus,
         &:hover {
             outline: 0;
-            text-decoration: underline;
+            text-decoration: underline !important;
             transform: scale(1.05);
         }
     }
@@ -1825,11 +1899,22 @@ footer {
     }
 }
 
+.landing-content {
+    position: relative;
+    min-height: 200px;
+
+    .lds-ellipsis {
+        display: block;
+        top: calc(50% - 22px);
+        left: calc(50% - 43px);
+        right: auto;
+    }
+}
+
 .landing-tournaments {
     .title-head {
         padding: 10px 0;
         position: relative;
-        cursor: pointer;
         text-align: center;
 
         .learn-more {
@@ -1847,7 +1932,7 @@ footer {
             margin: 10px 0 0;
 
             &:hover {
-                text-decoration: none;
+                text-decoration: none !important;
                 transform: scale(1.05);
             }
         }
@@ -1897,7 +1982,7 @@ footer {
     }
     .details {
         padding: 40px 0 0;
-        margin: 0;
+        margin: 0 0 24px;
 
         ul li {
             list-style-type: disc;
@@ -1981,7 +2066,7 @@ footer {
     position: relative;
 
     &.loading {
-        .demo-submit-btn {
+        .primary-btn {
             visibility: hidden;
             pointer-events: none;
         }
@@ -1992,6 +2077,34 @@ footer {
             top: -2px;
         }
     }
+
+    .primary-btn,
+        .secondary-btn {
+            border-radius: 4px;
+            padding: 0 20px;
+            line-height: 38px;
+            height: 38px;
+            color: @white;
+            font-family: @actionGolfSemiBold;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+
+            &:hover,
+            &:focus {
+                opacity: 0.9;
+                transform: scale(1.05);
+            }
+        }
+
+        .primary-btn {
+            background: @brandColor;
+        }
+
+        .secondary-btn {
+            background: @bgrey;
+        }
 }
 
 .lds-ellipsis {

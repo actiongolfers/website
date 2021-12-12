@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>Admin | login</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/admin.css" />
+    </head>
+    <body>
+        <main>
+            {{> landing-header }}
+
+            <section>
+                <div class="admin-container create-form-container">
+                    <h2 class="page-header">Login</h2>
+                    <div class="full-width input-container">
+                        <div class="col-12">
+                            <div class="col-6">
+                                <div class="form-field login">
+                                    <label>Phone number <sup>*</sup></label>
+                                    <div class="styled-input login-phone">
+                                        <input type="text" name="callingCode" class="callingCode" placeholder="+1"
+                                        />
+                                        <input type="number" name="phoneNumber" class="phoneNumber" required
+                                            data-required="Phone number is required."
+                                            data-invalid="Please enter a valid Phone number"
+                                        />
+                                        <span class="error-message required">Phone number is required.</span>
+                                    </div>
+                                </div>
+                                <div class="form-field otp">
+                                    <label>Verification Code <sup>*</sup></label>
+                                    <div class="verification-code">
+                                        <div class="styled-input">
+                                            <input type="number" class="verificationCode1" required
+                                                maxlength="1"
+                                            />
+                                        </div>
+                                        <div class="styled-input">
+                                            <input type="number" class="verificationCode2" required
+                                                maxlength="1"
+                                            />
+                                        </div>
+                                        <div class="styled-input">
+                                            <input type="number" class="verificationCode3" required
+                                                maxlength="1"
+                                            />
+                                        </div>
+                                        <div class="styled-input">
+                                            <input type="number" class="verificationCode4" required
+                                                maxlength="1"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="otp-error-message">Verification Code is required.</div>
+                                </div>
+
+                                <div class="screen-message error-message hide" style="margin-top: 0;">
+                                    Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+                                </div>
+                            </div>
+                            <div class="col-6">
+
+                            </div>
+                        </div>
+                        <div class="button-wrapper">
+                            <button class="primary-btn" id="login-submit">Login</button>
+                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {{> landing-footer }}
+        </main>
+        <script type="text/javascript" src="library/js/login.js"></script>
+    </body>
+</html>

@@ -4,11 +4,19 @@
  * See all options: https://github.com/gruntjs/grunt-contrib-uglify
  */
 module.exports = function( grunt ) {
-    var distFiles = {},
-        distCTFiles = {};
+    var distAGFiles = {},
+        distLPFiles = {},
+        distCTFiles = {},
+        distLGFiles = {},
+        distCLFiles = {},
+        distATFiles = {};
 
-    distFiles[ 'library/js/actiongolf.js' ] = ['library/js/actiongolf.js'];
+    distAGFiles[ 'library/js/actiongolf.js' ] = ['library/js/actiongolf.js'];
+    distLPFiles[ 'library/js/landing.js' ] = ['library/js/landing.js'];
     distCTFiles[ 'library/js/create-tournament.js' ] = ['library/js/create-tournament.js'];
+    distCLFiles[ 'library/js/create-landing.js' ] = ['library/js/create-landing.js'];
+    distCLFiles[ 'library/js/login.js' ] = ['library/js/login.js'];
+    distATFiles[ 'library/js/active-tournaments.js' ] = ['library/js/active-tournaments.js'];
 
     grunt.config( 'uglify', {
         options: {
@@ -17,11 +25,23 @@ module.exports = function( grunt ) {
                 toplevel: true
             }
         },
-        live: {
-            files: distFiles
+        actiongolf: {
+            files: distAGFiles
+        },
+        landing: {
+            files: distLPFiles
         },
         createtournament: {
             files: distCTFiles
+        },
+        activetournaments: {
+            files: distATFiles
+        },
+        createlanding: {
+            files: distCLFiles
+        },
+        login: {
+            files: distLGFiles
         }
     });
 
