@@ -3,6 +3,8 @@ var localDevelopment = false,
     tournamentId,
     userProfileId,
     uploadImages = [],
+    titleBackgroundMediaId,
+    titleBackgroundImage,
     sessionStartDate,
     sessionEndDate;
 
@@ -13,11 +15,8 @@ var actiongolfCL = {
         //localDevelopment = window.origin === 'http://localhost:8080';
 
          if (!this.getAuthSession(sessionKey) && !localDevelopment) {
-             if (window.origin === 'https://pramith.com') {
-                 window.location.href = window.origin + "/actiongolf/login.html";
-             } else {
-                 window.location.href = window.origin + "/login.html";
-             }
+                window.sessionStorage.setItem('agReDirectPage', './create-landing.html');
+                window.location.href = "./login.html";
 
              return;
          } else {
@@ -30,11 +29,7 @@ var actiongolfCL = {
             sessionEndDate = tournamentDetails.endDate;
 
             if (!tournamentDetails || !tournamentDetails.tournamentId) {
-                if (window.origin === 'https://pramith.com') {
-                    window.location.href = window.origin + "/actiongolf/active-tournaments.html";
-                } else {
-                    window.location.href = window.origin + "/active-tournaments.html";
-                }
+                    window.location.href = "./active-tournaments.html";
 
                 return;
             }
@@ -62,11 +57,13 @@ var actiongolfCL = {
                         $('.loading').hide();
                         $('#previous-data-load-error').removeClass('hide');
                     }
+                    $('.page-header').removeClass('loading');
                 }.bind(this),
                 error:  function(xhr, status, error) {
                     $('.loading').hide();
                     this.updateData();
                     $('#previous-data-load-error').removeClass('hide');
+                    $('.page-header').removeClass('loading');
                 }.bind(this)
             });
        }
@@ -94,11 +91,7 @@ var actiongolfCL = {
                 }
             };
         } else if (!data) {
-            if (window.origin === 'https://pramith.com') {
-                window.location.href = window.origin + "/actiongolf/active-tournaments.html";
-            } else {
-                window.location.href = window.origin + "/active-tournaments.html";
-            }
+            window.location.href = "./active-tournaments.html";
         }
 
         if (data && data.tournamentInfo) {
@@ -114,11 +107,13 @@ var actiongolfCL = {
             }
 
             if (data.tournamentInfo.friendlyName) {
-                $('.page-header').html('Edit Landing page - ' + friendlyNameFormated);
+                $('.page-header .admin-title').html('Edit Landing page - ' + friendlyNameFormated);
 
                 $('.tournament-details-head').html(
                     'Tournament Id - '+ data.tournamentInfo.tournamentId + ', ' + this.dateConversion(data.tournamentInfo.startDate, true) + ' - ' + this.dateConversion(data.tournamentInfo.endDate, true)
                 );
+
+                $('#view-current-btn').attr('href','./landing.html#' +data.tournamentInfo.friendlyName).removeClass('hide');
             }
 
             $('[name=webPageTitle]').val(data.tournamentInfo.webPageTitle);
@@ -128,30 +123,49 @@ var actiongolfCL = {
                 webPageBlob.setHTMLCode(decodeURIComponent(data.tournamentInfo.webPageBlob));
             }
 
+            if (data.tournamentInfo.titleBackgroundMediaId) {
+                titleBackgroundMediaId = data.tournamentInfo.titleBackgroundMediaId;
+            }
+
+            if (data.tournamentInfo.titleBackgroundImage) {
+                titleBackgroundImage = data.tournamentInfo.titleBackgroundImage;
+
+                $('#bg_landingimages_thumbnail').attr(
+                    'src', titleBackgroundImage
+                ).show();
+            }
+
             if (data.tournamentImages && data.tournamentImages.length) {
-                data.tournamentImages.forEach(function(img){
+                data.tournamentImages.forEach(function(img, index){
                     logoImages.push({
                         image: img
                     });
+
+                    $('#logo_image'+ index +'_thumbnail').attr(
+                        'src', img
+                    ).show();
                 });
             }
         }
 
         $('#preview-btn').on('click', function() {
             var webPageBlobContent = webPageBlob.getHTMLCode(),
-                landingTemplate = Handlebars.compile($("[data-template='landingTemplate']").html());
+                landingTemplate = Handlebars.compile($("[data-template='landingTemplate']").html()),
+                formError = false;
 
             details = {
                 logoImages: logoImages,
-                webPageTitle : '',
+                webPageTitle: '',
                 startDate: data && this.dateConversion(data.tournamentInfo.startDate),
                 endDate: data && this.dateConversion(data.tournamentInfo.endDate),
-                golfCourseName : data && data.tournamentInfo.golfCourseName,
+                golfCourseName: data && data.tournamentInfo.golfCourseName,
                 learnMore: 'Learn More',
+                titleBackgroundImage: titleBackgroundImage ||data && data.tournamentInfo.titleBackgroundImage,
+                titleBackgroundMediaId: data && data.tournamentInfo.titleBackgroundMediaId
             };
 
             details.webPageBlob = webPageBlobContent;
-            details.friendlyName = $('[name=friendlyName]').val();
+            details.friendlyName = $('[name=friendlyName]').val() ? $('[name=friendlyName]').val().trim() : '';
             details.webPageBlobValue = encodeURIComponent(webPageBlobContent);
             details.webPageTitleValue = $('[name=webPageTitle]').val();
             details.webPageTitle = $('[name=webPageTitle]').val();
@@ -163,6 +177,30 @@ var actiongolfCL = {
             details.webPageBlob = details.webPageBlob.replace('[[ENDDATE]]', details.endDate);
             details.webPageBlob = details.webPageBlob.replace('[[STARTDATEYEAR]]', data && this.dateConversion(data.tournamentInfo.startDate, true));
             details.webPageBlob = details.webPageBlob.replace('[[ENDDATEYEAR]]', data && this.dateConversion(data.tournamentInfo.endDate, true));
+
+            details.webPageTitle = details.webPageTitle ? details.webPageTitle.trim() : '';
+
+            if (!details.friendlyName) {
+                $('[name=friendlyName]').parents('.form-field').addClass('error');
+                formError = true;
+            }
+            if (!details.webPageTitle) {
+                $('[name=webPageTitle]').parents('.form-field').addClass('error');
+                formError = true;
+            }
+
+            if (formError) {
+                $('html, body').animate({
+                    scrollTop: $('.page-header').offset().top - 30
+                }, 'slow');
+
+
+                $('#create-landing-preview').hide();
+                return;
+            } else {
+                $('[name=friendlyName]').parents('.form-field').removeClass('error');
+                $('[name=webPageTitle]').parents('.form-field').removeClass('error');
+            }
 
             setTimeout(function(){
                 $('.landing-content').html(landingTemplate(details));
@@ -189,15 +227,15 @@ var actiongolfCL = {
         }.bind(this));
 
         $('#publish-btn').on('click', function() {
-            var ajaxUrl= this.getApiUrl('create');
-
-            var requestData = {
-                userProfileId: userProfileId,
-                tournamentId: tournamentId,
-                friendlyName: details.friendlyName + '_' + (data ? this.dateConversion(data.tournamentInfo.startDate, true, true) : ''),
-                title: details.webPageTitleValue,
-                webpageBlob: details.webPageBlobValue
-            };
+            var ajaxUrl= this.getApiUrl('create'),
+                requestData = {
+                    userProfileId: userProfileId,
+                    tournamentId: tournamentId,
+                    friendlyName: details.friendlyName + '_' + (data ? this.dateConversion(data.tournamentInfo.startDate, true, true) : ''),
+                    title: details.webPageTitleValue,
+                    webpageBlob: details.webPageBlobValue,
+                    titleBackgroundMediaId: titleBackgroundMediaId || details.titleBackgroundMediaId
+                };
 
             if (uploadImages && uploadImages.length) {
                 requestData.images = {
@@ -218,8 +256,11 @@ var actiongolfCL = {
                     tournamentDetails.friendlyName = requestData.friendlyName;
                     this.setAuthSession('tournamentDetails', tournamentDetails);
                     $('.button-wrapper').removeClass('loading');
+
+                    var landingHref =  "./landing.html#";
+
                     $('#publish-success').html(
-                        'Your page published successfully, please validate - <a target="_blank" href="/landing.html#' + requestData.friendlyName +'">' + requestData.friendlyName + '</a>'
+                        'Your page published successfully, please validate - <a target="_blank" href="' + landingHref + requestData.friendlyName +'">' + requestData.friendlyName + '</a>'
                     );
 
                     $('#publish-error').addClass('hide');
@@ -235,30 +276,36 @@ var actiongolfCL = {
             });
         }.bind(this));
 
+        $('[name=bg_landingimages]').on('change', function(event) {
+            var _this = $('[name=bg_landingimages]');
+            uploadImage(_this, $(_this).data('index'), this, 'Team');
+        }.bind(this));
+
+        $('[name=logo_image0]').on('change', function(event) {
+            var _this = $('[name=logo_image0]');
+            uploadImage(_this, $(_this).data('index'), this, 'Logo');
+        }.bind(this));
+
         $('[name=logo_image1]').on('change', function(event) {
             var _this = $('[name=logo_image1]');
-            showMyImage(_this, $(_this).data('index'), this);
+            uploadImage(_this, $(_this).data('index'), this, 'Logo');
         }.bind(this));
 
         $('[name=logo_image2]').on('change', function(event) {
             var _this = $('[name=logo_image2]');
-            showMyImage(_this, $(_this).data('index'), this);
+            uploadImage(_this, $(_this).data('index'), this, 'Logo');
         }.bind(this));
 
-        $('[name=logo_image3]').on('change', function(event) {
-            var _this = $('[name=logo_image3]');
-            showMyImage(_this, $(_this).data('index'), this);
-        }.bind(this));
-
-        function showMyImage(fileInput, index, _this) {
+        function uploadImage(fileInput, index, _this, type) {
             var ajaxUrl= _this.getApiUrl('upload'),
-                formData = new FormData();
+                formData = new FormData(),
+                files = $(fileInput)[0].files;
 
             formData.append("imageFile", $(fileInput)[0].files[0]);
             formData.append("userProfileId", userProfileId);
             formData.append("mediaFolder", "Tournament");
             formData.append("mediaFolderId", 123);
-            formData.append("mediaSubFolder", 'Logo');
+            formData.append("mediaSubFolder", type);
             formData.append("mediaSubFolderId", 456);
 
            $.ajax({
@@ -272,13 +319,18 @@ var actiongolfCL = {
                 data: formData,
                 success: function(xhr, status) {
                     if (xhr) {
-                        var imgObj = {
-                            "mediaRole": "logo",
-                            "mediaFriendlyName": "logo" + xhr.mediaId,
-                            "mediaId": xhr.mediaId
-                        };
 
-                        uploadImages.push(imgObj);
+                        if (type === 'Team') {
+                            titleBackgroundMediaId = xhr.mediaId;
+                        } else if (type === 'Logo') {
+                            var imgObj = {
+                                "mediaRole": type,
+                                "mediaFriendlyName": type + xhr.mediaId,
+                                "mediaId": xhr.mediaId
+                            };
+
+                            uploadImages.push(imgObj);
+                        }
                     }
                 }.bind(this),
                 error:  function(xhr, status, error) {
@@ -286,23 +338,26 @@ var actiongolfCL = {
                 }.bind(this)
            });
 
-
-            var files = $(fileInput)[0].files;
-
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 var imageType = /image.*/;
                 if (!file.type.match(imageType)) {
                     continue;
                 }
-                var img=document.getElementById("thumbnil");
+                var img= document.getElementById($(fileInput).attr('name') + '_thumbnail');
+
                 img.file = file;
                 var reader = new FileReader();
                 reader.onload = (function(aImg) {
                     return function(e) {
                         aImg.src = e.target.result;
-                        logoImages[index] = {image:''};
-                        logoImages[index].image = e.target.result;
+                        aImg.style.display = 'block';
+                        if (type === 'Logo') {
+                            logoImages[index] = {image:''};
+                            logoImages[index].image = e.target.result;
+                        } else {
+                            titleBackgroundImage = e.target.result;
+                        }
                     };
                 })(img);
                 reader.readAsDataURL(file);

@@ -15,16 +15,20 @@ var activeTournaments = {
         }
 
         if (!this.getAuthSession(sessionKey) && !localDevelopment) {
-            if (window.origin === 'https://pramith.com') {
-                window.location.href = window.origin + "/actiongolf/login.html";
-            } else {
-                window.location.href = window.origin + "/login.html";
-            }
+            window.sessionStorage.setItem('agReDirectPage', './active-tournaments.html');
+            window.location.href = "./login.html";
 
-            window.localStorage.removeItem('tournamentId');
+            window.localStorage.removeItem('tournamentDetails');
             return;
         } else if (this.getAuthSession(sessionKey)) {
             this.setAuthSession(sessionKey, this.getAuthSession(sessionKey));
+
+            $('.page-header-link').on('click', function() {
+                window.localStorage.removeItem('tournamentDetails');
+                window.localStorage.removeItem(sessionKey);
+
+                window.location.href = "./login.html";
+            });
 
             var ajaxUrl,
                 userProfileId = this.getAuthSession(sessionKey).userProfileId;
@@ -43,7 +47,7 @@ var activeTournaments = {
                     if (xhr && xhr.ownerTournaments) {
                         $('.list-tournaments').html(listTournamentsTemplate(xhr));
 
-                        $(".create-website").on({
+                        $(".action-links").on({
                             mouseenter: function () {
                                 $(this).parent('.tournament-item').addClass('active');
                             },
@@ -65,20 +69,29 @@ var activeTournaments = {
                                 endDate: endDate
                             });
 
-                            if (window.origin === 'https://pramith.com') {
-                                window.location.href = window.origin + "/actiongolf/create-landing.html";
-                            } else {
-                                window.location.href = window.origin + "/create-landing.html";
-                            }
+                            window.location.href = "./create-landing.html";
+                        }.bind(this));
+
+                        $('.create-teams').on('click', function(e) {
+                            var tournamentId = $(e.target).data('tournamentId');
+
+                            this.setAuthSession('tournamentDetails', {
+                                tournamentId: tournamentId
+                            });
+
+                            window.location.href = "./create-teams.html";
                         }.bind(this));
                     } else {
                         $('.loading').hide();
                         $('.screen-message').removeClass('hide');
                     }
+
+                    $('.page-header').removeClass('loading');
                 }.bind(this),
                 error:  function(xhr, status, error) {
                     $('.loading').hide();
                     $('.screen-message').removeClass('hide');
+                    $('.page-header').removeClass('loading');
                 }.bind(this)
             });
         }

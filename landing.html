@@ -33,7 +33,14 @@
                                     {{/each}}
                                 {{/if}}
                                 </div>
-                                <div class="content">
+                                <div class="content"
+                                    {{#if titleBackgroundImage}}
+                                    style="
+                                        background-color: transparent;
+                                        background-image: url({{titleBackgroundImage}})
+                                    "
+                                    {{/if}}
+                                >
                                     <h5>{{webPageTitle}}</h5>
                                     <div class="subdetails">
                                         <p>{{startDate}} - {{endDate}}</p>

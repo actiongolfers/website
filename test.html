@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>TEST</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/actiongolf.css" />
+    </head>
+    <body>
+        <main>
+            <header>
+                <section>
+                    <nav>
+                        <input type="file" id="csvfile" />
+                        <input type="button" id="viewfile" value="Export To Table" onclick="ExportToTable()" />
+                    </nav>
+                </section>
+            </header>
+            <section>
+                <div class="create-form-container">
+                    <table id="csvtable">
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <script type="text/javascript" src="uncompressed/js/vendor/jquery.js"></script>
+            <script>
+                 function ExportToTable() {
+                    var originalArray = [];
+                    var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv)$/;
+                    //Checks whether the file is a valid csv file
+                    if (regex.test($("#csvfile").val().toLowerCase())) {
+                        //Checks whether the browser supports HTML5
+                        if (typeof(FileReader) != "undefined") {
+                            var reader = new FileReader();
+
+                            reader.readAsText($("#csvfile")[0].files[0]);
+
+                            reader.onload = function(e) {
+                                //Splitting of Rows in the csv file
+                                var csvrows = e.target.result.split("\n");
+                                for (var i = 1; i < csvrows.length; i++) {
+                                    if (csvrows[i] != "") {
+                                        var csvcols = csvrows[i].split(",");
+
+                                        originalArray.push({
+                                            teamName: csvcols[0].replaceAll('"', ''),
+                                            players: [{
+                                                phone: csvcols[1],
+                                                name: csvcols[2].replaceAll('"', ''),
+                                                isLead: csvcols[3]
+
+                                            }]
+                                        });
+                                    }
+                                }
+
+                                const arrayHashmap = originalArray.reduce((obj, item) => {
+                                    obj[item.teamName] ? obj[item.teamName].players.push(...item.players) : (obj[item.teamName] = { ...item });
+                                    return obj;
+                                }, {});
+
+                                const mergedArray = Object.values(arrayHashmap);
+
+                                console.log(mergedArray);
+                            }
+                        } else {
+                            alert("Sorry! Your browser does not support HTML5!");
+                        }
+                    } else {
+                        alert("Please upload a valid CSV file!");
+                    }
+                }
+            </script>
+        </main>
+    </body>
+</html>

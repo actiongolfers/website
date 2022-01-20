@@ -189,6 +189,17 @@ module.exports = function ( grunt ) {
                 ],
                 basePath: '/'
             }
+        },
+        createteams: {
+            files: {
+                'create-teams.html': 'pages/create-teams.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
         }
     });
 

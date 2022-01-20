@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>Create Teams</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/admin.css" />
+    </head>
+    <body>
+        <main>
+            {{> landing-header }}
+
+            <section id="create-landing-edit">
+                <div class="admin-container create-form-container create-landing-form">
+                    <h2 class="page-header loading">
+                        <span class="admin-title">Create Teams page</span>
+                        <a class="page-header-link" href="./active-tournaments.html">Active Tournaments</a>
+                    </h2>
+
+                    <div class="full-width input-container">
+                        <div class="col-12">
+                            <div class="col-4">
+                                <div class="form-field">
+                                    <label>Please select a CSV file <sup>*</sup></label>
+                                    <div class="styled-input">
+                                        <input type="file" id="csvfile" />
+                                        <span class="error-message">Please upload a valid CSV file!</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-wrapper">
+                            <button class="primary-btn" id="get-teams">Get Teams</button>
+                        </div>
+
+                        <div class="list-teams">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <script type="text/x-handlebars-template" data-template="listTeamsTemplate">
+            \{{#if teams}}
+                \{{#each teams}}
+                    <div class="teams-item" id=\{{id}}>
+                        <h3>\{{teamName}}</h3>
+                        \{{#each players}}
+                        <div class="player \{{#if isLead}}lead\{{/if}}">
+                            <div class="name">\{{name}}</div>
+                            <div class="phone \{{phone}} \{{#if isLead}}lead\{{/if}}">\{{phone}}</div>
+                        </div>
+                        \{{/each}}
+                        <div class="button-wrapper">
+                            <button class="primary-btn create-team">Create Team</button>
+                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        </div>
+                    </div>
+                    \{{/each}}
+            \{{else}}
+                No active tournaments available..
+            \{{/if}}
+        </script>
+
+            {{> landing-footer }}
+        </main>
+        <script type="text/javascript" src="library/js/create-teams.js"></script>
+    </body>
+</html>

@@ -13,20 +13,30 @@ var actiongolfLogin = {
             invalidMessage,
             deviceId,
             sessionKey = 'agLoginAuth',
-            auth = 'YWdkZXY6cGFzc3dvcmQ=';
+            auth = 'YWdkZXY6cGFzc3dvcmQ=',
+            reDirectUrl;
 
         if (this.getAuthSession(sessionKey)) {
             this.setAuthSession(sessionKey, this.getAuthSession(sessionKey));
-            if (window.origin === 'https://pramith.com') {
-                window.location.href = window.origin + "/actiongolf/active-tournaments.html";
+            reDirectUrl = window.sessionStorage.getItem('agReDirectPage');
+            window.sessionStorage.removeItem('agReDirectPage');
+
+            if (reDirectUrl) {
+                window.location.href = reDirectUrl;
             } else {
-                window.location.href = window.origin + "/active-tournaments.html";
+                window.location.href = "./active-tournaments.html";
             }
             return;
         }
 
         $('.callingCode, .phoneNumber,.verification-code input').on('keypress', function(event) {
-            var charCode = (event.which) ? event.which : event.keyCode;
+            var charCode = (event.which) ? event.which : event.keyCode,
+                element = $(event.target),
+                maxlength = element.attr('maxlength');
+
+            if (element.val() && element.val().toString().length == maxlength) {
+                return false;
+            }
 
             if (charCode > 31 && (charCode < 48 || charCode > 57)) {
                 return false;
@@ -143,13 +153,14 @@ var actiongolfLogin = {
                                 userProfileId: xhr.userProfileId,
                                 deviceId: deviceId
                             };
-
+                            reDirectUrl = window.sessionStorage.getItem('agReDirectPage');
+                            window.sessionStorage.removeItem('agReDirectPage');
                             this.setAuthSession(sessionKey, sessionData);
 
-                            if (window.origin === 'https://pramith.com') {
-                                window.location.href = window.origin + "/actiongolf/active-tournaments.html";
+                            if (reDirectUrl) {
+                                window.location.href = reDirectUrl;
                             } else {
-                                window.location.href = window.origin + "/active-tournaments.html";
+                                window.location.href = "./active-tournaments.html";
                             }
                         } else {
                             $('.screen-message').removeClass('hide');

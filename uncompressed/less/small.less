@@ -1671,6 +1671,7 @@ footer {
     font-family: @actionGolfSemiBold;
     font-size: 32px;
     font-weight: 100;
+    position: relative;
 
     &:after {
         display: inline-block;
@@ -1917,6 +1918,19 @@ footer {
         position: relative;
         text-align: center;
 
+        .logo-images {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 20px;
+
+            img {
+                max-height: 130px;
+                margin: 0 20px;
+                max-width: calc(30% - 40px);
+            }
+        }
+
         .learn-more {
             border-radius: 4px;
             padding: 0 30px;
@@ -1938,7 +1952,9 @@ footer {
         }
 
         .content {
-            background: url(../../images/tca_bg.jpg) no-repeat center center;
+            background-color: @black;
+            background-repeat: no-repeat;
+            background-position: center center;
             background-size: cover;
             color: @white;
             padding: 50px 0;
@@ -2079,32 +2095,33 @@ footer {
     }
 
     .primary-btn,
-        .secondary-btn {
-            border-radius: 4px;
-            padding: 0 20px;
-            line-height: 38px;
-            height: 38px;
-            color: @white;
-            font-family: @actionGolfSemiBold;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
-            margin-right: 10px;
+    .secondary-btn {
+        border-radius: 4px;
+        padding: 0 20px;
+        line-height: 38px;
+        height: 38px;
+        color: @white;
+        font-family: @actionGolfSemiBold;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        margin-right: 10px;
+        display: inline-block;
 
-            &:hover,
-            &:focus {
-                opacity: 0.9;
-                transform: scale(1.05);
-            }
+        &:hover,
+        &:focus {
+            opacity: 0.9;
+            transform: scale(1.05);
         }
+    }
 
-        .primary-btn {
-            background: @brandColor;
-        }
+    .primary-btn {
+        background: @brandColor;
+    }
 
-        .secondary-btn {
-            background: @bgrey;
-        }
+    .secondary-btn {
+        background: @bgrey;
+    }
 }
 
 .lds-ellipsis {

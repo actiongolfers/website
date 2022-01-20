@@ -384,7 +384,7 @@ html .ui-button.ui-state-disabled:active {
 	border: 1px solid #327E04;
 	background: #459e00 url("../../images/ui-bg_highlight-hard_15_459e00_1x100.png") 50% 50% repeat-x;
 	font-weight: bold;
-	color: #ffffff;
+	color: @white;
 }
 .ui-state-default a,
 .ui-state-default a:link,
@@ -393,7 +393,7 @@ a.ui-button,
 a:link.ui-button,
 a:visited.ui-button,
 .ui-button {
-	color: #ffffff;
+	color: @white;
 	text-decoration: none;
 }
 .ui-state-hover,
@@ -407,7 +407,7 @@ a:visited.ui-button,
 	border: 1px solid #327E04;
 	background: #67b021 url("../../images/ui-bg_highlight-soft_25_67b021_1x100.png") 50% 50% repeat-x;
 	font-weight: bold;
-	color: #ffffff;
+	color: @white;
 }
 .ui-state-hover a,
 .ui-state-hover a:hover,
@@ -419,7 +419,7 @@ a:visited.ui-button,
 .ui-state-focus a:visited,
 a.ui-button:hover,
 a.ui-button:focus {
-	color: #ffffff;
+	color: @white;
 	text-decoration: none;
 }
 
@@ -804,7 +804,7 @@ a.ui-button:active,
 
 	.dp-highlighter ol {
 		list-style: decimal; /* for ie */
-		background-color: #fff;
+		background-color: @white;
 		margin: 0px 0px 1px 45px !important; /* 1px bottom margin seems to fix occasional Firefox scrolling */
 		padding: 0px;
 		color: #5C5C5C;
@@ -844,7 +844,7 @@ a.ui-button:active,
 		}
 
 	.dp-highlighter ol li.alt {
-		background-color: #FFF;
+		background-color: @white;
 		color: inherit;
 	}
 
@@ -913,7 +913,7 @@ a.ui-button:active,
 /* About dialog styles */
 
 .dp-about {
-	background-color: #fff;
+	background-color: @white;
 	color: #333;
 	margin: 0px;
 	padding: 0px;
@@ -949,7 +949,7 @@ a.ui-button:active,
 	.dp-about .footer {
 		background-color: #ECEADB;
 		color: #333;
-		border-top: 1px solid #fff;
+		border-top: 1px solid @white;
 		text-align: right;
 	}
 
@@ -1052,7 +1052,7 @@ pre[class*="language-"] {
 
 code[class*="language-"],
 pre[class*="language-"] {
-	color: #ffffff;
+	color: @white;
 	text-shadow: none;
 	white-space: pre-wrap;
 }
@@ -1105,7 +1105,7 @@ div.code-toolbar > .toolbar {
 
 		div.code-toolbar > .toolbar a:hover {
 			background-color: #377dff;
-			color: #fff !important;
+			color: @white !important;
 		}
 
 /*------------------------------------
@@ -1261,7 +1261,7 @@ div.code-toolbar > .toolbar {
 }
 
 .hs-docs-copy-to-clipboard:hover .hs-docs-copy-to-clipboard-text {
-	color: #fff;
+	color: @white;
 	background-color: #377dff;
 }
 
@@ -1440,7 +1440,7 @@ div.code-toolbar > .toolbar {
     border: 1px solid #ddd;
     min-height: 200px;
     min-width: 200px;
-    background-color: #fff;
+    background-color: @white;
     user-select: none;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
@@ -1502,7 +1502,7 @@ rte-content {
     border-bottom: solid 1px #ebedf2;
     padding: 8px;
     user-select: none;
-    background-color: #fff;
+    background-color: @white;
 }
 
 rte-toolbar {
@@ -1526,7 +1526,7 @@ rte-codebox {
 
 .richtexteditor.rte-modern rte-toolbar {
     padding: 0px 2px;
-    background-color: #ffffff;
+    background-color: @white;
     font-size: 14px;
     color: #333;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.05);
@@ -1576,7 +1576,7 @@ rte-codebox {
 
 
 rte-bottom {
-    background-color: #fff;
+    background-color: @white;
     padding: 3px 8px;
     user-select: none;
     min-height: 35px;
@@ -1739,7 +1739,7 @@ rte-dropdown-head {
 
 rte-dropdown-panel {
     text-align: left;
-    background-color: #fff;
+    background-color: @white;
     user-select: none;
     display: flex;
     flex-direction: column;
@@ -1958,7 +1958,7 @@ rte-color-button-mask {
 }
 
 .rte-modern rte-toolbar-dropdown:hover {
-    background-color: #fff;
+    background-color: @white;
 }
 
 .rte-modern .rte_command_togglemore.rte-command-active {
@@ -1988,7 +1988,7 @@ rte-dropdown-panel rte-toolbar-button {
 rte-toolbar-dropdown {
     margin-left: 0px;
     margin-right: 0px;
-    /*background-color:#fff;*/
+    /*background-color:@white;*/
 }
 
 rte-control-toolbar.rte-modern rte-toolbar-dropdown {
@@ -1997,7 +1997,7 @@ rte-control-toolbar.rte-modern rte-toolbar-dropdown {
 }
 
 .rte-office rte-toolbar-dropdown {
-    background-color: #fff;
+    background-color: @white;
 }
 
 rte-toolbar-dropdown-arrow, rte-input-arrow {
@@ -2172,7 +2172,7 @@ rte-dialog-outer {
 }
 
 rte-dialog-inner {
-    background-color: #fff;
+    background-color: @white;
     border-radius: 7px;
     padding: 10px 15px 10px;
     min-width: 300px;
@@ -2360,7 +2360,7 @@ rte-dialog-line-action {
 
 rte-dialog-button {
     cursor: pointer;
-    color: #fff;
+    color: @white;
     background-color: #007bff;
     border-color: #007bff;
     display: inline-block;
@@ -2399,13 +2399,13 @@ rte-dialog-button {
     }
 
     .rte-button-type-cancel, rte-dialog-button.rte-button-type-replace, rte-dialog-button.rte-button-type-replaceall {
-        background-color: #fff;
+        background-color: @white;
         color: #377dff;
         border-color: #377dff;
     }
 
         .rte-button-type-cancel:hover, rte-dialog-button.rte-button-type-replace:hover, rte-dialog-button.rte-button-type-replaceall:hover {
-            color: #fff;
+            color: @white;
             background-color: #007bff;
             border-color: #007bff;
         }
@@ -2785,7 +2785,7 @@ rte-dropdown-panel rte-dialog-header {
     position: absolute;
     transform: translate(-50%,100%);
     margin: 0 auto;
-    color: #FFF;
+    color: @white;
     min-width: 25px;
     bottom: -5px;
     left: 50%;
@@ -2814,7 +2814,7 @@ rte-dropdown-panel rte-dialog-header {
     display: block;
     padding: 30px 0;
     margin: 30px 15px;
-    background: #fff;
+    background: @white;
     border: 2px dotted #c2cdda;
     border-radius: 14px;
     text-align: center;
@@ -2849,7 +2849,7 @@ rte-submenu {
     border-top: solid 1px transparent;
     border-left: solid 1px transparent;
     /*link dropdown-panel*/
-    background-color: #fff;
+    background-color: @white;
     user-select: none;
     display: flex;
     flex-direction: column;
@@ -2948,7 +2948,7 @@ rte-menuspliter {
 
 rte-floatpanel {
     z-index: 101;
-    background-color: #fff;
+    background-color: @white;
     border: solid 1px gray;
     border-radius: 5px;
     width: 22px;
@@ -3022,7 +3022,7 @@ rte-toast {
 }
 
     .rte-skin-blue rte-content, .rte-skin-blue textarea {
-        background-color: #fff;
+        background-color: @white;
     }
 
     .rte-skin-blue * {
@@ -3092,12 +3092,12 @@ rte-toast {
     }
 
     .rte-skin-dark * {
-        color: #fff;
-        fill: #fff;
+        color: @white;
+        fill: @white;
     }
 
     .rte-skin-dark iframe {
-        background-color: #fff;
+        background-color: @white;
     }
 
     .rte-skin-dark rte-toolbar {
@@ -3166,6 +3166,65 @@ footer {
     background: #eee;
 }
 
+.placeholders {
+    color: @black;
+    font-size: 14px;
+    padding: 0 4px;
+    position: relative;
+
+    div {
+        color: @brandColor;
+    }
+}
+
+.admin-container {
+    .form-field .thumbnail {
+        margin-top: 10px;
+        display: none;
+        position: absolute;
+        top: 16px;
+        right: 4px;
+        height: 44px;
+        max-width: 50%;
+    }
+
+    .admin-title {
+        position: relative;
+        min-width: 200px;
+
+        .lds-ellipsis {
+            right: -106px;
+            top: 4px;
+
+            @media screen and (min-width:1024px) {
+                right: -119px;
+                top: 13px;
+            }
+        }
+    }
+
+    .page-header.loading .lds-ellipsis {
+        display: flex;
+    }
+
+    .page-header-link {
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+        font-family: @actionGolfRegular;
+        font-size: 16px;
+        color: @brandColor;
+        top: -32px;
+        text-decoration: underline;
+        padding-left: 15px;
+        background: url(@carouselArrow) no-repeat 0 center transparent;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
 #create-landing-preview {
     .button-wrapper {
         margin-top: 20px;
@@ -3221,7 +3280,11 @@ footer {
         position: relative;
 
         &.active {
-            color: @white;
+            transition: all 1s;
+
+            div.item {
+                opacity: 0.3;
+            }
         }
 
         &.loading {
@@ -3238,7 +3301,7 @@ footer {
             position: absolute;
             top: -12px;
             background: #00ac5a;
-            color: #fff;
+            color: @white;
             padding: 0 5px;
             border-radius: 8px 8px 0 0;
             font-size: 12px;
@@ -3248,8 +3311,13 @@ footer {
             position: relative;
             display: inline-block;
 
+            a {
+                color: @brandColor;
+            }
+
             span {
-                visibility: hidden;
+                transition: all 1s;
+                opacity: 0;
                 width: max-content;
                 background: #00ac5a;
                 border-radius: 10px;
@@ -3258,7 +3326,7 @@ footer {
                 padding: 0 4px;
                 margin: 0 0 0 4px;
                 z-index: 2;
-                color: #fff;
+                color: @white;
             }
         }
 
@@ -3269,7 +3337,7 @@ footer {
             position: absolute;
             bottom: 0px;
             width: 100%;
-            color: #fff;
+            color: @white;
             background: #61706a;
             left: 0;
             padding: 0 10px;
@@ -3285,26 +3353,27 @@ footer {
 
             div.item {
                 &:hover span{
-                    visibility: visible;
+                    opacity: 1;
                 }
             }
         }
 
-        .create-website {
-            width: 100%;
-            height: 100%;
-            border-radius: 12px;
+        .action-links {
+            width: 30px;
+            height: 30px;
             cursor: pointer;
             display: block;
             position: absolute;
             top: 0;
-            left: 0;
+            z-index: 3;
+
+            &:hover span {
+                opacity: 1;
+            }
 
             &::after {
                 content: '';
                 display: block;
-                background: url(@addEdit) no-repeat 0 0;
-                background-size: contain;
                 position: absolute;
                 top: 10px;
                 right: 10px;
@@ -3312,11 +3381,34 @@ footer {
                 height: 18px;
             }
 
-            &:hover {
-                background-color: @brandColor;
+            span {
+                opacity: 0;
+                position: absolute;
+                right: 10px;
+                top: 28px;
+                width: 117px;
+                text-align: right;
+                color: @white;
+                background: @brandColor;
+                border-radius: 6px;
+                padding: 0 5px;
+            }
+
+            &.create-website {
+                right: 0;
 
                 &::after {
-                    filter: invert(1);
+                    background: url(@createWebsite) no-repeat 0 0;
+                    background-size: contain;
+                }
+            }
+
+            &.create-teams {
+                right: 30px;
+
+                &::after {
+                    background: url(@createTeams) no-repeat 0 0;
+                    background-size: contain;
                 }
             }
         }
@@ -3333,4 +3425,126 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.list-teams {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 20px -10px 0;
+
+    h3 {
+        font-size: 20px;
+        padding: 0 0 10px;
+    }
+
+    .teams-item {
+        background: #ddd;
+        margin: 10px;
+        display: inline-block;
+        padding: 10px;
+        width: calc(100% - 20px);
+        border-radius: 10px;
+        background-size: 30px;
+        background-repeat: no-repeat;
+        background-position: calc(100% - 10px) 10px;
+        transition: all 2s ease-in-out;
+
+        @media screen and (min-width: 768px) {
+            width: calc(50% - 20px);
+        }
+
+        @media screen and (min-width:1024px) {
+            width: calc(33.33% - 20px);
+        }
+
+        &.success {
+            background-color: @successBg;
+            background-image: url(@successMessage);
+        }
+
+        &.error {
+            background-color: @errorBg;
+            background-image: url(@errorMessage);
+        }
+
+        .player {
+            position: relative;
+            min-height: 49px;
+            padding-left: 44px;
+            margin: 0 0 20px 0;
+            font-style: italic;
+
+            &.lead {
+                min-height: 72px;
+                padding-left: 60px;
+
+                &::after {
+                    width: 49px;
+                    height: 72px;
+                }
+            }
+
+            .phone {
+                display: inline-block;
+            }
+
+            .error {
+                border-bottom: 3px solid @red;
+            }
+
+            .invalid {
+                display: inline-block;
+                padding: 0 10px;
+                color: @red;
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: url(@playerIcon) no-repeat 0 0;
+                width: 34px;
+                height: 49px;
+                background-size: cover;
+                background-color: #10ff00;
+                border-radius: 4px;
+            }
+        }
+
+        &:nth-child(2n) .player::after{
+            background-color: #0000ff;
+        }
+
+        &:nth-child(3n) .player::after{
+            background-color: #000000;
+        }
+
+        .create-team {
+            background-image: url(@plus);
+            padding-left: 30px;
+            background-repeat: no-repeat;
+            background-size: 20px;
+            background-position: 7px 9px;
+
+            &.success {
+                background-color: @successBg;
+                color: @green;
+                background-image: url(@successMessage);
+                background-size: 14px;
+                background-position: 10px 12px;
+                pointer-events: none;
+            }
+
+            &.error {
+                background-color: @errorBg;
+                color: @red;
+                background-image: url(@errorMessage);
+                background-size: 14px;
+                background-position: 10px 12px;
+                pointer-events: none;
+            }
+        }
+    }
 }

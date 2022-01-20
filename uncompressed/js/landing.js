@@ -8,6 +8,8 @@ var actiongolfLanding = {
         friendlyName = window.location.hash ? window.location.hash.substring(1) : '';
 
         if (!friendlyName) {
+            $('.landing-content').hide();
+            $('.screen-message').removeClass('hide');
             return;
         }
 
@@ -21,14 +23,15 @@ var actiongolfLanding = {
             timeout: 0,
             success: function(xhr, status) {
                 if (xhr && xhr.tournamentInfo) {
+                    $('.landing-content').show();
                     this.updateData(xhr);
                 } else {
-                    $('.loading').hide();
+                    $('.landing-content').hide();
                     $('.screen-message').removeClass('hide');
                 }
             }.bind(this),
             error:  function(xhr, status, error) {
-                $('.loading').hide();
+                $('.landing-content').hide();
                 $('.screen-message').removeClass('hide');
             }.bind(this)
         });
@@ -36,15 +39,27 @@ var actiongolfLanding = {
 
     updateData: function(data) {
         var landingTemplate = Handlebars.compile($("[data-template='landingTemplate']").html()),
+            logoImages = [],
             details = {
                 images: 'images/noprofitlogos.jpg',
                 webPageTitle: data.tournamentInfo.webPageTitle,
                 webPageBlob: data.tournamentInfo.webPageBlob,
-                startDate: data && this.dateConversion(data.tournamentInfo.startDate),
-                endDate: data && this.dateConversion(data.tournamentInfo.endDate),
+                startDate: this.dateConversion(data.tournamentInfo.startDate),
+                endDate: this.dateConversion(data.tournamentInfo.endDate),
                 golfCourseName : data.tournamentInfo.golfCourseName,
+                titleBackgroundImage: data.tournamentInfo.titleBackgroundImage,
                 learnMore: 'Learn More'
             };
+
+        if (data.tournamentImages && data.tournamentImages.length) {
+            data.tournamentImages.forEach(function(img){
+                logoImages.push({
+                    image: img
+                });
+            });
+        }
+
+        details.logoImages = logoImages;
 
         details.webPageBlob = decodeURIComponent(details.webPageBlob);
         details.webPageTitle = details.webPageTitle.replace('[[STARTDATE]]', details.startDate);

@@ -37,6 +37,8 @@ module.exports = function ( grunt ) {
        'concat:createlanding',
        'uglify:login',
        'concat:login',
+       'uglify:createteams',
+       'concat:createteams',
        'clean:vendor',
        'handlebarslayouts'
     ]);
