@@ -86,14 +86,23 @@
                         data-end-date="{{tournamentInfo.endDate}}">
                             <span>Create Website</span>
                         </a>
-                        <a class="action-links create-teams" data-tournament-id="{{tournamentInfo.tournamentId}}">
+                        {{#if tournamentInfo.createTeams}}
+                        <a class="action-links create-teams"
+                         data-tournament-desc="{{tournamentInfo.tournamentDesc}}"
+                         data-tournament-id="{{tournamentInfo.tournamentId}}"
+                         data-team-size="{{tournamentInfo.teamSize}}">
                             <span>Create Teams</span>
                         </a>
+                        {{/if}}
 
                         <div class="tournament-id"># {{tournamentInfo.tournamentId}}</div>
                         {{/if}}
                         {{#if tournamentInfo.friendlyName}}
                         <div class="item"><a target="_blank" href="./landing.html#{{tournamentInfo.friendlyName}}">{{tournamentInfo.friendlyName}}</a><span>Friendly Name</span></div>
+                        <br />
+                        {{/if}}
+                        {{#if tournamentInfo.tournamentDesc}}
+                        <div class="item">{{tournamentInfo.tournamentDesc}}<span>Description</span></div>
                         <br />
                         {{/if}}
                         {{#if tournamentInfo.city}}

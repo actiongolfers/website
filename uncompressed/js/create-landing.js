@@ -12,8 +12,6 @@ var actiongolfCL = {
     init: function () {
         var sessionKey = 'agLoginAuth';
 
-        //localDevelopment = window.origin === 'http://localhost:8080';
-
          if (!this.getAuthSession(sessionKey) && !localDevelopment) {
                 window.sessionStorage.setItem('agReDirectPage', './create-landing.html');
                 window.location.href = "./login.html";

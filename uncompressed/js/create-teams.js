@@ -1,8 +1,14 @@
 var localDevelopment = false,
-    sessionKey = 'agLoginAuth';
+    sessionKey = 'agLoginAuth',
+    mergedArray;
 
 var createTeams = {
     init: function () {
+        var tournamentDetails,
+            tournamentId,
+            tournamentDesc,
+            teamSize;
+
         if (!this.getAuthSession(sessionKey) && !localDevelopment) {
             window.sessionStorage.setItem('agReDirectPage', './create-teams.html');
             window.location.href = "./login.html";
@@ -11,10 +17,12 @@ var createTeams = {
         } else {
             this.setAuthSession(sessionKey, this.getAuthSession(sessionKey));
 
-            var tournamentDetails = this.getAuthSession('tournamentDetails') || {},
-                tournamentId = tournamentDetails.tournamentId;
+            tournamentDetails = this.getAuthSession('tournamentDetails') || {};
+            tournamentId = tournamentDetails.tournamentId;
+            teamSize = tournamentDetails.teamSize;
+            tournamentDesc = tournamentDetails.tournamentDesc;
 
-            if (!tournamentId) {
+            if (!tournamentId || !teamSize) {
                 window.location.href = "./active-tournaments.html";
             }
         }
@@ -22,11 +30,10 @@ var createTeams = {
         $('#get-teams').on('click', function(event) {
             event.preventDefault();
 
-            var originalArray = [],
-                regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv)$/,
-                mergedArray,
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv)$/,
                 arrayHashmap,
                 reader,
+                originalArray = [],
                 _this = this;
 
             //Checks whether the file is a valid csv file
@@ -64,110 +71,65 @@ var createTeams = {
                         }, {});
 
                         mergedArray = {
+                            tournamentDetails: {
+                                tournamentId: tournamentId,
+                                tournamentDesc: tournamentDesc
+                            },
                             teams:Object.values(arrayHashmap)
                         };
 
+                        mergedArray.teams.map(function(team) {
+                            team.teamSize = teamSize;
+                            team.teamSizeError = team.players && team.players.length !== teamSize;
+                            team.players.map(function(player) {
+                                team.duplicateError = team.duplicateError ? true : _this.isDuplicatePhone(player.phone, team.id);
+                                team.invalidError = team.invalidError ? true : !_this.isValidPhoneField(player.phone);
+                                player.duplicateError = player.duplicateError ? true : _this.isDuplicatePhone(player.phone, team.id);
+                                player.invalidError = player.invalidError ? true : !_this.isValidPhoneField(player.phone);
+                            });
+                        });
+
                         var listTeamsTemplate = Handlebars.compile($("[data-template='listTeamsTemplate']").html());
-                        $('.list-teams').html(listTeamsTemplate(mergedArray));
+                        $('.list-teams-wrapper').html(listTeamsTemplate(mergedArray));
 
                         $('html, body').animate({
-                            scrollTop: $('.list-teams').offset().top - 10
+                            scrollTop: $('.list-teams-wrapper').offset().top - 10
                         }, 'slow');
 
                         $('.create-team').off().on('click', function(e) {
                             var buttonEle = $(e.target),
-                                duplicateError= {},
                                 _team = buttonEle.parents('.teams-item'),
-                                id = _team.attr('id'),
-                                allTeamPlayersPhoneDuplicate = [],
-                                allTeamPlayersPhoneSorted,
                                 allTeamPlayersName = _team.find('.name').map(function () {
                                     return $(this).text();
                                 }).get(),
                                 allTeamPlayersPhone = _team.find('.phone').map(function () {
                                     return $(this).text();
-                                }).get();
+                                }).get(),
+                                data = {};
 
-                            allTeamPlayersPhoneSorted = allTeamPlayersPhone.sort();
 
                             allTeamPlayersPhone = _team.find('.phone').map(function () {
                                 return $(this).text();
                             }).get();
 
-                            for (var i = 0; i < allTeamPlayersPhoneSorted.length - 1; i++) {
-                                if (allTeamPlayersPhoneSorted[i + 1] == allTeamPlayersPhoneSorted[i]) {
-                                    allTeamPlayersPhoneDuplicate.push(allTeamPlayersPhoneSorted[i]);
-                                }
+                            data.teamName = _team.find('h3').text();
+                            data.members = [];
+
+                            for(var j = 0; j < allTeamPlayersName.length; j++) {
+                                data.members.push({
+                                    name: allTeamPlayersName[j],
+                                    tele: allTeamPlayersPhone[j],
+                                    isLead: $('.' + allTeamPlayersPhone[j]).hasClass('lead') ? 1 : 0
+                                });
                             }
 
-                            allTeamPlayersPhoneDuplicate.map(function(phone) {
-                                $('.'+phone).addClass('error');
+                            _this.createTeamApi(buttonEle, data);
+                        });
+
+                        $('.create-all-teams').off().on('click', function(e) {
+                            $('.primary-btn.create-team').each(function(){
+                                $(this).trigger('click');
                             });
-
-                            mergedArray.teams.map(function(team) {
-                                if (id != team.id) {
-                                    team.players.map(function(player){
-                                        if (allTeamPlayersPhone.includes(player.phone)) {
-                                            duplicateError.id = team.id;
-                                            duplicateError.phone =  player.phone;
-                                        }
-                                    });
-                                }
-                            });
-
-                            if (duplicateError.id || allTeamPlayersPhoneDuplicate.length) {
-                                _team.addClass('error');
-                                buttonEle.addClass('error');
-                                buttonEle.blur();
-                                buttonEle.html('Duplicate Phone number');
-
-                                if (duplicateError.id) {
-                                    $('#'+duplicateError.id).addClass('error');
-                                    $('#'+duplicateError.id).find('.create-team').addClass('error');
-                                    $('#'+duplicateError.id).find('.create-team').html('Duplicate Phone number');
-                                    $('.'+duplicateError.phone).addClass('error');
-                                }
-
-                                allTeamPlayersPhone.map(function(phone) {
-                                    if (!_this.isValidPhoneField(phone)) {
-                                        $('.'+phone).addClass('error');
-                                        $('.'+phone).after('<span class="invalid">Invalid Phone number</span>');
-                                    }
-                                });
-                            } else {
-                                var isValid = true;
-                                allTeamPlayersPhone.map(function(phone) {
-                                    if (!_this.isValidPhoneField(phone)) {
-                                        $('.'+phone).addClass('error');
-                                        $('.'+phone).after('<span class="invalid">Invalid Phone number</span>');
-                                        isValid = false;
-                                    }
-                                });
-
-                                if (isValid) {
-                                    var data = {};
-                                    data.teamName = _team.find('h3').text();
-                                    data.members = [];
-
-                                    console.log(allTeamPlayersName);
-                                    console.log(allTeamPlayersPhone);
-
-                                    for(var j = 0; j < allTeamPlayersName.length; j++) {
-                                        data.members.push({
-                                            name: allTeamPlayersName[j],
-                                            tele: allTeamPlayersPhone[j],
-                                            isLead: $('.' + allTeamPlayersPhone[j]).hasClass('lead') ? 1 : 0
-                                        });
-                                    }
-
-                                    _this.createTeamApi(buttonEle, data);
-                                } else {
-                                    _team.addClass('error');
-                                    buttonEle.addClass('error');
-                                    buttonEle.blur();
-                                    buttonEle.html('Invalid Phone number');
-                                }
-                            }
                         });
                     };
                 } else {
@@ -186,6 +148,39 @@ var createTeams = {
         return pattern.test(value);
     },
 
+    isDuplicatePhone: function(phone, id) {
+        var _duplicateError = false;
+
+        mergedArray.teams.map(function(team) {
+            if (id != team.id) {
+                team.players.map(function(player){
+                    if (phone == player.phone) {
+                        _duplicateError = true;
+                        return;
+                    }
+                });
+            }
+        });
+
+        if (!_duplicateError) {
+            var c;
+            mergedArray.teams.map(function(team) {
+                if (id == team.id) {
+                    c = 0;
+                    team.players.map(function(player){
+                        if (phone == player.phone) {
+                            c++;
+                        }
+                    });
+                }
+            });
+
+            _duplicateError = (c === 2);
+        }
+
+        return _duplicateError;
+    },
+
     createTeamApi: function(buttonEle, data) {
         var ajaxUrl= this.getApiUrl('createTeam'),
             requestData = {},
@@ -199,8 +194,6 @@ var createTeams = {
         } else if (!tournamentId) {
             window.location.href = "./active-tournaments.html";
         }
-
-        console.log(data);
 
         buttonEle.parents('.button-wrapper').addClass('loading');
 
@@ -218,11 +211,39 @@ var createTeams = {
             data: JSON.stringify(requestData),
             timeout: 0,
             success: function(xhr, status) {
-                buttonEle.parents('.button-wrapper').removeClass('loading');
-                buttonEle.html('Team Created');
                 buttonEle.blur();
-                buttonEle.addClass('success');
-                _team.addClass('success');
+                buttonEle.parents('.button-wrapper').removeClass('loading');
+
+                if (xhr && xhr.IsSuccess) {
+                    buttonEle.removeClass('error').removeClass('retry');
+                    buttonEle.html('Team Created');
+                    buttonEle.addClass('success');
+                    _team.removeClass('error').addClass('success');
+                } else if (xhr && xhr.errorCode === 1062) {
+                    _team.addClass('error');
+                    buttonEle.addClass('error');
+                    buttonEle.html(xhr.errorMsg);
+                }  else if (xhr && xhr.errorCode === 1644) {
+                    _team.addClass('error');
+                    buttonEle.addClass('error');
+                    buttonEle.html(xhr.errorMsg);
+                } else if (xhr && xhr.errorCode === 1213) {
+                    _team.addClass('error');
+                    buttonEle.addClass('error').addClass('retry');
+                    buttonEle.html('Please Retry');
+
+                    var retryCount = buttonEle.data('retry');
+
+                    if (!retryCount || (retryCount && parseInt(retryCount) < 4)) {
+                        buttonEle.data('retry', !retryCount ? 0 : retryCount + 1);
+                        buttonEle.trigger('click');
+                    }
+
+                } else {
+                    _team.addClass('error');
+                    buttonEle.addClass('error');
+                    buttonEle.html('Error Creating Team');
+                }
 
             }.bind(this),
             error:  function(xhr, status, error) {

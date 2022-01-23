@@ -3,8 +3,6 @@ var activeTournaments = {
     init: function () {
         var sessionKey = 'agLoginAuth';
 
-        //localDevelopment = window.origin === 'http://localhost:8080';
-
         if (localDevelopment) {
             var sessionData = {
                 userProfileId: 1,
@@ -45,6 +43,12 @@ var activeTournaments = {
                     var listTournamentsTemplate = Handlebars.compile($("[data-template='listTournamentsTemplate']").html());
 
                     if (xhr && xhr.ownerTournaments) {
+                        xhr.ownerTournaments.map(function(tournaments) {
+                            if (tournaments.tournamentInfo && tournaments.tournamentInfo.baseCategory) {
+                                tournaments.tournamentInfo.createTeams = (tournaments.tournamentInfo.baseCategory == 2 || tournaments.tournamentInfo.baseCategory == 3) ? true : false;
+                            }
+                        });
+
                         $('.list-tournaments').html(listTournamentsTemplate(xhr));
 
                         $(".action-links").on({
@@ -73,10 +77,14 @@ var activeTournaments = {
                         }.bind(this));
 
                         $('.create-teams').on('click', function(e) {
-                            var tournamentId = $(e.target).data('tournamentId');
+                            var tournamentId = $(e.target).data('tournamentId'),
+                                teamSize = $(e.target).data('teamSize'),
+                                tournamentDesc = $(e.target).data('tournamentDesc');
 
                             this.setAuthSession('tournamentDetails', {
-                                tournamentId: tournamentId
+                                tournamentId: tournamentId,
+                                teamSize: teamSize,
+                                tournamentDesc: tournamentDesc
                             });
 
                             window.location.href = "./create-teams.html";

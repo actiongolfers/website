@@ -4,7 +4,6 @@ var localDevelopment = false,
 var actiongolfLanding = {
     init: function () {
 
-        //localDevelopment = window.origin === 'http://localhost:8080';
         friendlyName = window.location.hash ? window.location.hash.substring(1) : '';
 
         if (!friendlyName) {

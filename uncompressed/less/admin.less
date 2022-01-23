@@ -3427,124 +3427,185 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.list-teams {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 20px -10px 0;
+@media screen and (min-width:1024px) {
+    .get-teams {
+        margin-top: 28px;
+    }
+}
 
-    h3 {
-        font-size: 20px;
-        padding: 0 0 10px;
+.list-teams-wrapper {
+    padding: 20px 0 0;
+
+    @media screen and (min-width:1024px) {
+        padding: 50px 0 0;
     }
 
-    .teams-item {
-        background: #ddd;
-        margin: 10px;
-        display: inline-block;
-        padding: 10px;
-        width: calc(100% - 20px);
-        border-radius: 10px;
-        background-size: 30px;
+    .create-all-teams {
+        background-image: url(@plus);
+        padding-left: 30px;
         background-repeat: no-repeat;
-        background-position: calc(100% - 10px) 10px;
-        transition: all 2s ease-in-out;
+        background-size: 20px;
+        background-position: 7px 9px;
+    }
 
-        @media screen and (min-width: 768px) {
-            width: calc(50% - 20px);
+    h5 {
+        font-size: 24px;
+        padding: 0 0 18px;
+        font-family: @actionGolfSemiBold;
+    }
+
+    .list-teams {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin: 20px -10px 0;
+
+        h3 {
+            font-size: 20px;
+            padding: 0 30px 20px 0;
         }
 
-        @media screen and (min-width:1024px) {
-            width: calc(33.33% - 20px);
-        }
-
-        &.success {
-            background-color: @successBg;
-            background-image: url(@successMessage);
-        }
-
-        &.error {
-            background-color: @errorBg;
-            background-image: url(@errorMessage);
-        }
-
-        .player {
-            position: relative;
-            min-height: 49px;
-            padding-left: 44px;
-            margin: 0 0 20px 0;
-            font-style: italic;
-
-            &.lead {
-                min-height: 72px;
-                padding-left: 60px;
-
-                &::after {
-                    width: 49px;
-                    height: 72px;
-                }
-            }
-
-            .phone {
-                display: inline-block;
-            }
-
-            .error {
-                border-bottom: 3px solid @red;
-            }
-
-            .invalid {
-                display: inline-block;
-                padding: 0 10px;
-                color: @red;
-            }
-
-            &::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                background: url(@playerIcon) no-repeat 0 0;
-                width: 34px;
-                height: 49px;
-                background-size: cover;
-                background-color: #10ff00;
-                border-radius: 4px;
-            }
-        }
-
-        &:nth-child(2n) .player::after{
-            background-color: #0000ff;
-        }
-
-        &:nth-child(3n) .player::after{
-            background-color: #000000;
-        }
-
-        .create-team {
-            background-image: url(@plus);
-            padding-left: 30px;
+        .teams-item {
+            background: #ddd;
+            margin: 10px;
+            display: inline-block;
+            padding: 10px;
+            width: calc(100% - 20px);
+            border-radius: 10px;
+            background-size: 30px;
             background-repeat: no-repeat;
-            background-size: 20px;
-            background-position: 7px 9px;
+            background-position: calc(100% - 10px) 10px;
+            transition: all 2s ease-in-out;
+
+            @media screen and (min-width: 768px) {
+                padding: 15px;
+                width: calc(50% - 20px);
+            }
+
+            @media screen and (min-width:1024px) {
+                padding: 18px;
+                width: calc(33.33% - 20px);
+            }
 
             &.success {
                 background-color: @successBg;
-                color: @green;
                 background-image: url(@successMessage);
-                background-size: 14px;
-                background-position: 10px 12px;
-                pointer-events: none;
             }
 
             &.error {
                 background-color: @errorBg;
-                color: @red;
                 background-image: url(@errorMessage);
-                background-size: 14px;
-                background-position: 10px 12px;
-                pointer-events: none;
+            }
+
+            .player {
+                position: relative;
+                min-height: 49px;
+                padding-left: 44px;
+                margin: 0 0 20px 0;
+                font-style: italic;
+
+                &.lead {
+                    min-height: 72px;
+                    padding-left: 60px;
+
+                    &::after {
+                        width: 49px;
+                        height: 72px;
+                    }
+                }
+
+                .phone {
+                    display: inline-block;
+                }
+
+                .error {
+                    border-bottom: 3px solid @red;
+                }
+
+                .invalid {
+                    display: inline-block;
+                    padding: 0 10px;
+                    color: @red;
+                }
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    background: url(@playerIcon) no-repeat 0 0;
+                    width: 34px;
+                    height: 49px;
+                    background-size: cover;
+                    background-color: #10ff00;
+                    border-radius: 4px;
+                }
+            }
+
+            &:nth-child(2n) .player::after{
+                background-color: #0000ff;
+            }
+
+            &:nth-child(3n) .player::after{
+                background-color: #000000;
+            }
+
+            .button-wrapper {
+                .create-team {
+                    background-image: url(@plus);
+                    padding-left: 30px;
+                    background-repeat: no-repeat;
+                    background-size: 20px;
+                    background-position: 7px 9px;
+
+                    &.success {
+                        background-color: @successBg;
+                        color: @green;
+                        background-image: url(@successMessage);
+                        background-size: 14px;
+                        background-position: 10px 12px;
+                        pointer-events: none;
+                    }
+
+                    &.error {
+                        background-color: @errorBg;
+                        color: @red;
+                        background-image: url(@errorMessage);
+                        background-size: 14px;
+                        background-position: 7px 1px;
+                        pointer-events: none;
+                        line-height: 16px;
+                        text-align: left;
+                        height: auto;
+                        padding-left: 28px;
+                    }
+
+                    &.retry {
+                        background-color: #f75858;
+                        color: #fff;
+                        pointer-events: initial;
+                        min-height: 38px;
+                        padding-right: 20px;
+                        background-position: 8px 12px;
+                        line-height: 38px;
+                        padding-bottom: 0;
+                    }
+                }
+
+                .error {
+                    background-color: @errorBg;
+                    color: @red;
+                    background-image: url(@errorMessage);
+                    background-size: 14px;
+                    background-position: 7px 1px;
+                    font-size: 14px;
+                    line-height: 16px;
+                    padding: 0 0 6px 28px;
+                    font-family: @actionGolfSemiBold;
+                    background-repeat: no-repeat;
+                }
             }
         }
     }
 }
+
