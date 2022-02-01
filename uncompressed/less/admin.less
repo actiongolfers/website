@@ -3287,6 +3287,12 @@ footer {
             }
         }
 
+        &:hover {
+            div.item span {
+                opacity: 1;
+            }
+        }
+
         &.loading {
             .item {
                 opacity: 0.5;
@@ -3310,6 +3316,7 @@ footer {
         div.item {
             position: relative;
             display: inline-block;
+            padding: 0 0 3px;
 
             a {
                 color: @brandColor;
@@ -3319,14 +3326,15 @@ footer {
                 transition: all 1s;
                 opacity: 0;
                 width: max-content;
-                background: #00ac5a;
-                border-radius: 10px;
+                background: #fff;
+                border-radius: 0;
                 font-size: 10px;
                 position: absolute;
                 padding: 0 4px;
                 margin: 0 0 0 4px;
                 z-index: 2;
-                color: @white;
+                color: #00ac5a;
+                border-bottom: 1px solid #00ac5a;
             }
         }
 

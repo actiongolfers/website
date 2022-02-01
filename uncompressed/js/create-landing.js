@@ -2,7 +2,6 @@ var localDevelopment = false,
     tournamentDetails,
     tournamentId,
     userProfileId,
-    uploadImages = [],
     titleBackgroundMediaId,
     titleBackgroundImage,
     sessionStartDate,
@@ -134,13 +133,11 @@ var actiongolfCL = {
             }
 
             if (data.tournamentImages && data.tournamentImages.length) {
-                data.tournamentImages.forEach(function(img, index){
-                    logoImages.push({
-                        image: img
-                    });
-
+                data.tournamentImages.forEach(function(imgObj, index){
                     $('#logo_image'+ index +'_thumbnail').attr(
-                        'src', img
+                        'src', imgObj.imageUrl
+                    ).attr(
+                        'data-mediaId', imgObj.mediaId
                     ).show();
                 });
             }
@@ -149,7 +146,22 @@ var actiongolfCL = {
         $('#preview-btn').on('click', function() {
             var webPageBlobContent = webPageBlob.getHTMLCode(),
                 landingTemplate = Handlebars.compile($("[data-template='landingTemplate']").html()),
-                formError = false;
+                formError = false,
+                logoImages = [];
+
+            $('.logo_thumbnail').each(function(index, imgEle) {
+                var mediaId = $(imgEle).attr('data-mediaid'),
+                    image = $(imgEle).attr('src');
+
+                if (mediaId) {
+                    logoImages.push({
+                        mediaId: mediaId,
+                        mediaFriendlyName: 'Logo' + mediaId,
+                        mediaRole: 'Logo',
+                        image: image
+                    });
+                }
+            });
 
             details = {
                 logoImages: logoImages,
@@ -226,6 +238,7 @@ var actiongolfCL = {
 
         $('#publish-btn').on('click', function() {
             var ajaxUrl= this.getApiUrl('create'),
+                uploadImages = [],
                 requestData = {
                     userProfileId: userProfileId,
                     tournamentId: tournamentId,
@@ -234,6 +247,18 @@ var actiongolfCL = {
                     webpageBlob: details.webPageBlobValue,
                     titleBackgroundMediaId: titleBackgroundMediaId || details.titleBackgroundMediaId
                 };
+
+            $('.logo_thumbnail').each(function(index, imgEle) {
+                var mediaId = $(imgEle).attr('data-mediaid');
+
+                if (mediaId) {
+                    uploadImages.push({
+                        mediaId: mediaId,
+                        mediaFriendlyName: 'Logo' + mediaId,
+                        mediaRole: 'Logo'
+                    });
+                }
+            });
 
             if (uploadImages && uploadImages.length) {
                 requestData.images = {
@@ -317,7 +342,6 @@ var actiongolfCL = {
                 data: formData,
                 success: function(xhr, status) {
                     if (xhr) {
-
                         if (type === 'Team') {
                             titleBackgroundMediaId = xhr.mediaId;
                         } else if (type === 'Logo') {
@@ -327,7 +351,32 @@ var actiongolfCL = {
                                 "mediaId": xhr.mediaId
                             };
 
-                            uploadImages.push(imgObj);
+                            for (var i = 0; i < files.length; i++) {
+                                var file = files[i];
+                                var imageType = /image.*/;
+                                if (!file.type.match(imageType)) {
+                                    continue;
+                                }
+                                var img= document.getElementById($(fileInput).attr('name') + '_thumbnail');
+
+                                $(img).attr('data-mediaId', imgObj.mediaId);
+
+                                img.file = file;
+                                var reader = new FileReader();
+                                reader.onload = (function(aImg) {
+                                    return function(e) {
+                                        aImg.src = e.target.result;
+                                        aImg.style.display = 'block';
+                                        if (type === 'Logo') {
+                                            logoImages[index] = {image:''};
+                                            logoImages[index].image = e.target.result;
+                                        } else {
+                                            titleBackgroundImage = e.target.result;
+                                        }
+                                    };
+                                })(img);
+                                reader.readAsDataURL(file);
+                            }
                         }
                     }
                 }.bind(this),
@@ -335,31 +384,6 @@ var actiongolfCL = {
                     console.log('failed');
                 }.bind(this)
            });
-
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                var imageType = /image.*/;
-                if (!file.type.match(imageType)) {
-                    continue;
-                }
-                var img= document.getElementById($(fileInput).attr('name') + '_thumbnail');
-
-                img.file = file;
-                var reader = new FileReader();
-                reader.onload = (function(aImg) {
-                    return function(e) {
-                        aImg.src = e.target.result;
-                        aImg.style.display = 'block';
-                        if (type === 'Logo') {
-                            logoImages[index] = {image:''};
-                            logoImages[index].image = e.target.result;
-                        } else {
-                            titleBackgroundImage = e.target.result;
-                        }
-                    };
-                })(img);
-                reader.readAsDataURL(file);
-            }
         }
     },
 

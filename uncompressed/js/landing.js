@@ -53,7 +53,7 @@ var actiongolfLanding = {
         if (data.tournamentImages && data.tournamentImages.length) {
             data.tournamentImages.forEach(function(img){
                 logoImages.push({
-                    image: img
+                    image: img.imageUrl
                 });
             });
         }

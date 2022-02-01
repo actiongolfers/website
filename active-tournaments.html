@@ -33,11 +33,12 @@
                     <div class="list-tournaments">
                         <div class="tournament-item loading">
                             <div class="tournament-id"># Tournament Id</div>
-                            <div class="item">Friendly Name</div><br />
+                            <div class="item">Description</div><br />
                             <div class="item">City</div><br />
                             <div class="item">Creator Name</div><br />
                             <div class="item">Golf Course Name</div><br />
-                            <div class="item">Tee Name</div><br />
+                            <div class="item">Category</div><br />
+                            <div class="item">Friendly Name</div><br />
 
                             <div class="tournament-item-btm">
                                 <div>Start Date</div>
@@ -97,10 +98,6 @@
 
                         <div class="tournament-id"># {{tournamentInfo.tournamentId}}</div>
                         {{/if}}
-                        {{#if tournamentInfo.friendlyName}}
-                        <div class="item"><a target="_blank" href="./landing.html#{{tournamentInfo.friendlyName}}">{{tournamentInfo.friendlyName}}</a><span>Friendly Name</span></div>
-                        <br />
-                        {{/if}}
                         {{#if tournamentInfo.tournamentDesc}}
                         <div class="item">{{tournamentInfo.tournamentDesc}}<span>Description</span></div>
                         <br />
@@ -117,8 +114,12 @@
                         <div class="item">{{tournamentInfo.golfCourseName}}<span>Golf Course Name</span></div>
                         <br />
                         {{/if}}
-                        {{#if tournamentInfo.teeName}}
-                        <div class="item">{{tournamentInfo.teeName}}<span>Tee Name</span></div>
+                        {{#if tournamentInfo.baseCategoryDesc}}
+                        <div class="item">{{tournamentInfo.baseCategoryDesc}}<span>Category</span></div>
+                        <br />
+                        {{/if}}
+                        {{#if tournamentInfo.friendlyName}}
+                        <div class="item"><a target="_blank" href="./landing.html#{{tournamentInfo.friendlyName}}">{{tournamentInfo.friendlyName}}</a><span>Friendly Name</span></div>
                         <br />
                         {{/if}}
 
