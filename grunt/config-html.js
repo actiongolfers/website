@@ -200,6 +200,17 @@ module.exports = function ( grunt ) {
                 ],
                 basePath: '/'
             }
+        },
+        upadteHoles: {
+            files: {
+                'update-holes.html': 'pages/update-holes.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
         }
     });
 

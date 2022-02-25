@@ -92,6 +92,18 @@ module.exports = function( grunt ) {
         nonull: true,
         src: ['library/js/vendor/jquery.js','library/js/vendor/handlebars.js', 'library/js/create-teams.js'],
         dest: 'library/js/create-teams.js'
+      },
+      updateHoles: {
+        filter: function (filepath) {
+            if (!grunt.file.exists(filepath)) {
+                grunt.fail.warn('Could not find: ' + filepath);
+            } else {
+                return true;
+            }
+        },
+        nonull: true,
+        src: ['library/js/vendor/jquery.js','library/js/vendor/handlebars.js', 'library/js/update-holes.js'],
+        dest: 'library/js/update-holes.js'
       }
   });
 

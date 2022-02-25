@@ -89,6 +89,18 @@ var activeTournaments = {
 
                             window.location.href = "./create-teams.html";
                         }.bind(this));
+
+                        $('.update-holes').on('click', function(e) {
+                            var tournamentId = $(e.target).data('tournamentId'),
+                                holesToPlay = $(e.target).data('holeToPlay');
+
+                            this.setAuthSession('tournamentDetails', {
+                                tournamentId: tournamentId,
+                                holesToPlay: holesToPlay
+                            });
+
+                            window.location.href = "./update-holes.html";
+                        }.bind(this));
                     } else {
                         $('.loading').hide();
                         $('.screen-message').removeClass('hide');

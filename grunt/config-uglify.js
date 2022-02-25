@@ -10,7 +10,8 @@ module.exports = function( grunt ) {
         distLGFiles = {},
         distCLFiles = {},
         distATFiles = {},
-        distCTMFiles = {};
+        distCTMFiles = {},
+        distUHFiles = {};
 
     distAGFiles[ 'library/js/actiongolf.js' ] = ['library/js/actiongolf.js'];
     distLPFiles[ 'library/js/landing.js' ] = ['library/js/landing.js'];
@@ -19,6 +20,7 @@ module.exports = function( grunt ) {
     distLGFiles[ 'library/js/login.js' ] = ['library/js/login.js'];
     distATFiles[ 'library/js/active-tournaments.js' ] = ['library/js/active-tournaments.js'];
     distCTMFiles[ 'library/js/create-teams.js' ] = ['library/js/create-teams.js'];
+    distUHFiles[ 'library/js/update-holes.js' ] = ['library/js/update-holes.js'];
 
     grunt.config( 'uglify', {
         options: {
@@ -47,6 +49,9 @@ module.exports = function( grunt ) {
         },
         createteams: {
             files: distCTMFiles
+        },
+        updateHoles: {
+            files: distUHFiles
         }
     });
 

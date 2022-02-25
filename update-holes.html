@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>Create Teams</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/admin.css" />
+    </head>
+    <body>
+        <main>
+            <header>
+                <section>
+                    <nav>
+                        <a class="logo" href="./" title="ActionGolfers">ActionGolfers</a>
+                    </nav>
+                </section>
+            </header>
+            <section id="create-landing-edit">
+                <div class="admin-container create-form-container create-landing-form">
+                    <h2 class="page-header loading">
+                        <span class="admin-title">Create Teams page</span>
+                        <a class="page-header-link" href="./active-tournaments.html">Active Tournaments</a>
+                    </h2>
+
+                    <div class="full-width input-container">
+                        <div class="col-12">
+                            <div class="col-4">
+                                <div class="form-field">
+                                    <label>Please select a CSV file <sup>*</sup></label>
+                                    <div class="styled-input">
+                                        <input type="file" id="csvfile" />
+                                        <span class="error-message">Please upload a valid CSV file!</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="button-wrapper">
+                                    <button class="primary-btn get-teams" id="get-teams">Get Teams</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-teams-wrapper">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <script type="text/x-handlebars-template" data-template="listTeamsTemplate">
+            <h5>{{tournamentDetails.tournamentId}} {{#if tournamentDetails.tournamentDesc}}| {{tournamentDetails.tournamentDesc}}{{/if}}</h5>
+            <div class="button-wrapper">
+                <button class="primary-btn create-all-teams" id="create-all-teams">Create All Teams</button>
+            </div>
+            <div class="list-teams">
+            {{#if teams}}
+                {{#each teams}}
+                    <div class="teams-item {{#if invalidError}}error{{/if}} {{#if duplicateError}}error{{/if}} {{#if teamSizeError}}error{{/if}}" id={{id}}>
+                        <h3>{{teamName}}</h3>
+                        {{#each players}}
+                        <div class="player {{#if isLead}}lead{{/if}}">
+                            <div class="name">{{name}}</div>
+                            <div class="phone {{phone}} {{#if isLead}}lead{{/if}} {{#if invalidError}}error{{/if}} {{#if duplicateError}}error{{/if}}">{{phone}}</div>
+                        </div>
+                        {{/each}}
+                        <div class="button-wrapper">
+                            {{#if teamSizeError}}
+                                <div class="error">
+                                    Team Size should be {{teamSize}}
+                                </div>
+                            {{/if}}
+                            {{#if duplicateError}}
+                            <div class="error">
+                                Duplicate Phone number
+                            </div>
+                            {{/if}}
+                            {{#if invalidError}}
+                            <div class="error">
+                                Invalid Phone number
+                            </div>
+                            {{/if}}
+                            {{#unless teamSizeError}}
+                            {{#unless duplicateError}}
+                            {{#unless invalidError}}
+                                <button class="primary-btn create-team">
+                                    Create Team
+                                </button>
+                            {{/unless}}
+                            {{/unless}}
+                            {{/unless}}
+                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        </div>
+                    </div>
+                    {{/each}}
+            {{else}}
+                No teams found..
+            {{/if}}
+            </div>
+        </script>
+
+            <footer>
+                <section>
+                    <div class="footer-right">
+            
+                    </div>
+                    <div class="footer-left">
+                        <span class="logo">ActionGolfers</span>
+                        <h5>Tournament Golf On-Demand</h5>
+                        <p>© Copyright 2021 ActionGolfers LLC <br/>All Rights Reserved.</p>
+                        <div class="footer-links">
+                            <ul class="social-links">
+                                <li><a class="facebook" title="Facebook" href="https://www.facebook.com/ActionGolfers/" target="_blank"><span>facebook</span></a></li>
+                                <li><a class="instagram" title="Instagram" href="https://www.instagram.com/actiongolfers/
+                                    " target="_blank"><span>instagram</span></a></li>
+                                <li><a class="twitter" title="Twitter" href="https://twitter.com/action_golfers" target="_blank"><span>twitter</span></a></li>
+                                <li><a class="youtube" title="Youtube" href="https://www.youtube.com/channel/UCOJRzam4OGFvEYxtKW27JbA" target="_blank"><span>youtube</span></a></li>
+                            </ul>
+                            <ul class="page-links">
+                                <li><a href="terms-of-use.html" title="Terms of Use">Terms of Use</a></li>
+                                <li><a href="privacy-policy.html" title="Privacy Policy">Privacy Policy</a></li>
+                                <li><a href="contact-us.html" title="Contact Us">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </footer>        </main>
+        <script type="text/javascript" src="library/js/update-holes.js"></script>
+    </body>
+</html>
