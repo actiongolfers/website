@@ -82,24 +82,32 @@
                 {{#each ownerTournaments}}
                     <div class="tournament-item">
                         {{#if tournamentInfo.tournamentId}}
-                        <a class="action-links create-website" data-tournament-id="{{tournamentInfo.tournamentId}}" data-friendly-name="{{tournamentInfo.friendlyName}}"
-                        data-start-date="{{tournamentInfo.startDate}}"
-                        data-end-date="{{tournamentInfo.endDate}}">
-                            <span>Create Website</span>
-                        </a>
-                        {{#if tournamentInfo.createTeams}}
-                        <a class="action-links create-teams"
-                         data-tournament-desc="{{tournamentInfo.tournamentDesc}}"
-                         data-tournament-id="{{tournamentInfo.tournamentId}}"
-                         data-team-size="{{tournamentInfo.teamSize}}">
-                            <span>Create Teams</span>
-                        </a>
-                        {{/if}}
-                        <a class="action-links update-holes"
-                         data-hole-to-play="{{tournamentInfo.holeToPlay}}"
-                         data-tournament-id="{{tournamentInfo.tournamentId}}">
-                            <span>Update holes</span>
-                        </a>
+                        <div class="action-menu">
+                            <a class="action-trigger">...</a>
+                            <div class="action-items">
+                                <ul>
+                                    <li>
+                                        <a class="create-website"
+                                            data-tournament-id="{{tournamentInfo.tournamentId}}"
+                                            data-friendly-name="{{tournamentInfo.friendlyName}}"
+                                            data-start-date="{{tournamentInfo.startDate}}"
+                                            data-end-date="{{tournamentInfo.endDate}}">
+                                            <span>Create Website</span>
+                                        </a>
+                                    </li>
+                                    {{#if tournamentInfo.createTeams}}
+                                    <li>
+                                        <a class="create-teams"
+                                            data-tournament-desc="{{tournamentInfo.tournamentDesc}}"
+                                            data-tournament-id="{{tournamentInfo.tournamentId}}"
+                                            data-team-size="{{tournamentInfo.teamSize}}">
+                                            <span>Create Teams</span>
+                                        </a>
+                                    </li>
+                                    {{/if}}
+                                </ul>
+                            </div>
+                        </div>
 
                         <div class="tournament-id"># {{tournamentInfo.tournamentId}}</div>
                         {{/if}}

@@ -3272,12 +3272,13 @@ footer {
     flex-wrap: wrap;
 
     .tournament-item {
-        width: calc(50% - 16px);
+        width: calc(100% - 16px);
         box-shadow: 2px 2px 6px #b5d3c5;
         margin: 0 8px 30px;
         padding: 24px 12px 30px;
         border-radius: 12px;
         position: relative;
+        min-height: 150px;
 
         &.active {
             transition: all 1s;
@@ -3366,69 +3367,106 @@ footer {
             }
         }
 
-        .action-links {
+        .action-menu {
+            position: absolute;
+            right: 0;
+            top: 0;
             width: 30px;
             height: 30px;
-            cursor: pointer;
-            display: block;
-            position: absolute;
-            top: 0;
-            z-index: 3;
+            z-index: 9;
 
-            &:hover span {
-                opacity: 1;
-            }
-
-            &::after {
-                content: '';
+            .action-trigger {
+                font-size: 30px;
                 display: block;
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                width: 18px;
-                height: 18px;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+                color: @brandColor;
             }
 
-            span {
+            &:hover {
+                .action-items {
+                    display: flex;
+                    opacity: 1;
+                    transition: opacity .3s ease-in-out .6s;
+                    transform: translateX(0);
+                }
+            }
+
+            .action-items {
+                display: none;
+                background: @white;
+                border-radius: 0 12px 12px 0;
+                box-shadow: -1px 1px 10px -1px rgb(0 0 0 / 50%);
+                padding-top: 60px;
+                flex-direction: column;
+                flex-grow: 1;
+                margin: 0;
                 opacity: 0;
+                padding: 32px 0 15px;
+                transform: translateX(50%);
                 position: absolute;
-                right: 10px;
-                top: 28px;
-                width: 117px;
-                text-align: right;
-                color: @white;
-                background: @brandColor;
-                border-radius: 6px;
-                padding: 0 5px;
-            }
-
-            &.create-website {
                 right: 0;
+                top: 0;
+                width: 200px;
+                min-height: 150px;
 
-                &::after {
-                    background: url(@createWebsite) no-repeat 0 0;
-                    background-size: contain;
-                }
-            }
+                ul {
+                    list-style-type: none;
 
-            &.update-holes {
-                right: 30px;
+                    li {
+                        a {
+                            cursor: pointer;
+                            display: block;
+                            position: relative;
+                            padding: 10px 20px 10px 40px;
 
-                &::after {
-                    background: url(@createWebsite) no-repeat 0 0;
-                    background-size: contain;
-                }
-            }
+                            &:hover {
+                                color: @white;
+                                background: @brandColor;
 
-            &.create-teams {
-                right: 60px;
+                                &::after {
+                                    filter: invert(1);
+                                }
+                            }
 
-                &::after {
-                    background: url(@createTeams) no-repeat 0 0;
-                    background-size: contain;
+                            &::after {
+                                content: '';
+                                display: block;
+                                position: absolute;
+                                top: 12px;
+                                left: 11px;
+                                width: 18px;
+                                height: 18px;
+                            }
+
+                            &.create-website {
+                                &::after {
+                                    background: url(@createWebsite) no-repeat 0 0;
+                                    background-size: contain;
+                                }
+                            }
+
+                            &.update-holes {
+                                &::after {
+                                    background: url(@createWebsite) no-repeat 0 0;
+                                    background-size: contain;
+                                }
+                            }
+
+                            &.create-teams {
+                                &::after {
+                                    background: url(@createTeams) no-repeat 0 0;
+                                    background-size: contain;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
+
+
     }
 }
 
