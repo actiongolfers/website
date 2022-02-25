@@ -28,6 +28,36 @@
             <div class="details">
                 \{{{webPageBlob}}}
             </div>
+            \{{#if sponsorers}}
+            <div class="landing-sponsors">
+                <h3>Our Sponsors</h3>
+                <ul>
+                    \{{#each sponsorers}}
+                    <li>
+                        <a href="\{{sponsorUrl}}" target="_blank">
+                            <img src="\{{imageUrl}}" />
+                        </a>
+                    </li>
+                    \{{/each}}
+                </ul>
+            </div>
+             \{{/if}}
+             \{{#if prizes}}
+            <div class="landing-prizes">
+                <h3>Tournament Prize Details</h3>
+                <table>
+                    <tr>
+                        <th>Position</th>
+                        <th>Prize</th>
+                    </tr>
+                    \{{#each prizes}}
+                    <tr>
+                        <td>\{{posRank}} </td>  <td>\{{#if prizeOffer}}\{{prizeOffer}} \{{else}} \{{cashOfferPct}}\{{/if}}</td>
+                    </tr>
+                    \{{/each}}
+                </table>
+            </div>
+             \{{/if}}
             <div class="landing-download">
                 <h3>Download the ActionGolfers app to enroll in the tournament here!</h3>
                 <table>

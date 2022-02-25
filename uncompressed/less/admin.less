@@ -3411,8 +3411,17 @@ footer {
                 }
             }
 
-            &.create-teams {
+            &.update-holes {
                 right: 30px;
+
+                &::after {
+                    background: url(@createWebsite) no-repeat 0 0;
+                    background-size: contain;
+                }
+            }
+
+            &.create-teams {
+                right: 60px;
 
                 &::after {
                     background: url(@createTeams) no-repeat 0 0;

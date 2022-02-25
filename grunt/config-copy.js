@@ -16,16 +16,16 @@ module.exports = function( grunt ) {
         },
         prodSource: {
             files: [
-                {expand: true,  src: 'fonts/**', dest: '../../actiongolfers/website/'},
-                {expand: true,  src: 'grunt/**', dest: '../../actiongolfers/website/'},
-                {expand: true,  src: 'images/**', dest: '../../actiongolfers/website/'},
-                {expand: true,  src: 'library/**', dest: '../../actiongolfers/website/'},
-                {expand: true,  src: 'pages/**', dest: '../../actiongolfers/website/'},
-                {expand: true,  src: 'uncompressed/**', dest: '../../actiongolfers/website/'},
-                {expand: true,  src: '*.html', dest: '../../actiongolfers/website/', filter: 'isFile'},
-                {expand: true,  src: '*.json', dest: '../../actiongolfers/website/', filter: 'isFile'},
-                {expand: true,  src: '*.js', dest: '../../actiongolfers/website/', filter: 'isFile'},
-                {expand: true,  src: '*.htm', dest: '../../actiongolfers/website/', filter: 'isFile'}
+                {expand: true,  src: 'fonts/**', dest: '../website/'},
+                {expand: true,  src: 'grunt/**', dest: '../website/'},
+                {expand: true,  src: 'images/**', dest: '../website/'},
+                {expand: true,  src: 'library/**', dest: '../website/'},
+                {expand: true,  src: 'pages/**', dest: '../website/'},
+                {expand: true,  src: 'uncompressed/**', dest: '../website/'},
+                {expand: true,  src: '*.html', dest: '../website/', filter: 'isFile'},
+                {expand: true,  src: '*.json', dest: '../website/', filter: 'isFile'},
+                {expand: true,  src: '*.js', dest: '../website/', filter: 'isFile'},
+                {expand: true,  src: '*.htm', dest: '../website/', filter: 'isFile'}
 
               ],
         },

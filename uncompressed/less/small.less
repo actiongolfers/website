@@ -1998,10 +1998,80 @@ footer {
     }
     .details {
         padding: 40px 0 0;
-        margin: 0 0 24px;
+        margin: 0 0 42px;
 
         ul li {
             list-style-type: disc;
+        }
+    }
+
+    .landing-prizes {
+        margin: 0 0 42px;
+        padding: 30px;
+        border-left: 3px solid #00ac5a;
+
+        h3 {
+            font-size: 20px;
+        }
+
+        table {
+            border: 0;
+            padding: 10px;
+
+            tr {
+                th {
+                    font-family: @actionGolfSemiBold;
+                }
+
+                th,
+                td {
+                    border-left: 1px solid @brandColor;
+
+                    &:first-child {
+                        border-left: 0;
+                        padding-right: 20px;
+                        min-width: 50px;
+                    }
+
+                    &:last-child {
+                        text-align: left;
+                        padding-left: 40px;
+
+                    }
+                }
+
+                &:last-child td{
+                    border-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .landing-sponsors {
+        margin: 0 0 42px;
+        text-align: center;
+
+        h3 {
+            font-size: 22px;
+        }
+
+        ul {
+            list-style-type: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+
+            li {
+                margin: 10px;
+            }
+
+            img {
+                max-width: 110px;
+                margin: 0;
+            }
         }
     }
 }

@@ -188,6 +188,14 @@ var actiongolfCL = {
             details.webPageBlob = details.webPageBlob.replace('[[STARTDATEYEAR]]', data && this.dateConversion(data.tournamentInfo.startDate, true));
             details.webPageBlob = details.webPageBlob.replace('[[ENDDATEYEAR]]', data && this.dateConversion(data.tournamentInfo.endDate, true));
 
+            if (data.sponsorers && data.sponsorers.length) {
+                details.sponsorers = data.sponsorers;
+            }
+
+            if (data.prizes && data.prizes.length) {
+                details.prizes = data.prizes;
+            }
+
             details.webPageTitle = details.webPageTitle ? details.webPageTitle.trim() : '';
 
             if (!details.friendlyName) {

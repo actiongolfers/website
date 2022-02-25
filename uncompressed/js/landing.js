@@ -69,6 +69,15 @@ var actiongolfLanding = {
         details.webPageBlob = details.webPageBlob.replace('[[ENDDATE]]', details.endDate);
         details.webPageBlob = details.webPageBlob.replace('[[STARTDATEYEAR]]', this.dateConversion(data.tournamentInfo.startDate, true));
         details.webPageBlob = details.webPageBlob.replace('[[ENDDATEYEAR]]', this.dateConversion(data.tournamentInfo.endDate, true));
+
+        if (data.sponsorers && data.sponsorers.length) {
+            details.sponsorers = data.sponsorers;
+        }
+
+        if (data.prizes && data.prizes.length) {
+            details.prizes = data.prizes;
+        }
+
         $('title').html(details.webPageTitle);
         $('.landing-content').html(landingTemplate(details));
     },
