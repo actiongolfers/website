@@ -90,7 +90,7 @@ var activeTournaments = {
                             window.location.href = "./create-teams.html";
                         }.bind(this));
 
-                        $('.update-holes').on('click', function(e) {
+                        $('.tournament-teams').on('click', function(e) {
                             var tournamentId = $(e.target).data('tournamentId'),
                                 holesToPlay = $(e.target).data('holeToPlay');
 
@@ -99,7 +99,7 @@ var activeTournaments = {
                                 holesToPlay: holesToPlay
                             });
 
-                            window.location.href = "./update-holes.html";
+                            window.location.href = "./tournament-teams.html";
                         }.bind(this));
                     } else {
                         $('.loading').hide();

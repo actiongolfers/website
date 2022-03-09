@@ -203,7 +203,7 @@ module.exports = function ( grunt ) {
         },
         upadteHoles: {
             files: {
-                'update-holes.html': 'pages/update-holes.hbs'
+                'tournament-teams.html': 'pages/tournament-teams.hbs'
             },
             options: {
                 partials: [

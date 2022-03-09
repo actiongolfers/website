@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>Tournament Teams</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/admin.css" />
+    </head>
+    <body>
+        <main>
+            {{> landing-header }}
+
+            <section>
+                <div class="admin-container">
+                    <h2 class="page-header loading">
+                        <span class="admin-title">
+                            Tournament Teams
+                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        </span>
+                        <a class="page-header-link" href="./active-tournaments.html">Active Tournaments</a>
+                    </h2>
+
+                    <div class="full-width">
+                        <div class="list-teams-details">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <script type="text/x-handlebars-template" data-template="listTeamsTemplate">
+            <h5>\{{tournamentDetails.tournamentId}}</h5>
+
+            \{{#if tournamentTeams}}
+                \{{#each tournamentTeams}}
+                 <div class="list-teams">
+                     <div class="team-image">
+                        <img src="\{{teamImageUrl}}" />
+                     </div>
+
+                    <div class="teams-item" data-team-id="\{{tournamentTeamId}}">
+                        <h3>\{{teamName}}</h3>
+                        <div class="start-hole">Starting Hole
+                            <div class="display-starting-hole">
+                                <span class="update-hole-trigger">\{{startingHole}}</span>
+                                <div class="update-starting-hole">
+                                    <select data-starting-hole="\{{startingHole}}">
+                                        \{{#each holesToPlay}}
+                                        <option value="\{{value}}"  \{{#if selected}} selected \{{/if}}>
+                                            \{{value}}
+                                        </option>
+                                        \{{/each}}
+                                    </select>
+                                </div>
+                                <div class="error-message">Error updating the starting hole</div>
+                            </div>
+                        </div>
+                        <div class="player-list">
+                        \{{#each tournamentTeamMembers}}
+                            <div class="player \{{#if isLead}}lead\{{/if}}" data-team-member-id="\{{tournamentTeamMemberId}}">
+                                <div class="photo">
+                                    <img src="\{{imageUrl}}" />
+                                </div>
+                                <div class="name">\{{firstName}} \{{lastName}}</div>
+                            </div>
+                        \{{/each}}
+                        </div>
+                    </div>
+                </div>
+                \{{/each}}
+            \{{else}}
+                No teams found..
+            \{{/if}}
+            </div>
+        </script>
+
+            {{> landing-footer }}
+        </main>
+        <script type="text/javascript" src="library/js/tournament-teams.js"></script>
+    </body>
+</html>
