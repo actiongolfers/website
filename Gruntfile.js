@@ -41,6 +41,8 @@ module.exports = function ( grunt ) {
        'concat:createteams',
        'uglify:tournamentTeams',
        'concat:tournamentTeams',
+       'uglify:tournamentDetails',
+       'concat:tournamentDetails',
        'clean:vendor',
        'handlebarslayouts'
     ]);

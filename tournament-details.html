@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>Tournament Details</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/actiongolf.css" />
+    </head>
+    <body>
+        <main>
+            <header>
+                <section>
+                    <nav>
+                        <a class="logo" href="./" title="ActionGolfers">ActionGolfers</a>
+                    </nav>
+                </section>
+            </header>
+            <section>
+                <div class="admin-container">
+                    <h2 class="page-header loading">
+                        <span class="admin-title">
+                            Tournament Details
+                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        </span>
+                    </h2>
+
+                    <div class="full-width">
+                        <div class="tournament-details">
+
+                        </div>
+
+                        <div class="screen-message error-message hide">
+                            Request page not available. Please check the URL. Thanks
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="download-app-section">
+                <section>
+                    <h3>Download the App.<br/> Join the Family!</h3>
+                    <div class="download-buttons">
+                        <a target="_blank" title="Download on Apple Store" class="app-store" href="https://apps.apple.com/us/app/actiongolfers/id1580939995">Apple Store</a>
+                        <a target="_blank" title="Download on Google Play" class="google-play" href="https://play.google.com/store/apps/details?id=com.actiongolfers.actiongolf">Google Play</a>
+                    </div>
+                </section>
+            </div>
+            <script type="text/x-handlebars-template" data-template="tournamentDetailsTemplate">
+                <div class="details-top-image">
+                    <div class="details-block">
+                        <div class="org-by-label">Organized By</div>
+                        <div class="org-by-name">{{tournamentDetail.golfCourseName}}</div>
+                        <div class="loc-dis">
+                            <span class="location">{{tournamentDetail.address.address1}}</span>
+                            <span class="distance">{{tournamentDetail.miles}} miles</span>
+                        </div>
+                    </div>
+                    <img src="{{tournamentDetail.courseImageUrl}}" class="course-image" />
+                </div>
+                <div class="tournament-data">
+                    <div class="tournament-title">
+                        <h3>{{tournamentDetail.tournamentName}}</h3>
+                        <div>{{tournamentDetail.tournamentType}}</div>
+                    </div>
+                    <ul>
+                        <li>
+                            <span class="tee-name">{{tournamentDetail.teeName}}</span>
+                            <span class="start-date">{{tournamentDetail.startDate}}</span>
+                        </li>
+                        <li>
+                            <span class="players">{{tournamentDetail.playerCountTillDate}}</span>
+                            <span class="holes">{{tournamentDetail.holesToPlay}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tournament-prizes">
+                    <h3>Prizes</h3>
+                    <ul>
+                    {{#each payouts}}
+                        <li>
+                            <div data-rank="{{posRank}}"></div>
+                            {{#if prizeOffer}}{{prizeOffer}} {{else}} {{cashOfferPct}}{{/if}}
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+
+                <div class="tournament-players">
+                    <h3>Participants</h3>
+                    <ul>
+                    {{#each participants}}
+                        <li>
+                            <div class="player {{#if isLead}}lead{{/if}}" data-team-member-id="{{tournamentTeamMemberId}}">
+                                <div class="photo">
+                                    <img src="{{imageUrl}}" />
+                                </div>
+                                <div class="name">{{firstName}} {{lastName}}</div>
+                            </div>
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+            </script>
+
+
+            <footer>
+                <section>
+                    <div class="footer-right">
+                        <h4>Be the early bird, by signing up with us!</h4>
+                        <div class="subscribe-box">
+                            <input type="text" class="subscribe-box-text" placeholder="Your email address.." />
+                            <button title="Notify Me" class="subscribe-box-button">Notify Me</button>
+                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        </div>
+                        <div class="subscribe-error"></div>
+                    </div>
+                    <div class="footer-left">
+                        <span class="logo">ActionGolfers</span>
+                        <h5>Tournament Golf On-Demand</h5>
+                        <p>© Copyright 2021 ActionGolfers LLC <br/>All Rights Reserved.</p>
+                        <div class="footer-links">
+                            <ul class="social-links">
+                                <li><a class="facebook" title="Facebook" href="https://www.facebook.com/ActionGolfers/" target="_blank"><span>facebook</span></a></li>
+                                <li><a class="instagram" title="Instagram" href="https://www.instagram.com/actiongolfers/
+                                    " target="_blank"><span>instagram</span></a></li>
+                                <li><a class="twitter" title="Twitter" href="https://twitter.com/action_golfers" target="_blank"><span>twitter</span></a></li>
+                                <li><a class="youtube" title="Youtube" href="https://www.youtube.com/channel/UCOJRzam4OGFvEYxtKW27JbA" target="_blank"><span>youtube</span></a></li>
+                            </ul>
+                            <ul class="page-links">
+                                <li><a href="terms-of-use.html" title="Terms of Use">Terms of Use</a></li>
+                                <li><a href="privacy-policy.html" title="Privacy Policy">Privacy Policy</a></li>
+                                <li><a href="contact-us.html" title="Contact Us">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <div id="modal-shade"></div>
+                <div class="modal" id="success-message">
+                    <div class="modal-dialog">
+                        <a class="close-modal"></a>
+                        <div class="modal-dialog-content">
+                            <img src="images/success.gif" width="162" />
+                            <h4>Provide another email address</h4>
+                        </div>
+                    </div>
+                </div>
+            </footer>        </main>
+        <script type="text/javascript" src="library/js/tournament-details.js"></script>
+    </body>
+</html>

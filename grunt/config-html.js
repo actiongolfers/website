@@ -201,9 +201,20 @@ module.exports = function ( grunt ) {
                 basePath: '/'
             }
         },
-        upadteHoles: {
+        tournamentTeams: {
             files: {
                 'tournament-teams.html': 'pages/tournament-teams.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
+        },
+        tournamentDetails: {
+            files: {
+                'tournament-details.html': 'pages/tournament-details.hbs'
             },
             options: {
                 partials: [

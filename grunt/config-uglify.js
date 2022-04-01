@@ -11,7 +11,8 @@ module.exports = function( grunt ) {
         distCLFiles = {},
         distATFiles = {},
         distCTMFiles = {},
-        distTTFiles = {};
+        distTTFiles = {},
+        distTDFiles = {};
 
     distAGFiles[ 'library/js/actiongolf.js' ] = ['library/js/actiongolf.js'];
     distLPFiles[ 'library/js/landing.js' ] = ['library/js/landing.js'];
@@ -21,6 +22,7 @@ module.exports = function( grunt ) {
     distATFiles[ 'library/js/active-tournaments.js' ] = ['library/js/active-tournaments.js'];
     distCTMFiles[ 'library/js/create-teams.js' ] = ['library/js/create-teams.js'];
     distTTFiles[ 'library/js/tournament-teams.js' ] = ['library/js/tournament-teams.js'];
+    distTDFiles[ 'library/js/tournament-details.js' ] = ['library/js/tournament-details.js'];
 
     grunt.config( 'uglify', {
         options: {
@@ -52,6 +54,9 @@ module.exports = function( grunt ) {
         },
         tournamentTeams: {
             files: distTTFiles
+        },
+        tournamentDetails: {
+            files: distTDFiles
         }
     });
 

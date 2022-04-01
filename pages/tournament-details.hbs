@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>Tournament Details</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/actiongolf.css" />
+    </head>
+    <body>
+        <main>
+            {{> landing-header }}
+
+            <section>
+                <div class="admin-container">
+                    <h2 class="page-header loading">
+                        <span class="admin-title">
+                            Tournament Details
+                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        </span>
+                    </h2>
+
+                    <div class="full-width">
+                        <div class="tournament-details">
+
+                        </div>
+
+                        <div class="screen-message error-message hide">
+                            Request page not available. Please check the URL. Thanks
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {{> download}}
+
+            <script type="text/x-handlebars-template" data-template="tournamentDetailsTemplate">
+                <div class="details-top-image">
+                    <div class="details-block">
+                        <div class="org-by-label">Organized By</div>
+                        <div class="org-by-name">\{{tournamentDetail.golfCourseName}}</div>
+                        <div class="loc-dis">
+                            <span class="location">\{{tournamentDetail.address.address1}}</span>
+                            <span class="distance">\{{tournamentDetail.miles}} miles</span>
+                        </div>
+                    </div>
+                    <img src="\{{tournamentDetail.courseImageUrl}}" class="course-image" />
+                </div>
+                <div class="tournament-data">
+                    <div class="tournament-title">
+                        <h3>\{{tournamentDetail.tournamentName}}</h3>
+                        <div>\{{tournamentDetail.tournamentType}}</div>
+                    </div>
+                    <ul>
+                        <li>
+                            <span class="tee-name">\{{tournamentDetail.teeName}}</span>
+                            <span class="start-date">\{{tournamentDetail.startDate}}</span>
+                        </li>
+                        <li>
+                            <span class="players">\{{tournamentDetail.playerCountTillDate}}</span>
+                            <span class="holes">\{{tournamentDetail.holesToPlay}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tournament-prizes">
+                    <h3>Prizes</h3>
+                    <ul>
+                    \{{#each payouts}}
+                        <li>
+                            <div data-rank="\{{posRank}}"></div>
+                            \{{#if prizeOffer}}\{{prizeOffer}} \{{else}} \{{cashOfferPct}}\{{/if}}
+                        </li>
+                    \{{/each}}
+                    </ul>
+                </div>
+
+                <div class="tournament-players">
+                    <h3>Participants</h3>
+                    <ul>
+                    \{{#each participants}}
+                        <li>
+                            <div class="player \{{#if isLead}}lead\{{/if}}" data-team-member-id="\{{tournamentTeamMemberId}}">
+                                <div class="photo">
+                                    <img src="\{{imageUrl}}" />
+                                </div>
+                                <div class="name">\{{firstName}} \{{lastName}}</div>
+                            </div>
+                        </li>
+                    \{{/each}}
+                    </ul>
+                </div>
+            </script>
+
+
+            {{> footer }}
+        </main>
+        <script type="text/javascript" src="library/js/tournament-details.js"></script>
+    </body>
+</html>
