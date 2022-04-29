@@ -1,0 +1,35 @@
+# This is an appspec.yml template file for use with an EC2/On-Premises deployment in CodeDeploy.
+
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /var/www/actiongolfers
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: root
+    group: root
+
+hooks:
+
+  # BeforeInstall:
+  #   - location: scripts/before_install.sh
+  #     timeout: 300
+  #     runas: root
+  
+  # AfterInstall:
+  #   - location: scripts/after_install.sh
+  #     timeout: 300
+  #     runas: root
+
+  AfterInstall:
+    - location: deploy/afterinstall.sh
+      timeout: 300
+      runas: root      
+  ApplicationStart:
+    - location: deploy/app_start.sh
+      timeout: 300
+      runas: root
