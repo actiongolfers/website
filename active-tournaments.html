@@ -92,7 +92,7 @@
                                             data-friendly-name="{{tournamentInfo.friendlyName}}"
                                             data-start-date="{{tournamentInfo.startDate}}"
                                             data-end-date="{{tournamentInfo.endDate}}">
-                                            Create Website
+                                            {{#if tournamentInfo.friendlyName}}Edit Website{{else}}Create Website{{/if}}
                                         </a>
                                     </li>
                                     {{#if tournamentInfo.createTeams}}
