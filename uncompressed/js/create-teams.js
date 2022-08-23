@@ -59,7 +59,7 @@ var createTeams = {
                                     players: [{
                                         phone: csvcols[1],
                                         name: csvcols[2].replaceAll('"', ''),
-                                        isLead: csvcols[3] === '1'
+                                        isLead: (csvcols[3] === '1' || csvcols[3] === '1\r')
                                     }]
                                 });
                             }
