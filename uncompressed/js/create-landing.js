@@ -75,7 +75,25 @@ var actiongolfCL = {
         webPageBlobCfg.toolbar = "mytoolbar";
         webPageBlobCfg.toolbar_mytoolbar = "{bold,italic,underline,insertorderedlist,insertunorderedlist,justifyleft,justifycenter,justifyright,insertlink,code,undo,redo}";
 
-        webPageBlob = new RichTextEditor("#div_webPageBlob", webPageBlobCfg);
+        tinymce.init({
+            selector: '#div_webPageBlob',
+            menubar: false,
+            plugins:'link, lists ',
+              toolbar: 'undo redo  | ' +
+              'bold italic backcolor | alignleft aligncenter ' +
+              'alignright alignjustify | bullist numlist outdent indent | ' +
+              'removeformat | link anchor ',
+              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+              setup: function (editor) {
+                editor.on('init', function (e) {
+                    if (data && data.tournamentInfo && data.tournamentInfo.webPageBlob) {
+                        editor.setContent(decodeURIComponent(data.tournamentInfo.webPageBlob));
+                        webPageBlob  = editor.getContent();
+                    }
+                });
+              }
+          });
+
 
         if (!data && tournamentDetails && tournamentId && sessionStartDate && sessionEndDate) {
             var data = {
@@ -116,9 +134,6 @@ var actiongolfCL = {
             $('[name=webPageTitle]').val(data.tournamentInfo.webPageTitle);
             $('[name=friendlyName]').val(friendlyNameFormated);
 
-            if (data.tournamentInfo.webPageBlob) {
-                webPageBlob.setHTMLCode(decodeURIComponent(data.tournamentInfo.webPageBlob));
-            }
 
             if (data.tournamentInfo.titleBackgroundMediaId) {
                 titleBackgroundMediaId = data.tournamentInfo.titleBackgroundMediaId;
@@ -144,7 +159,7 @@ var actiongolfCL = {
         }
 
         $('#preview-btn').on('click', function() {
-            var webPageBlobContent = webPageBlob.getHTMLCode(),
+            var webPageBlobContent = tinymce.activeEditor.getContent();
                 landingTemplate = Handlebars.compile($("[data-template='landingTemplate']").html()),
                 formError = false,
                 logoImages = [];
