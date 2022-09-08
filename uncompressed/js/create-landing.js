@@ -80,7 +80,7 @@ var actiongolfCL = {
             menubar: false,
             plugins:'link, lists ',
               toolbar: 'undo redo  | ' +
-              'bold italic backcolor | alignleft aligncenter ' +
+              'bold italic | forecolor backcolor | alignleft aligncenter ' +
               'alignright alignjustify | bullist numlist outdent indent | ' +
               'removeformat | link anchor ',
               content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
