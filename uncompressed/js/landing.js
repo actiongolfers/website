@@ -3,6 +3,7 @@ var localDevelopment = false,
 
 var actiongolfLanding = {
     init: function () {
+        var self = this;
 
         friendlyName = window.location.hash ? window.location.hash.substring(1) : '';
 
@@ -24,6 +25,37 @@ var actiongolfLanding = {
                 if (xhr && xhr.tournamentInfo) {
                     $('.landing-content').show();
                     this.updateData(xhr);
+
+                    var otpValidationParticipate = $('.otp-validation-slide').length;
+
+                    $('#participate-submit').on('click', function(event) {
+                        event.preventDefault();
+
+                        if (!otpValidationParticipate) {
+                            return;
+                        }
+
+                        var publicSessionKey = 'publicAgLoginAuth';
+
+                        self.setAuthSession('tournamentDetails', {
+                            tournamentId: xhr.tournamentInfo.tournamentId,
+                            friendlyName: xhr.tournamentInfo.friendlyName
+                        });
+
+                        if (self.getAuthSession(publicSessionKey)) {
+                            self.setAuthSession(publicSessionKey, self.getAuthSession(publicSessionKey));
+                            window.location.href = "./participate.html";
+                        } else {
+                            $('.otp-validation-slide').toggleClass('open');
+                            $('#modal-shade').toggle();
+                        }
+                    });
+
+                    $('.modal-slide-close').on('click', function(event) {
+                        event.preventDefault();
+                        $('.otp-validation-slide').toggleClass('open');
+                        $('#modal-shade').toggle();
+                    });
                 } else {
                     $('.landing-content').hide();
                     $('.screen-message').removeClass('hide');
@@ -34,6 +66,31 @@ var actiongolfLanding = {
                 $('.screen-message').removeClass('hide');
             }.bind(this)
         });
+    },
+
+    getAuthSession: function(key) {
+        var stringValue = window.localStorage.getItem(key);
+        if (stringValue !== null) {
+            var value = JSON.parse(stringValue),
+                expirationDate = new Date(value.expirationDate);
+
+            if (expirationDate > new Date() && value) {
+                return value.value;
+            } else {
+                window.localStorage.removeItem(key);
+            }
+        }
+        return null;
+    },
+
+    setAuthSession: function(key, value) {
+        var expirationInMin = 600,
+            expirationDate = new Date(new Date().getTime() + (60000 * expirationInMin)),
+            newValue = {
+                value: value,
+                expirationDate: expirationDate.toISOString()
+            };
+        window.localStorage.setItem(key, JSON.stringify(newValue));
     },
 
     updateData: function(data) {

@@ -1,0 +1,59 @@
+<section>
+    <div class="admin-container form-container">
+        <h2 class="page-header">Participate</h2>
+        <div class="col-12">
+            <div class="col-6 contact-container">
+                <div class="screen-message success-message hide">
+                    Thank you! A member of our staff will contact you within the next 24 hours.
+                </div>
+                <div class="screen-message error-message hide">
+                    Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+                </div>
+            </div>
+            <div class="col-6 input-container">
+                <form id="ajaxForm" data-type="contact">
+                    <div class="col-12">
+                        <div class="col-6">
+                            <div class="styled-input">
+                                <input type="text" name="firstName" required
+                                    data-required="First Name is required."
+                                    data-invalid="Please enter a valid First Name."
+                                />
+                                <label>Frist Name <sup>*</sup></label>
+                                <span class="error-message required">First Name is required.</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="styled-input">
+                                <input type="text" name="lastName" required
+                                    data-required="Last Name is required."
+                                    data-invalid="Please enter a valid Last Name."
+                                />
+                                <label>Last Name <sup>*</sup></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="col-6">
+                            <div class="styled-input">
+                                <input type="text" name="email" required
+                                    data-required="Email Address is required."
+                                    data-invalid="Please enter a valid Email Address."
+                                />
+                                <label>Email Address <sup>*</sup></label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+
+                        </div>
+                    </div>
+
+                    <div class="button-wrapper">
+                        <button id="form-submit" class="primary-btn">Submit</button>
+                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

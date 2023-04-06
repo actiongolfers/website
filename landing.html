@@ -82,6 +82,13 @@
                                 </table>
                             </div>
                              {{/if}}
+                
+                             <div class="button-wrapper">
+                                <button class="primary-btn" id="participate-submit">Participate</button>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
                             <div class="landing-download">
                                 <h3>Download the ActionGolfers app to enroll in the tournament here!</h3>
                                 <table>
@@ -148,7 +155,62 @@
                     </div>
                 </section>
             </footer>
+            <div class="create-form-container modal-slide otp-validation-slide">
+                <a class="modal-slide-close"></a>
+                <div class="input-container">
+                    <h4 class="page-header">Participate</h4>
+                        <div class="form-field login">
+                            <label>Phone number <sup>*</sup></label>
+                            <div class="styled-input login-phone">
+                                <input type="text" name="callingCode" class="callingCode" placeholder="+1"
+                                />
+                                <input type="number" name="phoneNumber" class="phoneNumber" required
+                                    data-required="Phone number is required."
+                                    data-invalid="Please enter a valid Phone number"
+                                />
+                                <span class="error-message required">Phone number is required.</span>
+                            </div>
+                        </div>
+                        <div class="form-field otp">
+                            <label>Verification Code <sup>*</sup></label>
+                            <div class="verification-code">
+                                <div class="styled-input">
+                                    <input type="number" class="verificationCode1" required
+                                        maxlength="1"
+                                    />
+                                </div>
+                                <div class="styled-input">
+                                    <input type="number" class="verificationCode2" required
+                                        maxlength="1"
+                                    />
+                                </div>
+                                <div class="styled-input">
+                                    <input type="number" class="verificationCode3" required
+                                        maxlength="1"
+                                    />
+                                </div>
+                                <div class="styled-input">
+                                    <input type="number" class="verificationCode4" required
+                                        maxlength="1"
+                                    />
+                                </div>
+                            </div>
+                            <div class="otp-error-message">Verification Code is required.</div>
+                        </div>
+
+                        <div class="screen-message error-message hide" style="margin-top: 0;">
+                            Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+                        </div>
+                        <div class="button-wrapper">
+                            <button class="primary-btn" id="login-submit">Login</button>
+                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="modal-shade" style="display: none;"></div>
             <script  src="library/js/landing.js"></script>
+            <script  src="library/js/login.js"></script>
         </main>
     </body>
 </html>

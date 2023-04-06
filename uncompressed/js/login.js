@@ -13,10 +13,12 @@ var actiongolfLogin = {
             invalidMessage,
             deviceId,
             sessionKey = 'agLoginAuth',
+            publicSessionKey = 'publicAgLoginAuth',
             auth = 'YWdkZXY6cGFzc3dvcmQ=',
-            reDirectUrl;
+            reDirectUrl,
+            otpValidationParticipate = $('.otp-validation-slide').length || window.sessionStorage.getItem('agReDirectPage') === './participate.html';
 
-        if (this.getAuthSession(sessionKey)) {
+        if (this.getAuthSession(sessionKey) && !otpValidationParticipate) {
             this.setAuthSession(sessionKey, this.getAuthSession(sessionKey));
             reDirectUrl = window.sessionStorage.getItem('agReDirectPage');
             window.sessionStorage.removeItem('agReDirectPage');
@@ -72,6 +74,11 @@ var actiongolfLogin = {
             event.preventDefault();
 
             requestData = {};
+            otpValidationParticipate = $('.otp-validation-slide').length || window.sessionStorage.getItem('agReDirectPage') === './participate.html';
+
+            if (otpValidationParticipate) {
+               window.sessionStorage.setItem('agReDirectPage', './participate.html');
+            }
 
             $('.screen-message').addClass('hide');
             $('.form-field').find('.error-message').remove();
@@ -155,7 +162,19 @@ var actiongolfLogin = {
                             };
                             reDirectUrl = window.sessionStorage.getItem('agReDirectPage');
                             window.sessionStorage.removeItem('agReDirectPage');
-                            this.setAuthSession(sessionKey, sessionData);
+                            this.setAuthSession( otpValidationParticipate ? publicSessionKey : sessionKey, sessionData);
+
+                            if (otpValidationParticipate && xhr) {
+                                var loginUserData = {
+                                    userProfileId: xhr.userProfileId,
+                                    email: xhr.email,
+                                    firstName: xhr.firstName,
+                                    lastName: xhr.lastName,
+                                    phoneNumber: xhr.phoneNumber,
+                                    deviceId: deviceId
+                                };
+                                this.setAuthSession('loginUserData', loginUserData);
+                             }
 
                             if (reDirectUrl) {
                                 window.location.href = reDirectUrl;

@@ -116,6 +116,18 @@ module.exports = function( grunt ) {
         nonull: true,
         src: ['library/js/vendor/jquery.js','library/js/vendor/handlebars.js', 'library/js/tournament-details.js'],
         dest: 'library/js/tournament-details.js'
+      },
+      participate: {
+        filter: function (filepath) {
+            if (!grunt.file.exists(filepath)) {
+                grunt.fail.warn('Could not find: ' + filepath);
+            } else {
+                return true;
+            }
+        },
+        nonull: true,
+        src: ['library/js/vendor/jquery.js','library/js/vendor/handlebars.js', 'library/js/participate.js'],
+        dest: 'library/js/participate.js'
       }
   });
 

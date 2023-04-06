@@ -222,7 +222,18 @@ module.exports = function ( grunt ) {
                 ],
                 basePath: '/'
             }
-        }
+        },
+        participate: {
+            files: {
+                'participate.html': 'pages/participate.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
+        },
     });
 
   grunt.loadNpmTasks( 'grunt-handlebars-layouts' );
