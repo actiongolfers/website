@@ -83,6 +83,15 @@ var actiongolfLogin = {
                         deviceId: requestData.deviceId
                     };
                     this.setAuthSession('loginUserData', loginUserData);
+
+                    $('#ajaxParticipateForm').addClass('hide');
+                    $('#participateUserDetails').removeClass('hide');
+                    $('[data-firstName]').html(loginUserData.firstName || '');
+                    $('[data-lastName]').html(loginUserData.lastName || '');
+                    $('[data-email]').html(loginUserData.email || '');
+                    $('[data-phoneNumber]').html(loginUserData.phoneNumber || '');
+
+                    this.tournamentUserDetails();
                 }.bind(this),
                 error:  function(xhr, status, error) {
 

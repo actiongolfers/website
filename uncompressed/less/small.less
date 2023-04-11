@@ -2574,6 +2574,59 @@ footer {
     }
 }
 
+.participate-user-details {
+    padding: 40px;
+    margin: 0 0 30px;
+    box-shadow: 3px 4px 30px #ddd;
+    border-radius: 20px;
+
+    .usection {
+        position: relative;
+        line-height: 34px;
+
+        strong {
+            display: none;
+        }
+
+        &:nth-child(1) {
+            font-size: 30px;
+        }
+
+        &:nth-child(1) {
+            font-size: 20px;
+        }
+    }
+}
+
+.pay-now {
+    padding: 40px 0 0 ;
+
+    h3 {
+        padding: 0 0 30px;
+    }
+
+    input[type=submit] {
+        border-radius: 4px;
+        padding: 0 20px;
+        line-height: 38px;
+        height: 38px;
+        color: @white;
+        font-family: @actionGolfSemiBold;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        margin-right: 10px;
+        display: inline-block;
+        background: @brandColor;
+
+        &:hover,
+        &:focus {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+    }
+}
+
 @keyframes hamburgermenu {
     0% {
         right: -70%;
