@@ -29,8 +29,23 @@
                                 Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
                             </div>
                         </div>
-                        <div class="col-6 input-container">
-                            <form id="ajaxForm" data-type="contact">
+                        <div id="participate-cnt" class="col-6 input-container">
+                            <div id="participateUserDetails" class="hide">
+                                <div>
+                                    <p><strong>First Name:</strong>  <span data-firstName></span></p>
+                                    <p><strong>Last Name:</strong>  <span data-lastName></span></p>
+                                    <p><strong>Email:</strong>  <span data-email></span></p>
+                                    <p><strong>Phone Number:</strong>  <span data-phoneNumber></span></p>
+            
+                                    <div class="screen-message success-message hide">
+                                        Thank you! A member of our staff will contact you within the next 24 hours.
+                                    </div>
+                                    <div class="screen-message error-message hide">
+                                        Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+                                    </div>
+                                </div>
+                            </div>
+                            <form id="ajaxParticipateForm" class="hide"  data-type="participate">
                                 <div class="col-12">
                                     <div class="col-6">
                                         <div class="styled-input">
@@ -68,11 +83,27 @@
                                 </div>
             
                                 <div class="button-wrapper">
-                                    <button id="form-submit" class="primary-btn">Submit</button>
+                                    <button id="participate-form-submit" class="primary-btn">Submit</button>
                                     <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                                 </div>
                             </form>
+            
+                            <div id="payNow" class="hide">
+                                <form name="PrePage" method = "post" action = "https://Simplecheckout.authorize.net/payment/CatalogPayment.aspx"> <input type = "hidden" name = "LinkId" value ="dbeeeb42-1ae5-44e6-a4b6-99c121a42843" /> <input type = "submit" value = "Register and Pay!" /> </form>
+            
+                                <!-- (c) 2005, 2023. Authorize.Net is a registered trademark of CyberSource Corporation --> <div class="AuthorizeNetSeal"> <script type="text/javascript" language="javascript">var ANS_customer_id="9fdb2c7a-8a75-4222-90c4-dbcbb2f71635";</script> <script type="text/javascript" language="javascript" src="//verify.authorize.net:443/anetseal/seal.js" ></script> </div>
+            
+                            </div>
+                            <div id="createTeam" class="hide">
+                                <div class="button-wrapper">
+                                    <button id="create-team-form-submit" class="primary-btn">Create Team</button>
+                                </div>
+                            </div>
+                            <div id="yourTeam" class="hide">
+                                team details
+                            </div>
                         </div>
+            
                     </div>
                 </div>
             </section>

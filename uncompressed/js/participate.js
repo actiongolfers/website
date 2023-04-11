@@ -24,33 +24,40 @@ var actiongolfLogin = {
 
         this.tournamentUserDetails();
 
-        // if (loginUserData && loginUserData.firstName) {
-        //     $('[name=firstName]').val(loginUserData.firstName);
-        //     $('[name=lastName]').val(loginUserData.lastName);
-        //     $('[name=email]').val(loginUserData.email);
+        if (loginUserData && !(loginUserData.firstName && loginUserData.lastName && loginUserData.email)) {
+            $('#ajaxParticipateForm').removeClass('hide');
+            $('#participateUserDetails').addClass('hide');
+            $('[name=firstName]').val(loginUserData.firstName || '');
+            $('[name=lastName]').val(loginUserData.lastName || '');
+            $('[name=email]').val(loginUserData.email || '');
+        } else {
+            $('#ajaxParticipateForm').addClass('hide');
+            $('#participateUserDetails').removeClass('hide');
+            $('[data-firstName]').html(loginUserData.firstName || '');
+            $('[data-lastName]').html(loginUserData.lastName || '');
+            $('[data-email]').html(loginUserData.email || '');
+            $('[data-phoneNumber]').html(loginUserData.phoneNumber || '');
+        }
 
-        //     $('[name=firstName]').attr(loginUserData.firstName);
-        //     $('[name=lastName]').val(loginUserData.lastName);
-        //     $('[name=email]').val(loginUserData.email);
-        // }
-
-        $('#form-submit').on('click', function(event) {
+        $('#participate-form-submit').on('click', function(event) {
             event.preventDefault();
             var ajaxUrl = this.getApiUrl('profileUpdate'),
                 requestData = {},
                 auth = 'YWdkZXY6cGFzc3dvcmQ=';
 
-            requestData.firstName = "Pramith";
-            requestData.lastName = "Prakash";
-            requestData.email = "p@ppp.com";
+            requestData.firstName = $('[name=firstName]').val();
+            requestData.lastName = $('[name=lastName]').val();
+            requestData.email = $('[name=email]').val();
+            requestData.phoneNumber = loginUserData.phoneNumber;
             requestData.userProfileId = userProfileId;
             requestData.deviceId = deviceId;
-
             requestData.golferStatusType = "Amateur";
             requestData.genderId = 1;
             requestData.ghin = "";
             requestData.handicapIndex= 0.0;
             requestData.approxIndex= 0.0;
+
+            $('.button-wrapper').addClass('loading');
 
             $.ajax({
                 type: "PUT",
@@ -67,7 +74,15 @@ var actiongolfLogin = {
                 success: function(xhr, status) {
                     $('.button-wrapper').removeClass('loading');
 
-
+                    var loginUserData = {
+                        userProfileId: requestData.userProfileId,
+                        email: requestData.email,
+                        firstName: requestData.firstName,
+                        lastName: requestData.lastName,
+                        phoneNumber: requestData.phoneNumber,
+                        deviceId: requestData.deviceId
+                    };
+                    this.setAuthSession('loginUserData', loginUserData);
                 }.bind(this),
                 error:  function(xhr, status, error) {
 
@@ -91,10 +106,14 @@ var actiongolfLogin = {
                 xhr.setRequestHeader("deviceId", deviceId)
             },
             success: function(xhr, status) {
-                if (xhr && xhr.tournamentInfo) {
-
+                if (xhr && !xhr.participating) {
+                    $('#payNow').removeClass('hide');
                 } else {
-
+                    if (xhr && !xhr.tournamentTeam) {
+                        $('#createTeam').removeClass('hide');
+                    } else {
+                        $('#yourTeam').removeClass('hide');
+                    }
                 }
             }.bind(this),
             error:  function(xhr, status, error) {
