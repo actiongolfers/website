@@ -2068,7 +2068,7 @@ footer {
     .landing-prizes {
         margin: 0 0 42px;
         padding: 30px;
-        border-left: 3px solid #00ac5a;
+        border-left: 3px solid @brandColor;
 
         h3 {
             font-size: 20px;
@@ -2577,7 +2577,7 @@ footer {
 .participate-user-details {
     padding: 40px;
     margin: 0 0 30px;
-    box-shadow: 3px 4px 30px #ddd;
+    box-shadow: 3px 4px 30px @greyButton;
     border-radius: 20px;
 
     .usection {
@@ -2596,6 +2596,10 @@ footer {
             font-size: 20px;
         }
     }
+}
+
+#ajaxParticipateForm  h3 {
+    padding: 0 0 30px;
 }
 
 .pay-now {
@@ -2634,6 +2638,218 @@ footer {
     }
 }
 
+.list-participate-wrapper {
+    padding: 20px 0 0;
+
+    @media screen and (min-width:1024px) {
+        padding: 50px 0 0;
+    }
+
+    h5 {
+        font-size: 24px;
+        padding: 0 0 18px;
+        font-family: @actionGolfSemiBold;
+    }
+
+    #teamMemberMessage {
+        color: @red;
+
+        &.shakeme {
+            animation: shake 1s ease-in-out 0.2s 2;
+        }
+    }
+
+    .list-participates {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin: 20px -10px 0;
+
+        h3 {
+            font-size: 20px;
+            padding: 0 30px 20px 0;
+        }
+
+        .participates-item {
+            cursor: pointer;
+            box-shadow: 3px 4px 30px @greyButton;
+            margin: 10px;
+            display: inline-block;
+            width: calc(50% - 20px);
+            border-radius: 8px;
+            padding: 10px;
+            background-size: 30px;
+            background-repeat: no-repeat;
+            background-position: calc(100% - 10px) 10px;
+            aspect-ratio: 1 / 1;
+            border: 3px solid transparent;
+            position: relative;
+            min-width: 150px;
+
+            @media screen and (min-width:768px) {
+                min-width: 210px;
+            }
+
+            .styledradio{
+                opacity: 0;
+                position: absolute;
+                top: 16px;
+                background: @white;
+                padding: 5px 7px;
+                border-radius: 14px;
+                right: 16px;
+
+                --active: #275EFE;
+                --active-inner: #fff;
+                --focus: 2px rgba(39, 94, 254, .3);
+                --border: #BBC1E1;
+                --border-hover: #275EFE;
+                --background: #fff;
+                --disabled: #F6F8FF;
+                --disabled-inner: #E1E6F9;
+
+                input[type='radio'] {
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+
+                    width: 38px;
+                    border-radius: 11px;
+                    height: 21px;
+                    outline: none;
+                    display: inline-block;
+                    vertical-align: top;
+                    position: relative;
+                    margin: 0;
+                    cursor: pointer;
+                    border: 1px solid var(--bc, var(--border));
+                    background: var(--b, var(--background));
+                    transition: background .3s, border-color .3s, box-shadow .2s;
+
+                    & + label {
+                        font-size: 14px;
+                        line-height: 21px;
+                        display: inline-block;
+                        vertical-align: top;
+                        cursor: pointer;
+                        margin-left: 4px;
+                    }
+
+                    &:after {
+                        content: '';
+                        display: block;
+                        left: 0;
+                        top: 0;
+                        position: absolute;
+                        transition: transform var(--d-t, .3s) var(--d-t-e, ease), opacity var(--d-o, .2s);
+                        left: 2px;
+                        top: 2px;
+                        border-radius: 50%;
+                        width: 15px;
+                        height: 15px;
+                        background: var(--ab, var(--border));
+                        transform: translateX(var(--x, 0));
+                    }
+
+                    &:checked {
+                        --b: var(--active);
+                        --bc: var(--active);
+                        --d-o: .3s;
+                        --d-t: .6s;
+                        --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
+                      --ab: var(--active-inner);
+                      --x: 17px;
+                    }
+                }
+            }
+            &.selected {
+                border-color: @brandColor;
+
+                .styledradio{
+                    opacity: 1;
+                }
+            }
+
+            @media screen and (min-width: 768px) {
+                width: calc(33.33% - 20px);
+            }
+
+            @media screen and (min-width:1024px) {
+                width: calc(20% - 20px);
+            }
+
+            .player {
+                position: relative;
+                margin: 0 0 20px 0;
+
+                .phone {
+                    display: inline-block;
+                    font-style: italic;
+                }
+
+                .name {
+                    font-size: 20px;
+                    line-height: 1;
+                    padding: 8px 0;
+                }
+
+                .photo {
+                    width: 100%;
+                    aspect-ratio: 1 / 1;
+                    img {
+                        border-radius: 8px 8px 0 0;
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    &.icon {
+                        img {
+                            visibility: hidden;
+                        }
+
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            background: url(@playerIcon) no-repeat 0 0;
+                            width: 100%;
+                            aspect-ratio: 1 / 1;
+                            background-size: cover;
+                            border-radius: 8px 8px 0 0;
+                        }
+                    }
+
+                }
+            }
+
+            &:nth-child(2n) .player::after{
+                background-color: #0000ff;
+            }
+
+            &:nth-child(3n) .player::after{
+                background-color: @black;
+            }
+        }
+    }
+
+    .create-team-wrapper {
+        display: flex;
+        align-items: center;
+        max-width: 100%;
+        width: 400px;
+
+        &.input-container .styled-input {
+            margin-bottom: 0;
+            width: 100%;
+        }
+
+        .button-wrapper {
+            margin-top: 0;
+            margin-left: 15px;
+        }
+    }
+}
+
 @keyframes hamburgermenu {
     0% {
         right: -70%;
@@ -2667,6 +2883,21 @@ footer {
         transform: translate(24px, 0);
     }
 }
+
+@keyframes shake {
+    0% {
+      margin-left: 0rem;
+    }
+    25% {
+      margin-left: 0.5rem;
+    }
+    75% {
+      margin-left: -0.5rem;
+    }
+    100% {
+      margin-left: 0rem;
+    }
+  }
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

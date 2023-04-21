@@ -171,6 +171,7 @@ var actiongolfLogin = {
                                     firstName: xhr.firstName,
                                     lastName: xhr.lastName,
                                     phoneNumber: xhr.phoneNumber,
+                                    imageUrl: xhr.largeImageUrl,
                                     deviceId: deviceId
                                 };
                                 this.setAuthSession('loginUserData', loginUserData);

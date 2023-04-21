@@ -39,7 +39,9 @@ var actiongolfLanding = {
 
                         self.setAuthSession('tournamentDetails', {
                             tournamentId: xhr.tournamentInfo.tournamentId,
-                            friendlyName: xhr.tournamentInfo.friendlyName
+                            friendlyName: xhr.tournamentInfo.friendlyName,
+                            teamSize: xhr.tournamentInfo.teamSize,
+                            full: xhr.tournamentInfo
                         });
 
                         if (self.getAuthSession(publicSessionKey)) {

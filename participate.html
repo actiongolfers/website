@@ -29,7 +29,7 @@
                                 Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
                             </div>
                         </div>
-                        <div id="participate-cnt" class="col-6 input-container">
+                        <div id="participate-cnt">
                             <div id="participateUserDetails" class="hide participate-user-details">
                                 <div>
                                     <div class="usection"><strong>Name:</strong>  <span data-firstName></span> <span data-lastName></span></div>
@@ -44,7 +44,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <form id="ajaxParticipateForm" class="hide"  data-type="participate">
+                            <form id="ajaxParticipateForm" class="input-container hide"  data-type="participate">
+                                <h3>Please update the user details</h3>
+            
                                 <div class="col-12">
                                     <div class="col-6">
                                         <div class="styled-input">
@@ -82,7 +84,7 @@
                                 </div>
             
                                 <div class="button-wrapper">
-                                    <button id="participate-form-submit" class="primary-btn">Submit</button>
+                                    <button id="participate-form-submit" class="primary-btn">Complete registration</button>
                                     <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                                 </div>
                             </form>
@@ -96,9 +98,7 @@
                                 </div>
                             </div>
                             <div id="createTeam" class="hide">
-                                <div class="button-wrapper">
-                                    <button id="create-team-form-submit" class="primary-btn">Create Team</button>
-                                </div>
+                                <div class="list-participate-wrapper"></div>
                             </div>
                             <div id="yourTeam" class="hide">
                                 team details
@@ -108,6 +108,47 @@
                     </div>
                 </div>
             </section>
+            
+            <script type="text/x-handlebars-template" data-template="listParticipatesTemplate">
+                <h5>Please add team members from the below list</h5>
+                {{#if openParticipants}}
+                <div id="teamMemberMessage" class="hide">Please add {{teamSize}} team members</div>
+                    <div class="list-participates">
+                        {{#each openParticipants}}
+                        {{#if isOpen}}
+                            <div class="participates-item {{#if selected}} selected {{/if}}" data-uid="{{userProfileId}}">
+                                <div class="player">
+                                    <div class="photo {{#unless imageUrl}}icon{{/unless}}"><img src="{{imageUrl}}" /></div>
+                                    <div class="name">{{fullName}}</div>
+                                    <div class="phone">{{phoneNumber}}</div>
+                                </div>
+                                <div class="styledradio">
+                                    <input id="s{{userProfileId}}" type="radio" name="radio" class="switch" value="{{userProfileId}}" {{#if selected}} checked {{/if}}/>
+                                    <label for="s{{userProfileId}}">Lead</label>
+                                </div>
+            
+                            </div>
+                        {{/if}}
+                        {{/each}}
+                    </div>
+                    <div class="create-team-wrapper input-container">
+                        <div class="styled-input">
+                            <input type="text" name="teamName" required
+                                data-required="Team Name is required."
+                                data-invalid="Please enter a valid Team Name."
+                            />
+                            <label>Team Name <sup>*</sup></label>
+                            <span class="error-message">Team Name is required.</span>
+                        </div>
+                        <div class="button-wrapper">
+                            <button id="create-team-form-submit" class="primary-btn">Create Team</button>
+                        </div>
+                    </div>
+            
+                {{else}}
+                    No Open participates found..
+                {{/if}}
+            </script>
 
             <div class="download-app-section">
                 <section>

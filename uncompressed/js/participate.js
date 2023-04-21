@@ -1,24 +1,29 @@
 let tournamentId,
     userProfileId,
-    deviceId;
+    deviceId,
+    selectedMembers = [],
+    loginUserData,
+    tournamentDetails
+
 var actiongolfLogin = {
     init: function () {
-        var publicSessionKey = 'publicAgLoginAuth',
-            loginUserData = this.getAuthSession('loginUserData'),
-            tournamentDetails = this.getAuthSession('tournamentDetails');
+        var publicSessionKey = 'publicAgLoginAuth';
+
+        tournamentDetails = this.getAuthSession('tournamentDetails');
+        loginUserData = this.getAuthSession('loginUserData');
 
         if (!tournamentDetails) {
             alert('tournamentDetails Not found');
         }
 
-        if (!this.getAuthSession(publicSessionKey)) {
+        if (!this.getAuthSession(publicSessionKey) || !loginUserData) {
             window.sessionStorage.setItem('agReDirectPage', './participate.html');
             window.location.href = "./login.html";
 
             return;
         }
 
-        tournamentId = tournamentDetails.tournamentId;
+        tournamentId = 1952; //tournamentDetails.tournamentId;
         userProfileId = loginUserData.userProfileId;
         deviceId = loginUserData.deviceId;
 
@@ -101,6 +106,91 @@ var actiongolfLogin = {
         }.bind(this));
     },
 
+    openParticipantsDetails: function() {
+        var openParticipants = this.getApiUrl('openParticipants'),
+            teamSize = tournamentDetails.teamSize || 4;
+
+        $.ajax({
+            type: "GET",
+            url: openParticipants,
+            contentType: "application/json",
+            dataType: "json",
+            timeout: 0,
+            success: function(opxhr, opstatus) {
+                if (opxhr && opxhr.openParticipants && opxhr.openParticipants.length) {
+                    opxhr.openParticipants[0].selected = true;
+                    opxhr.teamSize = teamSize;
+
+                    var listParticipatesTemplate = Handlebars.compile($("[data-template='listParticipatesTemplate']").html());
+                    $('.list-participate-wrapper').html(listParticipatesTemplate(opxhr));
+
+                    $('.participates-item .styledradio').on('click', function(event) {
+                        event.stopPropagation();
+                    });
+                    $('.participates-item').off().on('click', function(event) {
+                        $('#teamMemberMessage').removeClass('shakeme').addClass('hide');
+                        event.stopPropagation();
+                        var selectedCount = 0;
+                        $('.participates-item').each(function(){
+                            if ($(this).hasClass('selected')) {
+                                selectedCount++;
+                            }
+                        });
+
+                        if ($(this).hasClass('selected')) {
+                            $(this).removeClass('selected');
+                        } else if (selectedCount < teamSize) {
+                            $(this).addClass('selected');
+                        } else {
+                            $('#teamMemberMessage').html(`You can select a Maximum of ${teamSize} team members, please remove one to select another`);
+                            $('#teamMemberMessage').removeClass('hide');
+                            $("html, body").animate({ scrollTop: $('#teamMemberMessage').offset().top - 50 });
+                            $('#teamMemberMessage').addClass('shakeme');
+
+                            setTimeout(function() {
+                                $('#teamMemberMessage').addClass('hide');
+                            }, 4000);
+                        }
+                    });
+
+                    $('#create-team-form-submit').on('click', function(event) {
+                        var selectedMembersArray = [],
+                            teamName,
+                            teamNameEle = $('input[name=teamName]');
+
+                        teamName = teamNameEle.val().trim();
+
+                        $(teamNameEle).parents('.styled-input').toggleClass('error', !teamName);
+
+                        $('.participates-item').each(function() {
+                            if ($(this).hasClass('selected')) {
+                                selectedMembersArray.push({
+                                    userProfileID: $(this).data('uid'),
+                                    isLead: $(this).find('.switch').is(':checked')
+                                });
+                            }
+                        });
+
+                        if (!teamName) {
+                            $("html, body").animate({ scrollTop: teamNameEle.offset().top - 50 });
+                        } else if (selectedMembersArray.length < teamSize) {
+                            $('#teamMemberMessage').html(`Minimum ${teamSize} team members required`);
+                            $('#teamMemberMessage').removeClass('hide');
+                            $("html, body").animate({ scrollTop: $('#teamMemberMessage').offset().top - 50});
+                            $('#teamMemberMessage').addClass('shakeme');
+                        } else {
+                            $('#teamMemberMessage').html('').addClass('hide').removeClass('shakeme');
+
+                        }
+                    });
+                }
+            }.bind(this),
+            error:  function(opxhr, opstatus, operror) {
+
+            }.bind(this)
+        });
+    },
+
     tournamentUserDetails: function() {
         var ajaxUrl = this.getApiUrl('tournamentUserDetails');
 
@@ -115,11 +205,17 @@ var actiongolfLogin = {
                 xhr.setRequestHeader("deviceId", deviceId)
             },
             success: function(xhr, status) {
+                //temp start
+                $('#createTeam').removeClass('hide');
+                this.openParticipantsDetails();
+                //temp end
+
                 if (xhr && !xhr.participating) {
                     $('#payNow').removeClass('hide');
                 } else {
                     if (xhr && !xhr.tournamentTeam) {
                         $('#createTeam').removeClass('hide');
+                        this.openParticipantsDetails();
                     } else {
                         $('#yourTeam').removeClass('hide');
                     }
@@ -130,6 +226,18 @@ var actiongolfLogin = {
             }.bind(this)
         });
     },
+
+// var requestData1 = {};
+// requestData1.userProfileId = userProfileId;
+// requestData1.tournamentId = tournamentId;
+// requestData1.mediaID = 'Int';
+// requestData1.teamName = "pppp";
+// requestData1.members= [
+//     {
+//       "userProfileID": "Int",
+//       "isLead": "Int"
+//     }
+//   ];
 
     getAuthSession: function(key) {
         var stringValue = window.localStorage.getItem(key);
@@ -179,12 +287,14 @@ var actiongolfLogin = {
                     verify: 'https://beta.actiongolfers.com/auth/verify',
                     profileUpdate: 'https://beta.actiongolfers.com/profile/update',
                     tournamentUserDetails: `https://beta.actiongolfers.com/tournament/${tournamentId}/profiles/${userProfileId}`,
+                    openParticipants: `https://beta.actiongolfers.com/tournament/openParticipants?userProfileId=${userProfileId}&tournamentId=${tournamentId}`
                 },
                 prod : {
                     login: 'https://api.actiongolfers.com/auth/verifyRequest',
                     verify: 'https://api.actiongolfers.com/auth/verify',
                     profileUpdate: 'https://api.actiongolfers.com/profile/update',
                     tournamentUserDetails: `https://api.actiongolfers.com/tournament/${tournamentId}/profiles/${userProfileId}`,
+                    openParticipants: `https://api.actiongolfers.com/tournament/openParticipants?userProfileId=${userProfileId}&tournamentId=${tournamentId}`
                 }
             },
             domain = window.origin === 'https://actiongolfers.com' ? 'prod' : 'test';
