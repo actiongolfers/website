@@ -485,7 +485,8 @@ var actiongolfLogin = {
             $('#payment-complete').parent('.button-wrapper').addClass('loading');
             $('.screen-message.error-message').addClass('hide');
 
-            var requestData = {},
+            var ajaxUrl = _this.getApiUrl('updatePayment'),
+                requestData = {},
                 auth = 'YWdkZXY6cGFzc3dvcmQ=';
 
             requestData.fromAccountTail = xhr.transactionResponse.accountNumber;
@@ -499,7 +500,7 @@ var actiongolfLogin = {
 
             $.ajax({
                 type: "POST",
-                url: 'https://beta.actiongolfers.com/tournament/get',
+                url: ajaxUrl,
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify(requestData),
