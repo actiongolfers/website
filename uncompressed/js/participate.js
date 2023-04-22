@@ -26,7 +26,7 @@ var actiongolfLogin = {
             return;
         }
 
-        tournamentId = 1834; //tournamentDetails.tournamentId; // 1952 1829 1834
+        tournamentId = tournamentDetails.tournamentId; // 1952 1829 1834
         userProfileId = loginUserData.userProfileId;
         deviceId = loginUserData.deviceId;
 
