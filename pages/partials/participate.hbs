@@ -1,14 +1,12 @@
 <section>
     <div class="admin-container form-container">
         <h2 class="page-header">Participate</h2>
+        <div class="screen-message error-message hide">
+            Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+        </div>
         <div class="col-12">
             <div class="">
-                <div class="screen-message success-message hide">
-                    Thank you! A member of our staff will contact you within the next 24 hours.
-                </div>
-                <div class="screen-message error-message hide">
-                    Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
-                </div>
+
             </div>
             <div id="participate-cnt">
                 <div id="participateUserDetails" class="hide participate-user-details">
@@ -16,16 +14,9 @@
                         <div class="usection"><strong>Name:</strong>  <span data-firstName></span> <span data-lastName></span></div>
                         <div class="usection"><strong>Email:</strong>  <span data-email></span></div>
                         <div class="usection"><strong>Phone Number:</strong>  <span data-phoneNumber></span></div>
-
-                        <div class="screen-message success-message hide">
-                            Thank you! A member of our staff will contact you within the next 24 hours.
-                        </div>
-                        <div class="screen-message error-message hide">
-                            Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
-                        </div>
                     </div>
                 </div>
-                <form id="ajaxParticipateForm" class="input-container hide"  data-type="participate">
+                <form id="ajaxParticipateForm" class="input-container participate-update-form hide"  data-type="participate">
                     <h3>Please update the user details</h3>
 
                     <div class="col-12">
@@ -46,17 +37,19 @@
                                     data-invalid="Please enter a valid Last Name."
                                 />
                                 <label>Last Name <sup>*</sup></label>
+                                <span class="error-message required">Last Name is required.</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="col-6">
-                            <div class="styled-input">
+                            <div class="styled-input last-row">
                                 <input type="text" name="email" required
                                     data-required="Email Address is required."
                                     data-invalid="Please enter a valid Email Address."
                                 />
                                 <label>Email Address <sup>*</sup></label>
+                                <span class="error-message required">Email Address is required.</span>
                             </div>
                         </div>
                         <div class="col-6">
@@ -65,24 +58,127 @@
                     </div>
 
                     <div class="button-wrapper">
-                        <button id="participate-form-submit" class="primary-btn">Complete registration</button>
+                        <button id="participate-complete-registration" class="primary-btn">Complete registration</button>
                         <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                     </div>
                 </form>
 
-                <div id="payNow" class="hide pay-now">
-                    <h3>Please complete the registration by making the payment</h3>
-                    <div class="pay-now-button">
-                        <form name="PrePage" method = "post" action = "https://Simplecheckout.authorize.net/payment/CatalogPayment.aspx"> <input type = "hidden" name = "LinkId" value ="dbeeeb42-1ae5-44e6-a4b6-99c121a42843" /> <input type = "submit" value = "Register and Pay!" /> </form>
+                <div id="payNow" class="input-container pay-now hide">
+                    <h3>Insuffient balance please add money to wallet..</h3>
+                    <div class="pay-now-block">
+                        <!-- payment form -->
+                        <div class="pay-now-form" id="pay-now-form">
+                            <h5>Pay securely using your Credit Card</h5>
 
-                        <!-- (c) 2005, 2023. Authorize.Net is a registered trademark of CyberSource Corporation --> <div class="AuthorizeNetSeal"> <script type="text/javascript" language="javascript">var ANS_customer_id="9fdb2c7a-8a75-4222-90c4-dbcbb2f71635";</script> <script type="text/javascript" language="javascript" src="//verify.authorize.net:443/anetseal/seal.js" ></script> </div>
+                            <form id="paymentForm">
+                                <div class="col-12">
+                                    <div class="col-6">
+                                        <div class="styled-input">
+                                            <input type="text" name="amount" id="amount"
+                                                required
+                                                class="number-only"
+                                                maxlength="4"
+                                                data-required="Amount is required."
+                                                data-invalid="Please enter a valid Amount."
+                                            />
+                                            <label>Amount <sup>*</sup></label>
+                                            <span class="error-message required">Amount is required.</span>
+                                        </div>
+
+                                        <div class="styled-input">
+                                            <input type="text"
+                                                name="cardNumber" id="cardNumber"
+                                                required
+                                                class="number-only"
+                                                maxlength="16"
+                                                data-required="Card Number is required."
+                                                data-invalid="Please enter a valid Card Number."
+                                            />
+                                            <label>Card Number <sup>*</sup></label>
+                                            <span class="error-message required">Card Number is required.</span>
+                                        </div>
+                                        <div class="card-exp-cvv">
+                                            <div class="card-fields">
+                                                <div class="styled-input">
+                                                    <input type="text"
+                                                        name="expMonth" id="expMonth"
+                                                        required
+                                                        class="number-only exp"
+                                                        maxlength="2"
+                                                        data-required="expiry is required."
+                                                        data-invalid="Please enter a valid expiry date (MM)."
+                                                    />
+                                                    <label>MM <sup>*</sup></label>
+                                                </div>
+                                            </div>
+                                            <div class="card-fields">
+                                                <div class="styled-input">
+                                                    <input type="text"
+                                                        name="expYear" id="expYear"
+                                                        required
+                                                        class="number-only exp"
+                                                        maxlength="4"
+                                                        data-required="expiry is required."
+                                                        data-invalid="Please enter a valid expiry date (YYYY)."
+                                                    />
+                                                    <label>YYYY <sup>*</sup></label>
+                                                </div>
+                                            </div>
+                                            <div class="card-fields">
+                                                <div class="styled-input cvv">
+                                                    <input type="text"
+                                                        name="cardCode" id="cardCode"
+                                                        required
+                                                        class="number-only"
+                                                        maxlength="3"
+                                                        data-required="CVV is required."
+                                                        data-invalid="Please enter a valid CVV."
+                                                    />
+                                                    <label>CVV <sup>*</sup></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 authorize-seal">
+                                        <!-- (c) 2005, 2023. Authorize.Net is a registered trademark of CyberSource Corporation -->
+                                        <div class="AuthorizeNetSeal">
+                                            <script type="text/javascript" language="javascript">var ANS_customer_id="9fdb2c7a-8a75-4222-90c4-dbcbb2f71635";</script> <script type="text/javascript" language="javascript" src="//verify.authorize.net:443/anetseal/seal.js" ></script>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="dataValue" id="dataValue" />
+                                <input type="hidden" name="dataDescriptor" id="dataDescriptor" />
+                                <div class="button-wrapper">
+                                    <button id="participate-pay-button" class="primary-btn disabled-btn" disabled>Pay</button>
+                                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="pay-now-success hide" id="pay-now-success">
+                            Thank you, your payment is successful <span id="transID"></span>
+
+                            <div class="button-wrapper center-align">
+                                <button id="payment-complete" class="primary-btn">Ok</button>
+                                <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <div id="participateNow" class="hide participate-now">
+                    <h3>Click below button to particpate the tournament</h3>
+                    <div class="button-wrapper center-align">
+                        <button id="participate-button" class="primary-btn">Participate now</button>
+                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                </div>
+
                 <div id="createTeam" class="hide">
                     <div class="list-participate-wrapper"></div>
                 </div>
+
                 <div id="yourTeam" class="hide">
-                    team details
+                    <div class="list-team-wrapper"></div>
                 </div>
             </div>
 
@@ -123,10 +219,30 @@
             </div>
             <div class="button-wrapper">
                 <button id="create-team-form-submit" class="primary-btn">Create Team</button>
+                <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
             </div>
         </div>
 
     \{{else}}
         No Open participates found..
+    \{{/if}}
+</script>
+
+<script type="text/x-handlebars-template" data-template="listTeamsTemplate">
+    <h5>Your Team</h5>
+    \{{#if tournamentTeamMembers}}
+        <div class="list-participates">
+            \{{#each tournamentTeamMembers}}
+                <div class="participates-item \{{#if isLead}} lead \{{/if}}">
+                    <div class="player">
+                        <div class="photo \{{#unless imageUrl}}icon\{{/unless}}"><img src="\{{imageUrl}}" /></div>
+                        <div class="name">\{{firstName}} \{{lastName}}</div>
+                        <div class="phone">\{{teleNumber}}</div>
+                    </div>
+                </div>
+            \{{/each}}
+        </div>
+    \{{else}}
+        No Team member found..
     \{{/if}}
 </script>

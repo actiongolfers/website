@@ -2248,6 +2248,27 @@ footer {
 .button-wrapper {
     position: relative;
 
+    &.center-align {
+        .primary-btn,
+        .secondary-btn {
+            margin-right: 0;
+        }
+
+        &.loading {
+            .lds-ellipsis {
+                display: inline-block;
+                position: relative;
+                top: 0;
+                left: 0;
+                right: 0;
+            }
+
+            .primary-btn {
+                position: absolute;
+            }
+        }
+    }
+
     &.loading {
         .primary-btn {
             visibility: hidden;
@@ -2279,6 +2300,11 @@ footer {
         &:focus {
             opacity: 0.9;
             transform: scale(1.05);
+        }
+
+        &.disabled-btn {
+            pointer-events: none;
+            background: @greyButton;
         }
     }
 
@@ -2575,10 +2601,14 @@ footer {
 }
 
 .participate-user-details {
-    padding: 40px;
+    padding: 20px;
     margin: 0 0 30px;
     box-shadow: 3px 4px 30px @greyButton;
     border-radius: 20px;
+
+    @media screen and (min-width:768px) {
+        padding: 30px;
+    }
 
     .usection {
         position: relative;
@@ -2598,21 +2628,118 @@ footer {
     }
 }
 
-#ajaxParticipateForm  h3 {
-    padding: 0 0 30px;
-}
-
-.pay-now {
-    padding: 40px 0 0 ;
-
+.participate-update-form  {
     h3 {
         padding: 0 0 30px;
     }
 
-    .pay-now-button{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .last-row.styled-input {
+        margin-bottom: 20px;
+    }
+}
+
+#participate-cnt {
+    min-width: 280px;
+
+    @media screen and (min-width:768px) {
+        min-width: 684px;
+    }
+
+    @media screen and (min-width:1024px) {
+        min-width: 974px;
+    }
+
+    @media screen and (min-width:1200px) {
+        min-width: 1130px;
+    }
+}
+
+.form-container .input-container.pay-now {
+    padding: 40px 0 0 ;
+
+    @media screen and (min-width:768px) {
+        width: 100%;
+    }
+}
+
+.pay-now {
+    h3 {
+        padding: 0 0 30px;
+    }
+
+    .pay-now-block {
+        width: 100%;
+        padding: 16px;
+        background: #efefef;
+        border-radius: 8px;
+
+        @media screen and (min-width:1024px) {
+            padding: 24px;
+        }
+
+        h5{
+            font-size: 16px;
+            padding-bottom: 24px;
+        }
+
+        .col-12 .styled-input {
+            width: 100%;
+            max-width: 400px;
+
+            input[type=text] {
+                background: @white;
+                letter-spacing: 4px;
+
+                @media screen and (min-width:768px) {
+                    letter-spacing: 6px;
+                }
+            }
+        }
+
+        .card-exp-cvv {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            gap: 10px;
+            max-width: 400px;
+
+            .card-fields {
+                &:first-child {
+                    width: 116px;
+                }
+
+                &:last-child {
+                    width: 150px;
+                }
+
+                .styled-input {
+                    margin-bottom: 12px;
+                }
+            }
+        }
+
+        #participate-pay-button {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .authorize-seal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .pay-now-success {
+            background: url(@successMessage) no-repeat center 10px;
+            padding: 85px 12px 20px;
+            background-size: 60px;
+            text-align: center;
+
+            .button-wrapper {
+
+            }
+        }
     }
 
 
@@ -2638,7 +2765,8 @@ footer {
     }
 }
 
-.list-participate-wrapper {
+.list-participate-wrapper,
+.list-team-wrapper {
     padding: 20px 0 0;
 
     @media screen and (min-width:1024px) {
@@ -2685,6 +2813,7 @@ footer {
             border: 3px solid transparent;
             position: relative;
             min-width: 150px;
+            word-break: break-word;
 
             @media screen and (min-width:768px) {
                 min-width: 210px;
@@ -2848,6 +2977,10 @@ footer {
             margin-left: 15px;
         }
     }
+}
+
+.list-team-wrapper .list-participates .participates-item {
+    cursor: default;
 }
 
 @keyframes hamburgermenu {

@@ -172,7 +172,8 @@ var actiongolfLogin = {
                                     lastName: xhr.lastName,
                                     phoneNumber: xhr.phoneNumber,
                                     imageUrl: xhr.largeImageUrl,
-                                    deviceId: deviceId
+                                    deviceId: deviceId,
+                                    balanceAmount: parseInt(xhr.balanceAmount || 0)
                                 };
                                 this.setAuthSession('loginUserData', loginUserData);
                              }
