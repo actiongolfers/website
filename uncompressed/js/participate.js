@@ -508,6 +508,7 @@ var actiongolfLogin = {
                 error:  function(xhr, status, error) {
                     $('.screen-message.error-message').removeClass('hide');
                     $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
+                    $('#payment-complete').parent('.button-wrapper').removeClass('loading');
                 }.bind(this)
             });
 
