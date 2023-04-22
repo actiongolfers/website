@@ -26,7 +26,7 @@ var actiongolfLogin = {
             return;
         }
 
-        tournamentId = 1829; //tournamentDetails.tournamentId; // 1952 1829 1834
+        tournamentId = 1834; //tournamentDetails.tournamentId; // 1952 1829 1834
         userProfileId = loginUserData.userProfileId;
         deviceId = loginUserData.deviceId;
 
@@ -157,6 +157,7 @@ var actiongolfLogin = {
         var openParticipants = _this.getApiUrl('openParticipants'),
             teamSize = tournamentDetails.teamSize;
 
+        $('.page-header').addClass('loading');
         $.ajax({
             type: "GET",
             url: openParticipants,
@@ -164,6 +165,8 @@ var actiongolfLogin = {
             dataType: "json",
             timeout: 0,
             success: function(opxhr, opstatus) {
+                $('.page-header').removeClass('loading');
+
                 if (opxhr && opxhr.openParticipants && opxhr.openParticipants.length) {
                     opxhr.openParticipants[0].selected = true;
                     opxhr.teamSize = teamSize;
@@ -234,6 +237,7 @@ var actiongolfLogin = {
                 }
             }.bind(this),
             error:  function(opxhr, opstatus, operror) {
+                $('.page-header').removeClass('loading');
                 $('.screen-message.error-message').removeClass('hide');
                 $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
             }.bind(this)
@@ -242,6 +246,7 @@ var actiongolfLogin = {
 
     tournamentUserDetails: function() {
         var ajaxUrl = _this.getApiUrl('tournamentUserDetails');
+        $('.page-header').addClass('loading');
 
         // get tournament details///
         // var requestData = {},
@@ -289,6 +294,7 @@ var actiongolfLogin = {
                 xhr.setRequestHeader("deviceId", deviceId)
             },
             success: function(xhr, status) {
+                $('.page-header').removeClass('loading');
                 if (xhr && xhr.tournamentTeam && xhr.tournamentTeam.tournamentTeamMembers && xhr.tournamentTeam.tournamentTeamMembers.length) {
                     $('#yourTeam').removeClass('hide');
                     var listTeamsTemplate = Handlebars.compile($("[data-template='listTeamsTemplate']").html());
@@ -463,6 +469,7 @@ var actiongolfLogin = {
                 }
             }.bind(this),
             error:  function(xhr, status, error) {
+                $('.page-header').removeClass('loading');
                 $('.screen-message.error-message').removeClass('hide');
                 $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
             }.bind(this)
