@@ -74,10 +74,10 @@ var actiongolfLogin = {
             event.preventDefault();
 
             requestData = {};
-            otpValidationParticipate = $('.otp-validation-slide').length || window.sessionStorage.getItem('agReDirectPage') === './participate.html';
+            otpValidationParticipate = $('.otp-validation-slide').length || window.sessionStorage.getItem('agReDirectPage').includes('participate');;
 
             if (otpValidationParticipate) {
-               window.sessionStorage.setItem('agReDirectPage', './participate.html');
+               window.sessionStorage.setItem('agReDirectPage', window.sessionStorage.getItem('agReDirectPage'));
             }
 
             $('.screen-message').addClass('hide');

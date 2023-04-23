@@ -18,25 +18,25 @@ var actiongolfLogin = {
         tournamentDetails = _this.getAuthSession('tournamentDetails');
         publicAgLoginAuth = _this.getAuthSession(publicSessionKey);
 
-        if (!tournamentDetails) {
-            $('.screen-message.error-message').html('Tournament Details Not found').removeClass('hide');
-            return;
-        }
-
-        if (!publicAgLoginAuth) {
-            window.sessionStorage.setItem('agReDirectPage', './participate.html');
-            window.location.href = './login.html';
-
-            return;
-        }
-
-        tournamentId = tournamentDetails.tournamentId; // 1952 1829 1834
-
         const urlSearchParams = new URLSearchParams(window.location.search);
         const params = Object.fromEntries(urlSearchParams.entries());
 
         if (params && params.tournamentId) {
             tournamentId = params.tournamentId;
+        } else if (tournamentDetails) {
+            tournamentId = tournamentDetails.tournamentId; // 1952 1829 1834
+        }
+
+        if (!tournamentDetails && !tournamentId) {
+            $('.screen-message.error-message').html('Tournament Details Not found').removeClass('hide');
+            return;
+        }
+
+        if (!publicAgLoginAuth) {
+            window.sessionStorage.setItem('agReDirectPage', window.location.href);
+            window.location.href = './login.html';
+
+            return;
         }
 
         userProfileId = publicAgLoginAuth.userProfileId;
@@ -287,7 +287,7 @@ var actiongolfLogin = {
                             });
                         }.bind(this));
                     } else {
-                        _this.tournamentUserDetails();
+                        _this.tournamentDetails();
                     }
                 }
             }.bind(this),
@@ -299,7 +299,7 @@ var actiongolfLogin = {
         });
     },
 
-    tournamentUserDetails: function() {
+    tournamentDetails: function() {
         var ajaxUrl = _this.getApiUrl('getTournamentDetails');
 
         $('#pageLoad').show();
@@ -329,19 +329,19 @@ var actiongolfLogin = {
                 $('#participateUserDetails').removeClass('hide');
 
                 var userTournamentDetails = Handlebars.compile($("[data-template='userTournamentDetails']").html()),
-                    userTournamentDate = {};
+                    userTournamentData = {};
 
-                userTournamentDate.firstName = loginUserData.firstName || '';
-                userTournamentDate.lastName = loginUserData.lastName || '';
-                userTournamentDate.email = loginUserData.email || '';
-                userTournamentDate.phoneNumber = loginUserData.phoneNumber || '';
+                userTournamentData.firstName = loginUserData.firstName || '';
+                userTournamentData.lastName = loginUserData.lastName || '';
+                userTournamentData.email = loginUserData.email || '';
+                userTournamentData.phoneNumber = loginUserData.phoneNumber || '';
 
-                userTournamentDate.tournamentName = tournamentDetails.tournamentName || '';
-                userTournamentDate.entryFee = (tournamentDetails.entryFee === 0) ? 'Free' :  ('$' + tournamentDetails.entryFee);
-                userTournamentDate.tournamentCategory = tournamentDetails.tournamentCategoryDesc || '';
-                userTournamentDate.teamSize = tournamentDetails.teamSize || '';
+                userTournamentData.tournamentName = tournamentDetails.tournamentName || '';
+                userTournamentData.entryFee = (tournamentDetails.entryFee === 0) ? 'Free' :  ('$' + tournamentDetails.entryFee);
+                userTournamentData.tournamentCategory = tournamentDetails.tournamentCategoryDesc || '';
+                userTournamentData.teamSize = tournamentDetails.teamSize || '';
 
-                $('.participate-user-details').html(userTournamentDetails(userTournamentDate));
+                $('.participate-user-details').html(userTournamentDetails(userTournamentData));
                 _this.getPartcipateStatus();
 
             }.bind(this),
