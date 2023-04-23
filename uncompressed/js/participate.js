@@ -4,6 +4,8 @@ let tournamentId,
     selectedMembers = [],
     loginUserData,
     tournamentDetails,
+    publicAgLoginAuth,
+    auth = 'YWdkZXY6cGFzc3dvcmQ=',
     _this;
 
 var actiongolfLogin = {
@@ -13,13 +15,14 @@ var actiongolfLogin = {
         _this = this;
 
         tournamentDetails = _this.getAuthSession('tournamentDetails');
-        loginUserData = _this.getAuthSession('loginUserData');
+        publicAgLoginAuth = _this.getAuthSession(publicSessionKey);
 
         if (!tournamentDetails) {
-            alert('tournamentDetails Not found');
+            $('.screen-message.error-message').html('Tournament Details Not found').removeClass('hide');
+            return;
         }
 
-        if (!_this.getAuthSession(publicSessionKey) || !loginUserData) {
+        if (!publicAgLoginAuth) {
             window.sessionStorage.setItem('agReDirectPage', './participate.html');
             window.location.href = "./login.html";
 
@@ -27,126 +30,18 @@ var actiongolfLogin = {
         }
 
         tournamentId = tournamentDetails.tournamentId; // 1952 1829 1834
-        userProfileId = loginUserData.userProfileId;
-        deviceId = loginUserData.deviceId;
 
-        if (loginUserData && !(loginUserData.firstName || loginUserData.lastName || loginUserData.email)) {
-            $('#ajaxParticipateForm').removeClass('hide');
-            $('#participateUserDetails').addClass('hide');
-            $('#payNow').addClass('hide');
-            $('#participateNow').addClass('hide');
-            $('[name=firstName]').val(loginUserData.firstName || '');
-            $('[name=lastName]').val(loginUserData.lastName || '');
-            $('[name=email]').val(loginUserData.email || '');
-        } else {
-            $('#ajaxParticipateForm').addClass('hide');
-            $('#participateUserDetails').removeClass('hide');
-            $('[data-firstName]').html(loginUserData.firstName || '');
-            $('[data-lastName]').html(loginUserData.lastName || '');
-            $('[data-email]').html(loginUserData.email || '');
-            $('[data-phoneNumber]').html(loginUserData.phoneNumber || '');
-            _this.tournamentUserDetails();
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
+
+        if (params && params.tournamentId) {
+            tournamentId = params.tournamentId;
         }
 
-        $('#participate-complete-registration').on('click', function(event) {
-            event.preventDefault();
-            var ajaxUrl = _this.getApiUrl('profileUpdate'),
-                requestData = {},
-                auth = 'YWdkZXY6cGFzc3dvcmQ=',
-                isValid = true;
+        userProfileId = publicAgLoginAuth.userProfileId;
+        deviceId = publicAgLoginAuth.deviceId;
 
-            requestData.firstName = $('[name=firstName]').val() || '';
-            requestData.lastName = $('[name=lastName]').val() || '';
-            requestData.email = $('[name=email]').val() || '';
-            requestData.phoneNumber = loginUserData.phoneNumber;
-            requestData.userProfileId = userProfileId;
-            requestData.deviceId = deviceId;
-            requestData.golferStatusType = "Amateur";
-            requestData.genderId = 1;
-            requestData.ghin = "";
-            requestData.handicapIndex= 0.0;
-            requestData.approxIndex= 0.0;
-
-            if (!_this.isValidTextField(requestData.firstName)) {
-                $('[name=firstName]').parent('.styled-input').addClass('error');
-                isValid = false;
-            } else {
-                $('[name=firstName]').parent('.styled-input').removeClass('error');
-                isValid = true;
-            }
-
-            if (!_this.isValidTextField(requestData.lastName)) {
-                $('[name=lastName]').parent('.styled-input').addClass('error');
-                isValid = false;
-            } else {
-                $('[name=lastName]').parent('.styled-input').removeClass('error');
-                isValid = isValid;
-            }
-
-            if (!requestData.email.trim()) {
-                $('[name=email]').parent('.styled-input').addClass('error');
-                $('[name=email]').parent('.styled-input').find('.error-message').html($('[name=email]').data('required'));
-                isValid = false;
-            } else {
-                if (!_this.isValidEmail(requestData.email)) {
-                    $('[name=email]').parent('.styled-input').addClass('error');
-                    $('[name=email]').parent('.styled-input').find('.error-message').html($('[name=email]').data('invalid'));
-                    isValid = false;
-                } else {
-                    $('[name=email]').parent('.styled-input').removeClass('error');
-                    isValid = isValid;
-                }
-            }
-
-            if (!isValid) {
-                return;
-            }
-
-            $('#participate-complete-registration').parent('.button-wrapper').addClass('loading');
-            $('.screen-message.error-message').addClass('hide');
-
-            $.ajax({
-                type: "PUT",
-                url: ajaxUrl,
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify(requestData),
-                timeout: 0,
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Authorization", "Basic " + auth),
-                    xhr.setRequestHeader("userProfileId", userProfileId),
-                    xhr.setRequestHeader("deviceId", deviceId)
-                },
-                success: function(xhr, status) {
-                    $('#participate-complete-registration').parent('.button-wrapper').removeClass('loading');
-
-                    var loginUserData = {
-                        userProfileId: requestData.userProfileId,
-                        email: requestData.email,
-                        firstName: requestData.firstName,
-                        lastName: requestData.lastName,
-                        phoneNumber: requestData.phoneNumber,
-                        deviceId: requestData.deviceId,
-                        balanceAmount: 0
-                    };
-                    _this.setAuthSession('loginUserData', loginUserData);
-
-                    $('#ajaxParticipateForm').addClass('hide');
-                    $('#participateUserDetails').removeClass('hide');
-                    $('[data-firstName]').html(loginUserData.firstName || '');
-                    $('[data-lastName]').html(loginUserData.lastName || '');
-                    $('[data-email]').html(loginUserData.email || '');
-                    $('[data-phoneNumber]').html(loginUserData.phoneNumber || '');
-
-                    _this.tournamentUserDetails();
-                }.bind(this),
-                error:  function(xhr, status, error) {
-                    $('.screen-message.error-message').removeClass('hide');
-                    $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
-                    $('#participate-complete-registration').parent('.button-wrapper').removeClass('loading');
-                }.bind(this)
-            });
-        }.bind(this));
+        _this.getProfile();
 
         String.prototype.splice = function(idx, rem, str) {
             return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
@@ -157,7 +52,8 @@ var actiongolfLogin = {
         var openParticipants = _this.getApiUrl('openParticipants'),
             teamSize = tournamentDetails.teamSize;
 
-        $('.page-header').addClass('loading');
+        $('#pageLoad').show();
+
         $.ajax({
             type: "GET",
             url: openParticipants,
@@ -165,7 +61,7 @@ var actiongolfLogin = {
             dataType: "json",
             timeout: 0,
             success: function(opxhr, opstatus) {
-                $('.page-header').removeClass('loading');
+                $('#pageLoad').hide();
 
                 if (opxhr && opxhr.openParticipants && opxhr.openParticipants.length) {
                     opxhr.openParticipants[0].selected = true;
@@ -215,7 +111,7 @@ var actiongolfLogin = {
                         $('.participates-item').each(function() {
                             if ($(this).hasClass('selected')) {
                                 selectedMembersArray.push({
-                                    userProfileID: $(this).data('uid'),
+                                    userProfileId: $(this).data('uid'),
                                     isLead: $(this).find('.switch').is(':checked') ? 1 : 0
                                 });
                             }
@@ -237,7 +133,137 @@ var actiongolfLogin = {
                 }
             }.bind(this),
             error:  function(opxhr, opstatus, operror) {
-                $('.page-header').removeClass('loading');
+                $('#pageLoad').hide();
+                $('.screen-message.error-message').removeClass('hide');
+                $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
+            }.bind(this)
+        });
+    },
+
+    getProfile: function() {
+        var ajaxUrl = _this.getApiUrl('getProfile');
+
+        $('#pageLoad').show();
+
+        $.ajax({
+            type: "GET",
+            url: ajaxUrl,
+            contentType: "application/json",
+            dataType: "json",
+            timeout: 0,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Basic " + auth),
+                xhr.setRequestHeader("userProfileId", userProfileId),
+                xhr.setRequestHeader("deviceId", deviceId)
+            },
+            success: function(xhr, status) {
+                $('#pageLoad').hide();
+
+                if (xhr) {
+                    loginUserData = xhr;
+
+                    if (loginUserData && !(loginUserData.firstName && loginUserData.lastName && loginUserData.email)) {
+                        $('#ajaxParticipateForm').removeClass('hide');
+                        $('#participateUserDetails').addClass('hide');
+                        $('#payNow').addClass('hide');
+                        $('#participateNow').addClass('hide');
+                        $('[name=firstName]').val(loginUserData.firstName || '');
+                        $('[name=lastName]').val(loginUserData.lastName || '');
+                        $('[name=email]').val(loginUserData.email || '');
+
+                        $('#participate-complete-registration').on('click', function(event) {
+                            event.preventDefault();
+                            var ajaxUrl = _this.getApiUrl('profileUpdate'),
+                                requestData = {},
+                                isValid = true;
+
+                            requestData.firstName = $('[name=firstName]').val() || '';
+                            requestData.lastName = $('[name=lastName]').val() || '';
+                            requestData.email = $('[name=email]').val() || '';
+                            requestData.phoneNumber = loginUserData.phoneNumber;
+                            requestData.userProfileId = userProfileId;
+                            requestData.deviceId = deviceId;
+                            requestData.golferStatusType = "Amateur";
+                            requestData.genderId = 1;
+                            requestData.ghin = "";
+                            requestData.handicapIndex= 0.0;
+                            requestData.approxIndex= 0.0;
+
+                            if (!_this.isValidTextField(requestData.firstName)) {
+                                $('[name=firstName]').parent('.styled-input').addClass('error');
+                                isValid = false;
+                            } else {
+                                $('[name=firstName]').parent('.styled-input').removeClass('error');
+                                isValid = true;
+                            }
+
+                            if (!_this.isValidTextField(requestData.lastName)) {
+                                $('[name=lastName]').parent('.styled-input').addClass('error');
+                                isValid = false;
+                            } else {
+                                $('[name=lastName]').parent('.styled-input').removeClass('error');
+                                isValid = isValid;
+                            }
+
+                            if (!requestData.email.trim()) {
+                                $('[name=email]').parent('.styled-input').addClass('error');
+                                $('[name=email]').parent('.styled-input').find('.error-message').html($('[name=email]').data('required'));
+                                isValid = false;
+                            } else {
+                                if (!_this.isValidEmail(requestData.email)) {
+                                    $('[name=email]').parent('.styled-input').addClass('error');
+                                    $('[name=email]').parent('.styled-input').find('.error-message').html($('[name=email]').data('invalid'));
+                                    isValid = false;
+                                } else {
+                                    $('[name=email]').parent('.styled-input').removeClass('error');
+                                    isValid = isValid;
+                                }
+                            }
+
+                            if (!isValid) {
+                                return;
+                            }
+
+                            $('#participate-complete-registration').parent('.button-wrapper').addClass('loading');
+                            $('.screen-message.error-message').addClass('hide');
+
+                            $.ajax({
+                                type: "PUT",
+                                url: ajaxUrl,
+                                contentType: "application/json",
+                                dataType: "json",
+                                data: JSON.stringify(requestData),
+                                timeout: 0,
+                                beforeSend: function(xhr) {
+                                    xhr.setRequestHeader("Authorization", "Basic " + auth),
+                                    xhr.setRequestHeader("userProfileId", userProfileId),
+                                    xhr.setRequestHeader("deviceId", deviceId)
+                                },
+                                success: function(xhr, status) {
+                                    $('#participate-complete-registration').parent('.button-wrapper').removeClass('loading');
+
+                                    window.location.reload();
+                                }.bind(this),
+                                error:  function(xhr, status, error) {
+                                    $('.screen-message.error-message').removeClass('hide');
+                                    $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
+                                    $('#participate-complete-registration').parent('.button-wrapper').removeClass('loading');
+                                }.bind(this)
+                            });
+                        }.bind(this));
+                    } else {
+                        $('#ajaxParticipateForm').addClass('hide');
+                        $('#participateUserDetails').removeClass('hide');
+                        $('[data-firstName]').html(loginUserData.firstName || '');
+                        $('[data-lastName]').html(loginUserData.lastName || '');
+                        $('[data-email]').html(loginUserData.email || '');
+                        $('[data-phoneNumber]').html(loginUserData.phoneNumber || '');
+                        _this.tournamentUserDetails();
+                    }
+                }
+            }.bind(this),
+            error:  function(xhr, status, error) {
+                $('#pageLoad').hide();
                 $('.screen-message.error-message').removeClass('hide');
                 $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
             }.bind(this)
@@ -245,35 +271,41 @@ var actiongolfLogin = {
     },
 
     tournamentUserDetails: function() {
+        var ajaxUrl = _this.getApiUrl('getTournamentDetails');
+
+        $('#pageLoad').show();
+        var requestData = {};
+
+        requestData.tournamentId = tournamentId;
+        requestData.latitude = 0;
+        requestData.longitude = 0;
+        requestData.userProfileId = userProfileId;
+
+        $.ajax({
+            type: "POST",
+            url: ajaxUrl,
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(requestData),
+            timeout: 0,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Basic " + auth),
+                xhr.setRequestHeader("userProfileId", userProfileId),
+                xhr.setRequestHeader("deviceId", deviceId)
+            },
+            success: function(xhr, status) {
+                tournamentDetails = xhr.tournamentDetail;
+                _this.getPartcipateStatus();
+
+            }.bind(this),
+            error:  function(xhr, status, error) {
+                $('#pageLoad').hide();
+            }.bind(this)
+        });
+    },
+
+    getPartcipateStatus: function() {
         var ajaxUrl = _this.getApiUrl('tournamentUserDetails');
-        $('.page-header').addClass('loading');
-
-        // get tournament details///
-        // var requestData = {},
-        //     auth = 'YWdkZXY6cGFzc3dvcmQ=';
-
-        // requestData.tournamentId = tournamentId;
-        // requestData.latitude = 0;
-        // requestData.longitude = 0;
-        // requestData.userProfileId = userProfileId;
-
-        // $.ajax({
-        //     type: "POST",
-        //     url: 'https://beta.actiongolfers.com/tournament/get',
-        //     contentType: "application/json",
-        //     dataType: "json",
-        //     data: JSON.stringify(requestData),
-        //     timeout: 0,
-        //     beforeSend: function(xhr) {
-        //         xhr.setRequestHeader("Authorization", "Basic " + auth),
-        //         xhr.setRequestHeader("userProfileId", userProfileId),
-        //         xhr.setRequestHeader("deviceId", deviceId)
-        //     },
-        //     success: function(xhr, status) {
-        //     }.bind(this),
-        //     error:  function(xhr, status, error) {
-        //     }.bind(this)
-        // });
 
         function validateFields() {
             if (!$('input[name=amount]').val() || $('input[name=cardNumber]').val().toString().length != $('input[name=cardNumber]').attr('maxlength') || $('input[name=expMonth]').val().toString().length != $('input[name=expMonth]').attr('maxlength') || $('input[name=expYear]').val().toString().length != $('input[name=expYear]').attr('maxlength') || $('input[name=cardCode]').val().toString().length != $('input[name=cardCode]').attr('maxlength') ) {
@@ -294,7 +326,7 @@ var actiongolfLogin = {
                 xhr.setRequestHeader("deviceId", deviceId)
             },
             success: function(xhr, status) {
-                $('.page-header').removeClass('loading');
+                $('#pageLoad').hide();
                 if (xhr && xhr.tournamentTeam && xhr.tournamentTeam.tournamentTeamMembers && xhr.tournamentTeam.tournamentTeamMembers.length) {
                     $('#yourTeam').removeClass('hide');
                     var listTeamsTemplate = Handlebars.compile($("[data-template='listTeamsTemplate']").html());
@@ -318,8 +350,6 @@ var actiongolfLogin = {
                             return false;
                         }
                     }.bind(this));
-
-
 
                     $('.number-only').on('keyup', function(event) {
                         validateFields();
@@ -469,7 +499,7 @@ var actiongolfLogin = {
                 }
             }.bind(this),
             error:  function(xhr, status, error) {
-                $('.page-header').removeClass('loading');
+                $('#pageLoad').hide();
                 $('.screen-message.error-message').removeClass('hide');
                 $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
             }.bind(this)
@@ -486,8 +516,7 @@ var actiongolfLogin = {
             $('.screen-message.error-message').addClass('hide');
 
             var ajaxUrl = _this.getApiUrl('updatePayment'),
-                requestData = {},
-                auth = 'YWdkZXY6cGFzc3dvcmQ=';
+                requestData = {};
 
             requestData.fromAccountTail = xhr.transactionResponse.accountNumber;
             requestData.paymentTransactionId = xhr.transactionResponse.transId;
@@ -529,7 +558,7 @@ var actiongolfLogin = {
 
         requestData.userProfileId = userProfileId;
         requestData.tournamentId = tournamentId;
-        requestData.mediaID = 0;
+        requestData.mediaId = 0;
         requestData.teamName = teamName;
         requestData.members = selectedMembersArray;
 
@@ -544,10 +573,13 @@ var actiongolfLogin = {
             timeout: 0,
             data: JSON.stringify(requestData),
             success: function(xhr, status) {
-                $('#yourTeam').removeClass('hide');
-                $('#createTeam').addClass('hide');
-                $('#create-team-form-submit').parent('.button-wrapper').addClass('loading');
-                $('.screen-message.error-message').addClass('hide');
+                if (xhr && xhr.IsSuccess) {
+                    window.location.reload();
+                } else if (xhr && xhr.errorCode === 1644) {
+                    $('#create-team-form-submit').parent('.button-wrapper').removeClass('loading');
+                    $('.screen-message.error-message').html(xhr.errorMsg).removeClass('hide');
+                    $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
+                }
             }.bind(this),
             error:  function(xhr, status, error) {
                 $('.screen-message.error-message').removeClass('hide');
@@ -605,9 +637,7 @@ var actiongolfLogin = {
     },
 
     isValidTextField: function(userinput) {
-        var pattern = /^[a-zA-Z ]{1,50}$/i;
-
-        return pattern.test(userinput);
+        return userinput.trim() !== '';
     },
 
     getApiUrl: function(source) {
@@ -622,6 +652,8 @@ var actiongolfLogin = {
                     authorize: 'https://apitest.authorize.net/xml/v1/request.api',
                     participate: 'https://beta.actiongolfers.com/tournament/participate',
                     updatePayment: 'https://beta.actiongolfers.com/payment/ag_transaction',
+                    getProfile: `https://beta.actiongolfers.com/profile/get/${userProfileId}`,
+                    getTournamentDetails: 'https://beta.actiongolfers.com/tournament/get',
                 },
                 prod : {
                     login: 'https://api.actiongolfers.com/auth/verifyRequest',
@@ -632,7 +664,9 @@ var actiongolfLogin = {
                     createTeam: 'https://api.actiongolfers.com//tournament/createTeamV2',
                     authorize: 'https://api.authorize.net/xml/v1/request.api',
                     participate: 'https://api.actiongolfers.com/tournament/participate',
-                    updatePayment: 'https://api.actiongolfers.com/payment/ag_transaction'
+                    updatePayment: 'https://api.actiongolfers.com/payment/ag_transaction',
+                    getProfile: `https://api.actiongolfers.com/profile/get/${userProfileId}`,
+                    getTournamentDetails: 'https://api.actiongolfers.com/tournament/get',
                 }
             },
             domain = window.origin === 'https://actiongolfers.com' ? 'prod' : 'test';

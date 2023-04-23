@@ -164,20 +164,6 @@ var actiongolfLogin = {
                             window.sessionStorage.removeItem('agReDirectPage');
                             this.setAuthSession( otpValidationParticipate ? publicSessionKey : sessionKey, sessionData);
 
-                            if (otpValidationParticipate && xhr) {
-                                var loginUserData = {
-                                    userProfileId: xhr.userProfileId,
-                                    email: xhr.email,
-                                    firstName: xhr.firstName,
-                                    lastName: xhr.lastName,
-                                    phoneNumber: xhr.phoneNumber,
-                                    imageUrl: xhr.largeImageUrl,
-                                    deviceId: deviceId,
-                                    balanceAmount: parseInt(xhr.balanceAmount || 0)
-                                };
-                                this.setAuthSession('loginUserData', loginUserData);
-                             }
-
                             if (reDirectUrl) {
                                 window.location.href = reDirectUrl;
                             } else {
