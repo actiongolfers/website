@@ -43,6 +43,10 @@ var actiongolfLanding = {
                             teamSize: xhr.tournamentInfo.teamSize
                         });
 
+                        self.setAuthSession('landingPage', {
+                            href: window.location.href
+                        });
+
                         if (self.getAuthSession(publicSessionKey)) {
                             self.setAuthSession(publicSessionKey, self.getAuthSession(publicSessionKey));
                             window.location.href = "./participate.html";

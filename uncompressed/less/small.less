@@ -1711,6 +1711,23 @@ footer {
     font-weight: 100;
     position: relative;
 
+    .page-header-link {
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+        font-family: @actionGolfRegular;
+        font-size: 16px;
+        color: @brandColor;
+        top: -32px;
+        text-decoration: underline;
+        padding-left: 15px;
+        background: url(@carouselArrow) no-repeat 0 center transparent;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
     &:after {
         display: inline-block;
         width: 10px;
@@ -2602,6 +2619,29 @@ footer {
 }
 
 .participate-user-details {
+    .usection-name {
+        color: @brandColor;
+        padding: 0 0 20px;
+    }
+
+    @media screen and (min-width:768px) {
+        .user-tournament-details {
+            display: flex;
+            justify-content: space-between;
+
+            .tournament-details {
+                max-width: calc(50% - 20px);
+
+
+            }
+
+            .user-details {
+                max-width: calc(50% - 20px);
+                text-align: right;
+            }
+        }
+    }
+
     padding: 20px;
     margin: 0 0 30px;
     box-shadow: 3px 4px 30px @greyButton;
@@ -2609,6 +2649,11 @@ footer {
 
     @media screen and (min-width:768px) {
         padding: 30px;
+        margin: 0 0 40px;
+    }
+
+    @media screen and (min-width:1024px) {
+        margin: 0 0 50px;
     }
 
     .usection {
@@ -2617,13 +2662,18 @@ footer {
 
         strong {
             display: none;
+            font-size: 14px;
+            background: @brandColor;
+            color: @white;
+            padding: 5px;
+            border-radius: 8px;
         }
 
         &:nth-child(1) {
             font-size: 30px;
         }
 
-        &:nth-child(1) {
+        &:nth-child(2) {
             font-size: 20px;
         }
     }
@@ -2672,9 +2722,34 @@ footer {
     }
 }
 
+.participate-now {
+    h3 {
+        font-family: @actionGolfSemiBold;
+        font-size: 18px;
+
+        @media screen and (min-width:1024px) {
+            font-size: 22px;
+        }
+        padding: 0 0 30px;
+    }
+}
+
 .pay-now {
     h3 {
+        font-family: @actionGolfSemiBold;
+        font-size: 18px;
         padding: 0 0 30px;
+    }
+
+    .current-balance {
+        padding-bottom: 30px;
+        font-family: @actionGolfSemiBold;
+        font-size: 24px;
+
+        @media screen and (min-width:1024px) {
+            padding-bottom: 40px;
+        }
+
     }
 
     .pay-now-block {
@@ -2696,13 +2771,16 @@ footer {
             width: 100%;
             max-width: 400px;
 
-            input[type=text] {
-                background: @white;
+            input#cardNumber {
                 letter-spacing: 4px;
 
                 @media screen and (min-width:768px) {
                     letter-spacing: 6px;
                 }
+            }
+
+            input[type=text] {
+                background: @white;
             }
         }
 

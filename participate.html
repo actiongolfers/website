@@ -19,7 +19,7 @@
             </header>
             <section>
                 <div class="admin-container form-container">
-                    <h2 class="page-header">Participate </h2>
+                    <h2 class="page-header">Participate <a class="page-header-link" >Logout</a></h2>
                     <div class="screen-message error-message hide">
                         Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
                     </div>
@@ -29,13 +29,7 @@
                         </div>
                         <div id="participate-cnt" class="participate-content">
                             <div id="pageLoad" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-                            <div id="participateUserDetails" class="hide participate-user-details">
-                                <div>
-                                    <div class="usection"><strong>Name:</strong>  <span data-firstName></span> <span data-lastName></span></div>
-                                    <div class="usection"><strong>Email:</strong>  <span data-email></span></div>
-                                    <div class="usection"><strong>Phone Number:</strong>  <span data-phoneNumber></span></div>
-                                </div>
-                            </div>
+                            <div id="participateUserDetails" class="hide participate-user-details"></div>
                             <form id="ajaxParticipateForm" class="input-container participate-update-form hide"  data-type="participate">
                                 <h3>Please update the user details</h3>
             
@@ -84,7 +78,11 @@
                             </form>
             
                             <div id="payNow" class="input-container pay-now hide">
-                                <h3>Insuffient balance please add money to wallet..</h3>
+                                <div class="current-balance">
+                                    Current Balance - <span id="currentBalance"></span>
+                                </div>
+            
+                                <h3 id="payment-title">Insufficient amount to Participate this tournament. Please add the required amount to continue</h3>
                                 <div class="pay-now-block">
                                     <!-- payment form -->
                                     <div class="pay-now-form" id="pay-now-form">
@@ -175,7 +173,7 @@
                                         </form>
                                     </div>
                                     <div class="pay-now-success hide" id="pay-now-success">
-                                        Thank you, your payment is successful <span id="transID"></span>
+                                        Thank you, your payment is successful- <span id="transID"></span>
             
                                         <div class="button-wrapper center-align">
                                             <button id="payment-complete" class="primary-btn">Ok</button>
@@ -187,10 +185,15 @@
             
                             <div id="participateNow" class="hide participate-now">
                                 <h3>Click below button to particpate the tournament</h3>
+                                <p id="entryFeeDeduction" class="hide"><span id="entryFee"></span> will be deducting from your wallet.</p>
                                 <div class="button-wrapper center-align">
                                     <button id="participate-button" class="primary-btn">Participate now</button>
                                     <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                                 </div>
+                            </div>
+            
+                            <div id="alreadyParticipated" class="hide participate-now">
+                                <h3>Thank you, you are now participating in this <span id="tournamentCategoryDesc"></span></h3>
                             </div>
             
                             <div id="createTeam" class="hide">
@@ -207,42 +210,41 @@
             </section>
             
             <script type="text/x-handlebars-template" data-template="listParticipatesTemplate">
-                <h5>Please add team members from the below list</h5>
+                <h5>Create team</h5>
+                <div class="create-team-wrapper input-container">
+                    <div class="styled-input">
+                        <input type="text" name="teamName" required
+                            data-required="Team Name is required."
+                            data-invalid="Please enter a valid Team Name."
+                        />
+                        <label>Team Name <sup>*</sup></label>
+                        <span class="error-message">Team Name is required.</span>
+                    </div>
+                </div>
                 {{#if openParticipants}}
                 <div id="teamMemberMessage" class="hide">Please add {{teamSize}} team members</div>
                     <div class="list-participates">
                         {{#each openParticipants}}
-                        {{#if isOpen}}
-                            <div class="participates-item {{#if selected}} selected {{/if}}" data-uid="{{userProfileId}}">
-                                <div class="player">
-                                    <div class="photo {{#unless imageUrl}}icon{{/unless}}"><img src="{{imageUrl}}" /></div>
-                                    <div class="name">{{fullName}}</div>
-                                    <div class="phone">{{phoneNumber}}</div>
-                                </div>
-                                <div class="styledradio">
-                                    <input id="s{{userProfileId}}" type="radio" name="radio" class="switch" value="{{userProfileId}}" {{#if selected}} checked {{/if}}/>
-                                    <label for="s{{userProfileId}}">Lead</label>
-                                </div>
-            
+                        <div class="participates-item {{#if selected}} selected {{/if}}" data-uid="{{userProfileId}}">
+                            <div class="player">
+                                <div class="photo {{#unless imageUrl}}icon{{/unless}}"><img src="{{imageUrl}}" /></div>
+                                <div class="name">{{fullName}}</div>
+                                <div class="phone">{{phoneNumber}}</div>
                             </div>
-                        {{/if}}
+                            <div class="styledradio">
+                                <input id="s{{userProfileId}}" type="radio" name="radio" class="switch" value="{{userProfileId}}" {{#if selected}} checked {{/if}}/>
+                                <label for="s{{userProfileId}}">Lead</label>
+                            </div>
+            
+                        </div>
                         {{/each}}
                     </div>
                     <div class="create-team-wrapper input-container">
-                        <div class="styled-input">
-                            <input type="text" name="teamName" required
-                                data-required="Team Name is required."
-                                data-invalid="Please enter a valid Team Name."
-                            />
-                            <label>Team Name <sup>*</sup></label>
-                            <span class="error-message">Team Name is required.</span>
-                        </div>
                         <div class="button-wrapper">
                             <button id="create-team-form-submit" class="primary-btn">Create Team</button>
                             <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                         </div>
                     </div>
-            
                 {{else}}
                     No Open participates found..
                 {{/if}}
@@ -251,6 +253,7 @@
             <script type="text/x-handlebars-template" data-template="listTeamsTemplate">
                 <h5>Your Team</h5>
                 {{#if tournamentTeamMembers}}
+                    Team Name - {{teamName}}
                     <div class="list-participates">
                         {{#each tournamentTeamMembers}}
                             <div class="participates-item {{#if isLead}} lead {{/if}}">
@@ -265,6 +268,22 @@
                 {{else}}
                     No Team member found..
                 {{/if}}
+            </script>
+            
+            
+            <script type="text/x-handlebars-template" data-template="userTournamentDetails">
+                <div class="usection usection-name"><strong>Tournament Name:</strong> <span>{{tournamentName}}</span> </div>
+                <div class="user-tournament-details">
+                    <div class="tournament-details">
+                        <div class="usection"><strong>Entry Fee:</strong>  <span>{{entryFee}}</span></div>
+                        <div class="usection"><strong>Category:</strong>  <span>{{tournamentCategory}}</span></div>
+                    </div>
+                    <div class="user-details">
+                        <div class="usection"><strong>Name:</strong>  <span>{{firstName}} {{lastName}}</span></div>
+                        <div class="usection"><strong>Email:</strong>  <span>{{email}}</span></div>
+                        <div class="usection"><strong>Phone Number:</strong>  <span>{{phoneNumber}}</span></div>
+                    </div>
+                </div>
             </script>
 
             <div class="download-app-section">
@@ -304,7 +323,7 @@
             </footer>
         </main>
         <script type="text/javascript"
-            src="https://jstest.authorize.net/v1/Accept.js"
+            src="https://js.authorize.net/v1/Accept.js"
             charset="utf-8">
         </script>
         <script  src="library/js/participate.js"></script>
