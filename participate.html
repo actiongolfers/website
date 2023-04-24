@@ -306,16 +306,23 @@
             </script>
             
             <script type="text/x-handlebars-template" data-template="userTournamentDetails">
-                <div class="usection usection-name"><strong>Tournament Name:</strong> <span>{{tournamentName}}</span> </div>
+                <div class="usection usection-name"><span>{{tournamentName}}</span>  <div class="usection-fee">Entry Fee: <span>{{entryFee}}</span></div></div>
                 <div class="user-tournament-details">
                     <div class="tournament-details">
-                        <div class="usection"><strong>Category:</strong>  <span>{{tournamentCategory}}</span></div>
-                        <div class="usection">Entry Fee: <span>{{entryFee}}</span></div>
+                        <div class="usection usection-category"><strong>Category:</strong>  <span>{{tournamentCategory}}</span></div>
+            
                     </div>
                     <div class="user-details">
-                        <div class="usection"><strong>Name:</strong>  <span>{{firstName}} {{lastName}}</span></div>
-                        <div class="usection"><strong>Email:</strong>  <span>{{email}}</span></div>
-                        <div class="usection"><strong>Phone Number:</strong>  <span>{{phoneNumber}}</span></div>
+                        <div class="user-details-left">
+                            <div class="user-image {{#unless imageUrl}}icon{{/unless}}">
+                                <img src="{{largeImageUrl}}" />
+                            </div>
+                            <div>
+                                <div class="usection"><span>{{firstName}} {{lastName}}</span></div>
+                                <div class="usection"><span>{{email}}</span></div>
+                                <div class="usection"> <span>{{phoneNumber}}</span></div>
+                            </div>
+                        </div>
                         <div class="current-balance">
                             Wallet Balance - <span id="currentBalance"></span>
                         </div>

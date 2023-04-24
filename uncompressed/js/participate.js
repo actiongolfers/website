@@ -496,6 +496,7 @@ var actiongolfLogin = {
                 userTournamentData.lastName = loginUserData.lastName || '';
                 userTournamentData.email = loginUserData.email || '';
                 userTournamentData.phoneNumber = loginUserData.phoneNumber || '';
+                userTournamentData.largeImageUrl = loginUserData.largeImageUrl || '';
 
                 userTournamentData.tournamentName = tournamentDetails.tournamentName || '';
                 userTournamentData.entryFee = (tournamentDetails.entryFee === 0) ? 'Free' :  ('$' + tournamentDetails.entryFee);
