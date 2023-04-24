@@ -411,11 +411,9 @@ var actiongolfLogin = {
 
                 var phoneNumber = $(this).data('pid');
 
-                addMemberObj.addedMembers.map(function(am, i) {
-                    if (am.phoneNumber === phoneNumber) {
-                        addMemberObj.addedMembers.splice(i, 1);
-                    }
-                });
+                addMemberObj.addedMembers.splice(addMemberObj.addedMembers.findIndex(function(i){
+                    return i.phoneNumber === phoneNumber;
+                }), 1);
 
                 addMemberObj.entryFee = entryFee  * addMemberObj.addedMembers.length;
                 addMemberObj.participateNow = addMemberObj.entryFee <= loginUserData.balanceAmount;
