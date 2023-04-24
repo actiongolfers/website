@@ -301,8 +301,6 @@ var actiongolfLogin = {
     addMemberJS: function(participating, entryFee) {
         var addMemberObj = {};
 
-        participating = false;
-
         addMemberObj.addedMembers = [];
         addMemberObj.participating = participating;
         addMemberObj.entryFee = entryFee;
