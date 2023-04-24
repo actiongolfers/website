@@ -387,6 +387,10 @@ var actiongolfLogin = {
             var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
             $('.added-members-list').html(addedMembersList(addMemberObj));
 
+            if(addMemberObj.entryFee > loginUserData.balanceAmount) {
+                _this.paymentBlock();
+            }
+
             addMemberEvents();
         }
 
@@ -499,14 +503,6 @@ var actiongolfLogin = {
     getPartcipateStatus: function() {
         var ajaxUrl = _this.getApiUrl('tournamentUserDetails');
 
-        function validatePaymentFields() {
-            if (!$('#pay-now-form input[name=amount]').val() || $('#pay-now-form input[name=cardNumber]').val().toString().length != $('#pay-now-form input[name=cardNumber]').attr('maxlength') || $('#pay-now-form input[name=expMonth]').val().toString().length != $('#pay-now-form input[name=expMonth]').attr('maxlength') || $('#pay-now-form input[name=expYear]').val().toString().length != $('#pay-now-form input[name=expYear]').attr('maxlength') || $('#pay-now-form input[name=cardCode]').val().toString().length != $('#pay-now-form input[name=cardCode]').attr('maxlength') ) {
-                $('#participate-pay-button').attr('disabled', true).addClass('disabled-btn');
-            } else {
-                $('#participate-pay-button').removeAttr('disabled', true).removeClass('disabled-btn');
-            }
-        }
-
         $.ajax({
             type: "GET",
             url: ajaxUrl,
@@ -561,6 +557,14 @@ var actiongolfLogin = {
     paymentBlock: function() {
         $('#payNow').removeClass('hide');
         //$('#pay-now-form input[name=amount]').val(xhr.entryFee);
+
+        function validatePaymentFields() {
+            if (!$('#pay-now-form input[name=amount]').val() || $('#pay-now-form input[name=cardNumber]').val().toString().length != $('#pay-now-form input[name=cardNumber]').attr('maxlength') || $('#pay-now-form input[name=expMonth]').val().toString().length != $('#pay-now-form input[name=expMonth]').attr('maxlength') || $('#pay-now-form input[name=expYear]').val().toString().length != $('#pay-now-form input[name=expYear]').attr('maxlength') || $('#pay-now-form input[name=cardCode]').val().toString().length != $('#pay-now-form input[name=cardCode]').attr('maxlength') ) {
+                $('#participate-pay-button').attr('disabled', true).addClass('disabled-btn');
+            } else {
+                $('#participate-pay-button').removeAttr('disabled', true).removeClass('disabled-btn');
+            }
+        }
 
         $('#pay-now-form .number-only').off().on('keypress', function(event) {
             var charCode = (event.which) ? event.which : event.keyCode,
