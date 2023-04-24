@@ -400,6 +400,8 @@ var actiongolfLogin = {
             if (addMemberObj.entryFee > loginUserData.balanceAmount) {
                 _this.setAuthSession('memberList', addMemberObj.addedMembers);
                 _this.paymentBlock();
+            } else {
+                $('#payNow').addClass('hide');
             }
 
             addMemberEvents();
@@ -424,7 +426,7 @@ var actiongolfLogin = {
                 if (addMemberObj.entryFee > loginUserData.balanceAmount) {
                     _this.paymentBlock();
                 } else {
-                    $('#payNow').removeClass('hide');
+                    $('#payNow').addClass('hide');
                 }
                 addMemberEvents();
             });
