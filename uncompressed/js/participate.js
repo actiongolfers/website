@@ -245,11 +245,11 @@ var actiongolfLogin = {
                                 isValid = false;
                             } else {
                                 if (!_this.isValidEmail(requestData.email)) {
-                                    $('[#ajaxParticipateForm name=email]').parent('.styled-input').addClass('error');
-                                    $('[#ajaxParticipateForm name=email]').parent('.styled-input').find('.error-message').html($('#ajaxParticipateForm [name=email]').data('invalid'));
+                                    $('#ajaxParticipateForm input[name=email]').parent('.styled-input').addClass('error');
+                                    $('#ajaxParticipateForm input[name=email]').parent('.styled-input').find('.error-message').html($('#ajaxParticipateForm [name=email]').data('invalid'));
                                     isValid = false;
                                 } else {
-                                    $('[#ajaxParticipateForm name=email]').parent('.styled-input').removeClass('error');
+                                    $('#ajaxParticipateForm input[name=email]').parent('.styled-input').removeClass('error');
                                     isValid = isValid;
                                 }
                             }
@@ -427,14 +427,7 @@ var actiongolfLogin = {
                     timeout: 0,
                     data: JSON.stringify(requestData),
                     success: function(xhr, status) {
-                        $('#participate-button').parent('.button-wrapper').removeClass('loading');
-                        if (tournamentDetails.teamSize > 1) {
-                            $('#createTeam').removeClass('hide');
-                            _this.openParticipantsDetails();
-                        } else {
-                            $('#alreadyParticipated').removeClass('hide');
-                            $('#tournamentCategoryDesc').html(tournamentDetails.tournamentCategoryDesc);
-                        }
+                        window.location.reload();
                     }.bind(this),
                     error:  function(xhr, status, error) {
                         $('.screen-message.error-message').removeClass('hide');

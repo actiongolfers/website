@@ -52,15 +52,24 @@ module.exports = function ( grunt ) {
     grunt.registerTask( 'stage', 'Deploy for integration handoff.', [
         'clean:stage',
         'copy:stage'
-     ]);
+    ]);
 
     grunt.registerTask( 'prod', 'Deploy for integration handoff.', [
         'clean:prod',
         'copy:prod'
-     ]);
+    ]);
 
     grunt.registerTask( 'prodSource', 'Deploy for integration handoff.', [
         'clean:prodSource',
         'copy:prodSource'
-     ]);
+    ]);
+
+    grunt.registerTask( 'all', 'Deploy for integration handoff.', [
+        'clean:stage',
+        'copy:stage',
+        'clean:prod',
+        'copy:prod',
+        'clean:prodSource',
+        'copy:prodSource'
+    ]);
 };
