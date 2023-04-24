@@ -407,6 +407,9 @@ var actiongolfLogin = {
                 var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
                 $('.added-members-list').html(addedMembersList(addMemberObj));
 
+                if(addMemberObj.entryFee > loginUserData.balanceAmount) {
+                    _this.paymentBlock();
+                }
                 addMemberEvents();
             });
 
@@ -533,134 +536,9 @@ var actiongolfLogin = {
                     $('.list-team-wrapper').html(listTeamsTemplate(xhr.tournamentTeam));
 
                 } else if (xhr && !xhr.participating && xhr.entryFee > loginUserData.balanceAmount) {
-                    $('#payNow').removeClass('hide');
-                    //$('#pay-now-form input[name=amount]').val(xhr.entryFee);
-
-                    $('#pay-now-form .number-only').on('keypress', function(event) {
-                        var charCode = (event.which) ? event.which : event.keyCode,
-                            element = $(event.target),
-                            maxlength = element.attr('maxlength');
-
-                        if (element.val() && element.val().toString().length == maxlength) {
-                            return false;
-                        }
-
-                        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                            return false;
-                        }
-                    }.bind(this));
-
-                    $('#pay-now-form .number-only').on('keyup', function(event) {
-                        validatePaymentFields();
-                    });
-
-                    $('#pay-now-form input[name=expMonth]').on('blur', function(event) {
-                        if ($(this).val().toString().length == 1) {
-                            $(this).val('0' + $(this).val());
-                        }
-
-                        validatePaymentFields();
-                    });
-
-                    $('#participate-pay-button').on('click', function(event) {
-                        event.preventDefault();
-
-                        $('#participate-pay-button').parent('.button-wrapper').addClass('loading');
-                        $('.screen-message.error-message').addClass('hide');
-
-                        var authData = {};
-                        authData.clientKey = "9E9u9bZhnz6AaaTxGqESm8Tr2AfuPXcex498Q9A9g7X9GG34yGpJGgh5cH4CNKZf";
-                        authData.apiLoginID = "9k9FP9khR";
-
-                        var cardData = {};
-                            cardData.cardNumber = document.getElementById("cardNumber").value;
-                            cardData.month = document.getElementById("expMonth").value;
-                            cardData.year = document.getElementById("expYear").value;
-                            cardData.cardCode = document.getElementById("cardCode").value;
-
-                        var secureData = {};
-                            secureData.authData = authData;
-                            secureData.cardData = cardData;
-
-                        Accept.dispatchData(secureData, responseHandler);
-
-                        function responseHandler(response) {
-                            if (response.messages.resultCode === "Error") {
-                                var i = 0;
-                                while (i < response.messages.message.length) {
-                                    console.log(
-                                        response.messages.message[i].code + ": " +
-                                        response.messages.message[i].text
-                                    );
-                                    i = i + 1;
-                                }
-                            } else {
-                                paymentFormUpdate(response.opaqueData);
-                            }
-                        }
-
-                        function paymentFormUpdate(opaqueData) {
-                            document.getElementById("dataDescriptor").value = opaqueData.dataDescriptor;
-                            document.getElementById("dataValue").value = opaqueData.dataValue;
-
-                            var amount = document.getElementById("amount").value;
-
-                            // If using your own form to collect the sensitive data from the customer,
-                            // blank out the fields before submitting them to your server.
-                            document.getElementById("amount").value = "";
-                            document.getElementById("cardNumber").value = "";
-                            document.getElementById("expMonth").value = "";
-                            document.getElementById("expYear").value = "";
-                            document.getElementById("cardCode").value = "";
-                            $('#participate-pay-button').attr('disabled', true).addClass('disabled-btn');
-
-                            var ajaxUrl = _this.getApiUrl('authorize');
-
-                            var requestData = {};
-                            requestData.createTransactionRequest = {};
-                            requestData.createTransactionRequest.merchantAuthentication = {};
-                            requestData.createTransactionRequest.merchantAuthentication.name = '9k9FP9khR';
-                            requestData.createTransactionRequest.merchantAuthentication.transactionKey = '2tkP3CP85y76Vp6P';
-                            requestData.createTransactionRequest.refId = "123456";
-                            requestData.createTransactionRequest.transactionRequest = {};
-                            requestData.createTransactionRequest.transactionRequest.transactionType = 'authCaptureTransaction';
-                            requestData.createTransactionRequest.transactionRequest.amount = amount;
-                            requestData.createTransactionRequest.transactionRequest.payment = {};
-                            requestData.createTransactionRequest.transactionRequest.payment.opaqueData = {};
-                            requestData.createTransactionRequest.transactionRequest.payment.opaqueData.dataDescriptor = opaqueData.dataDescriptor;
-                            requestData.createTransactionRequest.transactionRequest.payment.opaqueData.dataValue = opaqueData.dataValue;
-                            requestData.createTransactionRequest.transactionRequest.profile = {};
-                            requestData.createTransactionRequest.transactionRequest.profile.createProfile = false;
-                            requestData.createTransactionRequest.transactionRequest.order = {};
-                            requestData.createTransactionRequest.transactionRequest.order.invoiceNumber = Math.random().toString(36).substring(2, 10);
-                            requestData.createTransactionRequest.transactionRequest.customer = {};
-                            requestData.createTransactionRequest.transactionRequest.customer.id = "0";
-
-                            $.ajax({
-                                type: "POST",
-                                url: ajaxUrl,
-                                contentType: "application/json",
-                                dataType: "json",
-                                timeout: 0,
-                                data: JSON.stringify(requestData),
-                                success: function(xhr, status) {
-                                    if (xhr && xhr.messages && xhr.messages.resultCode === 'Ok' && xhr.refId === requestData.createTransactionRequest.refId && xhr.transactionResponse.responseCode === '1' && xhr.transactionResponse.transId) {
-                                        _this.updatePayment(xhr, amount);
-                                    } else {
-                                        $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
-                                    }
-                                }.bind(this),
-                                error:  function(xhr, status, error) {
-                                    $('.screen-message.error-message').removeClass('hide');
-                                    $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
-                                    $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
-                                }.bind(this)
-                            });
-                        }
-
-                    });
+                    _this.paymentBlock();
                 } else if (xhr && !xhr.participating) {
-
+                    //already handled
 
                 } else if (xhr && xhr.participating) {
                     if (tournamentDetails.teamSize > 1) {
@@ -677,6 +555,135 @@ var actiongolfLogin = {
                 $('.screen-message.error-message').removeClass('hide');
                 $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
             }.bind(this)
+        });
+    },
+
+    paymentBlock: function() {
+        $('#payNow').removeClass('hide');
+        //$('#pay-now-form input[name=amount]').val(xhr.entryFee);
+
+        $('#pay-now-form .number-only').off().on('keypress', function(event) {
+            var charCode = (event.which) ? event.which : event.keyCode,
+                element = $(event.target),
+                maxlength = element.attr('maxlength');
+
+            if (element.val() && element.val().toString().length == maxlength) {
+                return false;
+            }
+
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+        }.bind(this));
+
+        $('#pay-now-form .number-only').off().on('keyup', function(event) {
+            validatePaymentFields();
+        });
+
+        $('#pay-now-form input[name=expMonth]').off().on('blur', function(event) {
+            if ($(this).val().toString().length == 1) {
+                $(this).val('0' + $(this).val());
+            }
+
+            validatePaymentFields();
+        });
+
+        $('#participate-pay-button').off().on('click', function(event) {
+            event.preventDefault();
+
+            $('#participate-pay-button').parent('.button-wrapper').addClass('loading');
+            $('.screen-message.error-message').addClass('hide');
+
+            var authData = {};
+            authData.clientKey = "9E9u9bZhnz6AaaTxGqESm8Tr2AfuPXcex498Q9A9g7X9GG34yGpJGgh5cH4CNKZf";
+            authData.apiLoginID = "9k9FP9khR";
+
+            var cardData = {};
+                cardData.cardNumber = document.getElementById("cardNumber").value;
+                cardData.month = document.getElementById("expMonth").value;
+                cardData.year = document.getElementById("expYear").value;
+                cardData.cardCode = document.getElementById("cardCode").value;
+
+            var secureData = {};
+                secureData.authData = authData;
+                secureData.cardData = cardData;
+
+            Accept.dispatchData(secureData, responseHandler);
+
+            function responseHandler(response) {
+                if (response.messages.resultCode === "Error") {
+                    var i = 0;
+                    while (i < response.messages.message.length) {
+                        console.log(
+                            response.messages.message[i].code + ": " +
+                            response.messages.message[i].text
+                        );
+                        i = i + 1;
+                    }
+                } else {
+                    paymentFormUpdate(response.opaqueData);
+                }
+            }
+
+            function paymentFormUpdate(opaqueData) {
+                document.getElementById("dataDescriptor").value = opaqueData.dataDescriptor;
+                document.getElementById("dataValue").value = opaqueData.dataValue;
+
+                var amount = document.getElementById("amount").value;
+
+                // If using your own form to collect the sensitive data from the customer,
+                // blank out the fields before submitting them to your server.
+                document.getElementById("amount").value = "";
+                document.getElementById("cardNumber").value = "";
+                document.getElementById("expMonth").value = "";
+                document.getElementById("expYear").value = "";
+                document.getElementById("cardCode").value = "";
+                $('#participate-pay-button').attr('disabled', true).addClass('disabled-btn');
+
+                var ajaxUrl = _this.getApiUrl('authorize');
+
+                var requestData = {};
+                requestData.createTransactionRequest = {};
+                requestData.createTransactionRequest.merchantAuthentication = {};
+                requestData.createTransactionRequest.merchantAuthentication.name = '9k9FP9khR';
+                requestData.createTransactionRequest.merchantAuthentication.transactionKey = '2tkP3CP85y76Vp6P';
+                requestData.createTransactionRequest.refId = "123456";
+                requestData.createTransactionRequest.transactionRequest = {};
+                requestData.createTransactionRequest.transactionRequest.transactionType = 'authCaptureTransaction';
+                requestData.createTransactionRequest.transactionRequest.amount = amount;
+                requestData.createTransactionRequest.transactionRequest.payment = {};
+                requestData.createTransactionRequest.transactionRequest.payment.opaqueData = {};
+                requestData.createTransactionRequest.transactionRequest.payment.opaqueData.dataDescriptor = opaqueData.dataDescriptor;
+                requestData.createTransactionRequest.transactionRequest.payment.opaqueData.dataValue = opaqueData.dataValue;
+                requestData.createTransactionRequest.transactionRequest.profile = {};
+                requestData.createTransactionRequest.transactionRequest.profile.createProfile = false;
+                requestData.createTransactionRequest.transactionRequest.order = {};
+                requestData.createTransactionRequest.transactionRequest.order.invoiceNumber = Math.random().toString(36).substring(2, 10);
+                requestData.createTransactionRequest.transactionRequest.customer = {};
+                requestData.createTransactionRequest.transactionRequest.customer.id = "0";
+
+                $.ajax({
+                    type: "POST",
+                    url: ajaxUrl,
+                    contentType: "application/json",
+                    dataType: "json",
+                    timeout: 0,
+                    data: JSON.stringify(requestData),
+                    success: function(xhr, status) {
+                        if (xhr && xhr.messages && xhr.messages.resultCode === 'Ok' && xhr.refId === requestData.createTransactionRequest.refId && xhr.transactionResponse.responseCode === '1' && xhr.transactionResponse.transId) {
+                            _this.updatePayment(xhr, amount);
+                        } else {
+                            $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
+                        }
+                    }.bind(this),
+                    error:  function(xhr, status, error) {
+                        $('.screen-message.error-message').removeClass('hide');
+                        $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
+                        $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
+                    }.bind(this)
+                });
+            }
+
         });
     },
 
