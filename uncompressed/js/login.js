@@ -16,7 +16,7 @@ var actiongolfLogin = {
             publicSessionKey = 'publicAgLoginAuth',
             auth = 'YWdkZXY6cGFzc3dvcmQ=',
             reDirectUrl,
-            otpValidationParticipate = $('.otp-validation-slide').length || window.sessionStorage.getItem('agReDirectPage').includes('participate');
+            otpValidationParticipate = $('.otp-validation-slide').length || (window.sessionStorage.getItem('agReDirectPage') && window.sessionStorage.getItem('agReDirectPage').includes('participate'));
 
         if (this.getAuthSession(sessionKey) && !otpValidationParticipate) {
             this.setAuthSession(sessionKey, this.getAuthSession(sessionKey));
@@ -75,7 +75,7 @@ var actiongolfLogin = {
             var participatePage = window.sessionStorage.getItem('agReDirectPage') || './participate.html';
 
             requestData = {};
-            otpValidationParticipate = $('.otp-validation-slide').length || window.sessionStorage.getItem('agReDirectPage').includes('participate');
+            otpValidationParticipate = $('.otp-validation-slide').length || (window.sessionStorage.getItem('agReDirectPage') && window.sessionStorage.getItem('agReDirectPage').includes('participate'));
 
             if (otpValidationParticipate) {
                window.sessionStorage.setItem('agReDirectPage', participatePage);
