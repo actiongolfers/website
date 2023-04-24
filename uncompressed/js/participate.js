@@ -304,11 +304,11 @@ var actiongolfLogin = {
         addMemberObj.addedMembers = [];
         addMemberObj.participating = participating;
         addMemberObj.entryFee = entryFee;
-        addMemberObj.participateNow = entryFee <= loginUserData.balanceAmount;
+        addMemberObj.participateNow = !participating && entryFee <= loginUserData.balanceAmount;
 
         if (_this.getAuthSession('memberList')) {
-            addMemberObjaddedMembers = _this.getAuthSession('memberList');
-            window.sessionStorage.removeItem('memberList');
+            addMemberObj.addedMembers = _this.getAuthSession('memberList');
+            window.localStorage.removeItem('memberList');
         }
 
         var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
