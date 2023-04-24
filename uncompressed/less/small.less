@@ -2958,9 +2958,28 @@ footer {
                 align-items: center;
                 border-radius: 50%;
                 border: 4px solid @white;
+                position: relative;
 
                 img {
                     width: 100%;
+                }
+
+                &.icon {
+                    img {
+                        visibility: hidden;
+                    }
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        background: url(@playerIcon) no-repeat 0 0;
+                        width: 100%;
+                        aspect-ratio: 1 / 1;
+                        background-size: cover;
+                        border-radius: 8px 8px 0 0;
+                    }
                 }
             }
             .usection:first-child {
