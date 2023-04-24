@@ -77,12 +77,58 @@
                                 </div>
                             </form>
             
-                            <div id="payNow" class="input-container pay-now hide">
-                                <div id="payment-title">
-                                    <div class="current-balance">
-                                        Current Balance - <span id="currentBalance"></span>
+                            <div id="alreadyParticipated" class="hide participate-now">
+                                <h3>Thank you, you are now participating in this <span id="tournamentCategoryDesc"></span></h3>
+                            </div>
+            
+            
+                            <div class="add-members hide" id="addMembers">
+                                <h3>Add member to this tournament</h3>
+                                <div class="input-container add-member-input-wrapper">
+                                    <div class="add-member-input">
+                                        <div class="col-12">
+                                            <div class="col-6">
+                                                <div class="form-field">
+                                                    <label>Name <sup>*</sup></label>
+                                                    <div class="styled-input">
+                                                        <input type="text" name="name" required class="add-members-input"
+                                                            data-required="Name is required."
+                                                            data-invalid="Please enter a valid Name."
+                                                        />
+                                                        <span class="error-message required">Name is required.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 add-member-button-wrapper">
+                                                <div class="form-field">
+                                                    <label>Phone number <sup>*</sup></label>
+                                                    <div class="styled-input login-phone">
+                                                        <input type="text" name="callingCode" class="callingCode add-members-input number-only" placeholder="+1"
+                                                        />
+                                                        <input type="text" name="phoneNumber" class="add-members-input phoneNumber number-only" required
+                                                            data-required="Phone number is required."
+                                                            data-invalid="Please enter a valid Phone number"
+                                                            maxlength="10"
+                                                        />
+                                                        <span class="error-message required">Phone number is required.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="button-wrapper">
+                                                    <button id="add-member-button" class="primary-btn disabled-btn" disabled>
+                                                        <span class="text">Add</span>
+                                                        <span class="icon"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
             
+                                    <div class="added-members-list"></div>
+                                </div>
+                            </div>
+            
+                            <div id="payNow" class="input-container pay-now hide">
+                                <div id="payment-title">
                                     <h3>Insufficient amount to Participate this tournament. Please add the required amount to continue</h3>
                                 </div>
                                 <div class="pay-now-block">
@@ -185,19 +231,6 @@
                                 </div>
                             </div>
             
-                            <div id="participateNow" class="hide participate-now">
-                                <h3>Click below button to particpate the tournament</h3>
-                                <p id="entryFeeDeduction" class="hide"><span id="entryFee"></span> will be deducting from your wallet.</p>
-                                <div class="button-wrapper center-align">
-                                    <button id="participate-button" class="primary-btn">Participate now</button>
-                                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-                                </div>
-                            </div>
-            
-                            <div id="alreadyParticipated" class="hide participate-now">
-                                <h3>Thank you, you are now participating in this <span id="tournamentCategoryDesc"></span></h3>
-                            </div>
-            
                             <div id="createTeam" class="hide">
                                 <div class="list-participate-wrapper"></div>
                             </div>
@@ -277,15 +310,50 @@
                 <div class="usection usection-name"><strong>Tournament Name:</strong> <span>{{tournamentName}}</span> </div>
                 <div class="user-tournament-details">
                     <div class="tournament-details">
-                        <div class="usection"><strong>Entry Fee:</strong>  <span>{{entryFee}}</span></div>
+                        <div class="usection"><span>{{entryFee}}</span> (Entry Fee)</div>
                         <div class="usection"><strong>Category:</strong>  <span>{{tournamentCategory}}</span></div>
                     </div>
                     <div class="user-details">
                         <div class="usection"><strong>Name:</strong>  <span>{{firstName}} {{lastName}}</span></div>
                         <div class="usection"><strong>Email:</strong>  <span>{{email}}</span></div>
                         <div class="usection"><strong>Phone Number:</strong>  <span>{{phoneNumber}}</span></div>
+                        <div class="current-balance">
+                            Wallet Balance - <span id="currentBalance"></span>
+                        </div>
                     </div>
                 </div>
+            </script>
+            
+            <script type="text/x-handlebars-template" data-template="addedMembersList">
+                {{#if addedMembers}}
+                    <div class="member-list">
+                        <div class="member-item member-item-head">
+                            <span>Name</span> <span>Phone Number</span>
+                        </div>
+                        {{#each addedMembers}}
+                        <div class="member-item">
+                            <span>{{name}}</span> <span>{{phoneNumber}}</span> {{#if currentUser}} <a class="member-delete"></a> {{else}} <a data-pid="{{phoneNumber}}" class="member-delete member-delete-active"></a> {{/if}}
+                        </div>
+                        {{/each}}
+                    </div>
+                    <h4><span>${{entryFee}}</span> will be deducting from your wallet.</h4>
+                    <div class="button-wrapper">
+                        <button id="participate-button" class="primary-btn">{{#if participating}} Add members {{else}} Participate now {{/if}}</button>
+                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                {{else}}
+                    {{#unless participating}}
+                        <div class="participate-now">
+                            <br />
+                            <h3>Click below button to particpate the tournament</h3>
+                            <h4><span>${{entryFee}}</span> will be deducting from your wallet.</h4>
+                            <div class="button-wrapper center-align">
+                                <button id="participate-button" class="primary-btn">Participate now</button>
+                                <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                            </div>
+                        </div>
+                    {{/unless}}
+                {{/if}}
             </script>
 
             <div class="download-app-section">

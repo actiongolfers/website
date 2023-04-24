@@ -1027,6 +1027,327 @@ footer {
     }
 }
 
+.form-container {
+    .form-field {
+        label,
+        .label {
+            color: @black;
+            font-size: 14px;
+            padding: 0 4px;
+            position: relative;
+
+            sup {
+                position: absolute;
+                top: -2px;
+                right: -3px;
+                margin-left: 2px;
+                color: @red;
+            }
+        }
+
+        .styled-input {
+            position: relative;
+            margin: 0 0 20px;
+            border-radius: 4px;
+            border: 2px solid @brandColor;
+
+            &.last {
+                margin-bottom: 30px;
+            }
+
+            input[type=text],input[type=number], textarea, select {
+                padding: 14px;
+                border: 0;
+                width: calc(100% - 2px);
+                margin: 0;
+                font-size: 16px;
+                background-color: @white;
+                color: @black;
+                font-family: @actionGolfRegular;
+                background: none;
+            }
+
+            select {
+                width: 100%;
+                -webkit-appearance: none;
+                height: 47px;
+                background: transparent;
+                position: relative;
+                z-index: 2;
+            }
+
+            textarea {
+                min-height: 100px;
+                resize: vertical;
+            }
+
+            &.login-phone {
+                display: flex;
+
+                input[name="callingCode"] {
+                    width: 80px;
+                    text-align: right;
+                    border-right: 1px solid @brandColor;
+                }
+
+                input[name="phoneNumber"] {
+                    width: calc(100% - 80px);
+                }
+            }
+
+            .error-message {
+                display: none;
+                position: absolute;
+                right: 1px;
+                bottom: -22px;
+                background: @red;
+                font-size: 12px;
+                padding: 0 10px;
+                color: @white;
+                border-radius: 0 0 4px 4px;
+            }
+
+            &.select-box::after {
+                background: url(@selectArrow) no-repeat 0 0;
+                width: 25px;
+                height: 25px;
+                content: '';
+                position: absolute;
+                background-size: cover;
+                top: 12px;
+                right: 12px;
+                z-index: 0;
+            }
+
+            &.select-box {
+                input {
+                    background-color: transparent;
+                    z-index: 1;
+                    position: relative;
+                }
+            }
+
+            &.radio-button {
+                border: none;
+                min-height: 47px;
+
+                label {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    color: @white;
+                    font-size: 16px;
+                    background: @greyButton;
+                    width: 100%;
+                    height: 100%;
+                    text-align: center;
+                    border-radius: 4px;
+                    border: 2px solid @greyButton;
+                    min-height: 47px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    pointer-events: initial;
+                }
+
+                input {
+                    padding: 14px;
+                    border: 0;
+                    width: calc(100% - 2px);
+                    margin: 0;
+
+                    &:checked ~ label {
+                        border-color: @brandColor;
+                        background: @brandColor;
+                    }
+                }
+            }
+        }
+
+        &.error {
+            border-color: @red;
+
+            .styled-input {
+                border-color: @red;
+            }
+
+            label {
+                color: @red;
+            }
+
+            .error-message {
+                display: block;
+            }
+        }
+
+        &.checkbox-field {
+            margin-top: 20px;
+            margin-bottom: 20px;
+
+            &.disabled {
+                opacity: 0.4;
+
+                input,
+                label {
+                    pointer-events: none;
+                }
+            }
+
+            .col-6 {
+                &:first-child {
+                    width: calc(100% - 60px);
+                }
+
+                &:last-child {
+                    width: 40px;
+                }
+            }
+        }
+
+        .slider-checkbox {
+            position: relative;
+
+            input {
+                margin: 0;
+                margin-top: 1px;
+                cursor: pointer;
+                opacity: 0;
+                position: absolute;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                background: red;
+                width: 40px;
+                height: 20px;
+
+                &:checked + .label {
+                    &:before {
+                        background-color: @brandColor;
+                        content: "";
+                        padding-left: 6px;
+                    }
+                    &:after {
+                        left: 21px;
+                    }
+                }
+            }
+            .label {
+                position: relative;
+
+                &:before, &:after {
+                    position: absolute;
+                    border-radius: 10px;
+                    transition: background-color 0.3s, left 0.3s;
+                }
+
+                &:before {
+                    content: "";
+                    color: @white;
+                    box-sizing: border-box;
+                    font-family: 'FontAwesome', sans-serif;
+                    padding-left: 23px;
+                    font-size: 12px;
+                    line-height: 20px;
+                    background-color: @greyButton;
+                    left: 0;
+                    top: 0;
+                    height: 20px;
+                    width: 40px;
+                    border-radius: 10px;
+                }
+
+                &:after {
+                    content: "";
+                    letter-spacing: 20px;
+                    background: @white;
+                    left: 1px;
+                    top: 1px;
+                    height: 18px;
+                    width: 18px;
+                }
+            }
+        }
+
+
+        .min-max-hps .col-4 {
+            width: calc(50% - 20px);
+
+            &:nth-child(2n) {
+                width: 10px;
+                padding-top: 15px;
+                text-align: center;
+            }
+
+            &:nth-child(3n) {
+                text-align: right;
+            }
+
+            .styled-input {
+                display: inline-block;
+                max-width: 80px;
+                margin-left: 0;
+
+                input {
+                    text-align: center;
+                }
+            }
+        }
+
+        .max-participants,
+        .payouts {
+            label {
+                padding-top: 15px;
+            }
+
+            .styled-input {
+                display: inline-block;
+                max-width: 80px;
+                margin-left: 0;
+
+                input {
+                    text-align: center;
+                }
+            }
+        }
+
+        &.otp {
+            display: none;
+            margin-bottom: 8px;
+            max-width: 240px !important;
+            position: relative;
+
+            .otp-error-message {
+                display: none;
+                background: @red;
+                font-size: 12px;
+                padding: 0 10px;
+                color: @white;
+                border-radius: 0 0 4px 4px;
+                position: absolute;
+                right: 14px;
+                top: 71px;
+            }
+
+            &.error .otp-error-message {
+                display: block
+            }
+
+            .verification-code {
+                display: flex;
+
+                .styled-input {
+                    width: 50px;
+                    margin-right: 10px;
+
+                    input {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}
+
 .form-container,
 .create-form-container {
     .contact-container {
@@ -2669,13 +2990,24 @@ footer {
             border-radius: 8px;
         }
 
-        &:nth-child(1) {
+        &:nth-child(1) span {
             font-size: 30px;
         }
 
-        &:nth-child(2) {
+        &:nth-child(2) span {
             font-size: 20px;
         }
+    }
+
+    .current-balance {
+        padding-bottom: 30px;
+        font-family: @actionGolfSemiBold;
+        font-size: 24px;
+
+        @media screen and (min-width:1024px) {
+            padding-bottom: 40px;
+        }
+
     }
 }
 
@@ -2734,22 +3066,144 @@ footer {
     }
 }
 
+.add-members {
+    padding: 40px 0;
+
+    h3 {
+        font-family: @actionGolfSemiBold;
+        font-size: 24px;
+        padding: 0 0 30px;
+    }
+
+    h4 {
+        font-family: @actionGolfSemiBold;
+        font-size: 16px;
+    }
+
+    .add-member-input-wrapper.input-container {
+        padding: 0;
+
+        @media screen and (min-width:768px) {
+            width: 100%;
+        }
+
+        .add-member-input {
+            width: 100%;
+
+            @media screen and (min-width:768px) {
+                .col-12 {
+                    display: flex;
+                    flex-direction: row;
+                }
+            }
+
+            .styled-input {
+                margin-bottom: 20px;
+                background-color: @white;
+            }
+
+            .add-member-button-wrapper {
+                .button-wrapper {
+                    .primary-btn {
+                        width: 100%;
+                        margin-right: 0;
+
+                        span.icon {
+                            display: none;
+                        }
+
+                        span.text {
+                            display: inline;
+                        }
+                    }
+                }
+
+                @media screen and (min-width:768px) {
+                    margin-left: 14px;;
+                    display: flex;
+                    align-items: center;
+
+                    .form-field {
+                        width: 100%;
+                    }
+
+                    .button-wrapper {
+                        .primary-btn {
+                            width: 50px;
+                            border-radius: 100%;
+                            height: 50px;
+                            text-align: center;
+                            padding: 0;
+                            margin-top: 6px;
+
+                            span.icon {
+                                display: inline-block;
+                                background: url(@plus) no-repeat center center;
+                                width: 100%;
+                                height: 100%;
+                                background-size: 22px;
+                            }
+
+                            span.text {
+                                display: none;
+                            }
+                        }
+
+                        margin-top: 1px;
+                        margin-left: 14px;
+                    }
+                }
+            }
+        }
+    }
+
+    .added-members-list {
+        .member-list {
+            background: #fafafa;
+            padding: 10px;
+
+
+            .member-item {
+                &.member-item-head {
+                    font-family: @actionGolfSemiBold;
+                }
+
+                display: flex;
+                padding: 10px;
+                align-items: center;
+                border-bottom: 1px solid #ddd;
+
+                span {
+                    flex-grow: 1;
+                    width: 50%;
+                    padding: 5px;
+                }
+
+                .member-delete {
+                    pointer-events: none;
+                    width: 20px;
+                    height: 20px;
+                    display: block;
+
+
+                    &.member-delete-active {
+                        pointer-events: all;
+                        background: url(@close) no-repeat center center;
+                        background-size: 20px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 .pay-now {
     h3 {
         font-family: @actionGolfSemiBold;
         font-size: 18px;
         padding: 0 0 30px;
-    }
-
-    .current-balance {
-        padding-bottom: 30px;
-        font-family: @actionGolfSemiBold;
-        font-size: 24px;
-
-        @media screen and (min-width:1024px) {
-            padding-bottom: 40px;
-        }
-
     }
 
     .pay-now-block {

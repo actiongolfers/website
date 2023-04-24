@@ -201,7 +201,6 @@ var actiongolfLogin = {
                         $('#ajaxParticipateForm').removeClass('hide');
                         $('#participateUserDetails').addClass('hide');
                         $('#payNow').addClass('hide');
-                        $('#participateNow').addClass('hide');
                         $('[name=firstName]').val(loginUserData.firstName || '');
                         $('[name=lastName]').val(loginUserData.lastName || '');
                         $('[name=email]').val(loginUserData.email || '');
@@ -225,32 +224,32 @@ var actiongolfLogin = {
                             requestData.approxIndex= 0.0;
 
                             if (!_this.isValidTextField(requestData.firstName)) {
-                                $('[name=firstName]').parent('.styled-input').addClass('error');
+                                $('#ajaxParticipateForm [name=firstName]').parent('.styled-input').addClass('error');
                                 isValid = false;
                             } else {
-                                $('[name=firstName]').parent('.styled-input').removeClass('error');
+                                $('#ajaxParticipateForm [name=firstName]').parent('.styled-input').removeClass('error');
                                 isValid = true;
                             }
 
                             if (!_this.isValidTextField(requestData.lastName)) {
-                                $('[name=lastName]').parent('.styled-input').addClass('error');
+                                $('#ajaxParticipateForm [name=lastName]').parent('.styled-input').addClass('error');
                                 isValid = false;
                             } else {
-                                $('[name=lastName]').parent('.styled-input').removeClass('error');
+                                $('#ajaxParticipateForm [name=lastName]').parent('.styled-input').removeClass('error');
                                 isValid = isValid;
                             }
 
                             if (!requestData.email.trim()) {
-                                $('[name=email]').parent('.styled-input').addClass('error');
-                                $('[name=email]').parent('.styled-input').find('.error-message').html($('[name=email]').data('required'));
+                                $('#ajaxParticipateForm [name=email]').parent('.styled-input').addClass('error');
+                                $('#ajaxParticipateForm [name=email]').parent('.styled-input').find('.error-message').html($('#ajaxParticipateForm [name=email]').data('required'));
                                 isValid = false;
                             } else {
                                 if (!_this.isValidEmail(requestData.email)) {
-                                    $('[name=email]').parent('.styled-input').addClass('error');
-                                    $('[name=email]').parent('.styled-input').find('.error-message').html($('[name=email]').data('invalid'));
+                                    $('[#ajaxParticipateForm name=email]').parent('.styled-input').addClass('error');
+                                    $('[#ajaxParticipateForm name=email]').parent('.styled-input').find('.error-message').html($('#ajaxParticipateForm [name=email]').data('invalid'));
                                     isValid = false;
                                 } else {
-                                    $('[name=email]').parent('.styled-input').removeClass('error');
+                                    $('[#ajaxParticipateForm name=email]').parent('.styled-input').removeClass('error');
                                     isValid = isValid;
                                 }
                             }
@@ -297,6 +296,156 @@ var actiongolfLogin = {
                 $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
             }.bind(this)
         });
+    },
+
+    addMemberJS: function(participating, entryFee) {
+        var addMemberObj = {};
+
+        participating = false;
+
+        addMemberObj.addedMembers = [];
+        addMemberObj.participating = participating;
+        addMemberObj.entryFee = entryFee;
+
+        var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
+        $('.added-members-list').html(addedMembersList(addMemberObj));
+
+        addMemberEvents();
+
+        if (!participating) {
+            addMemberObj.addedMembers.push(
+                {
+                    name: loginUserData.firstName,
+                    phoneNumber: loginUserData.phoneNumber,
+                    currentUser: true
+                }
+            );
+        }
+
+        function validateAddMembersFields() {
+            if (!$('#addMembers input[name=name]').val().trim() || $('#addMembers input[name=phoneNumber]').val().toString().length != $('#addMembers input[name=phoneNumber]').attr('maxlength') ) {
+                $('#add-member-button').attr('disabled', true).addClass('disabled-btn');
+            } else {
+                $('#add-member-button').removeAttr('disabled', true).removeClass('disabled-btn');
+            }
+        }
+
+        $('#addMembers .callingCode').on('keyup', function(event) {
+            var val = $(this).val();
+
+            if (val && !val.includes('+')) {
+                $(this).val('+' + val);
+            }
+        });
+
+        $('#addMembers .number-only').on('keypress', function(event) {
+            var charCode = (event.which) ? event.which : event.keyCode,
+                element = $(event.target),
+                maxlength = element.attr('maxlength');
+
+            if (element.val() && element.val().toString().length == maxlength) {
+                return false;
+            }
+
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+        }.bind(this));
+
+        $('#addMembers .add-members-input').on('keyup', function(event) {
+            validateAddMembersFields();
+        });
+
+        $('#add-member-button').on('click', function(event) {
+            event.preventDefault();
+            var aMName,
+                aMCallingCode,
+                aMPhoneNumber;
+
+            aMName = $('#addMembers .add-members-input[name=name]').val();
+            aMCallingCode = $('#addMembers .add-members-input[name=callingCode]').val() || '+1';
+            aMPhoneNumber = $('#addMembers .add-members-input[name=phoneNumber]').val();
+
+            addMemberData(aMName, aMCallingCode + ' ' + aMPhoneNumber);
+            $('#addMembers .add-members-input[name=name]').val('');
+            $('#addMembers .add-members-input[name=callingCode]').val('');
+            $('#addMembers .add-members-input[name=phoneNumber]').val('');
+            $('#add-member-button').attr('disabled', true).addClass('disabled-btn');
+        });
+
+        function addMemberData(aMName, aMPhoneNumber) {
+            addMemberObj.addedMembers.push(
+                {
+                    name: aMName,
+                    phoneNumber: aMPhoneNumber,
+                    currentUser: false
+                }
+            );
+
+            addMemberObj.entryFee = entryFee  * addMemberObj.addedMembers.length;
+
+            var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
+            $('.added-members-list').html(addedMembersList(addMemberObj));
+
+            addMemberEvents();
+        }
+
+        function addMemberEvents() {
+            $('.member-delete-active').off().on('click', function(event) {
+                event.preventDefault();
+
+                var phoneNumber = $(this).data('pid');
+
+                addMemberObj.addedMembers.map(function(am, i) {
+                    if (am.phoneNumber === phoneNumber) {
+                        addMemberObj.addedMembers.splice(i, 1);
+                    }
+                });
+
+                addMemberObj.entryFee = entryFee  * addMemberObj.addedMembers.length;
+
+                var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
+                $('.added-members-list').html(addedMembersList(addMemberObj));
+
+                addMemberEvents();
+            });
+
+            $('#participate-button').off().on('click', function(event) {
+                event.preventDefault();
+                var ajaxUrl = _this.getApiUrl('participate'),
+                    requestData = {};
+
+                $('#participate-button').parent('.button-wrapper').addClass('loading');
+                $('.screen-message.error-message').addClass('hide');
+
+                requestData.userProfileId = userProfileId;
+                requestData.tournamentId = tournamentId;
+
+                $.ajax({
+                    type: "POST",
+                    url: ajaxUrl,
+                    contentType: "application/json",
+                    dataType: "json",
+                    timeout: 0,
+                    data: JSON.stringify(requestData),
+                    success: function(xhr, status) {
+                        $('#participate-button').parent('.button-wrapper').removeClass('loading');
+                        if (tournamentDetails.teamSize > 1) {
+                            $('#createTeam').removeClass('hide');
+                            _this.openParticipantsDetails();
+                        } else {
+                            $('#alreadyParticipated').removeClass('hide');
+                            $('#tournamentCategoryDesc').html(tournamentDetails.tournamentCategoryDesc);
+                        }
+                    }.bind(this),
+                    error:  function(xhr, status, error) {
+                        $('.screen-message.error-message').removeClass('hide');
+                        $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
+                        $('#participate-button').parent('.button-wrapper').removeClass('loading');
+                    }.bind(this)
+                });
+            });
+        }
     },
 
     tournamentDetails: function() {
@@ -354,8 +503,8 @@ var actiongolfLogin = {
     getPartcipateStatus: function() {
         var ajaxUrl = _this.getApiUrl('tournamentUserDetails');
 
-        function validateFields() {
-            if (!$('input[name=amount]').val() || $('input[name=cardNumber]').val().toString().length != $('input[name=cardNumber]').attr('maxlength') || $('input[name=expMonth]').val().toString().length != $('input[name=expMonth]').attr('maxlength') || $('input[name=expYear]').val().toString().length != $('input[name=expYear]').attr('maxlength') || $('input[name=cardCode]').val().toString().length != $('input[name=cardCode]').attr('maxlength') ) {
+        function validatePaymentFields() {
+            if (!$('#pay-now-form input[name=amount]').val() || $('#pay-now-form input[name=cardNumber]').val().toString().length != $('#pay-now-form input[name=cardNumber]').attr('maxlength') || $('#pay-now-form input[name=expMonth]').val().toString().length != $('#pay-now-form input[name=expMonth]').attr('maxlength') || $('#pay-now-form input[name=expYear]').val().toString().length != $('#pay-now-form input[name=expYear]').attr('maxlength') || $('#pay-now-form input[name=cardCode]').val().toString().length != $('#pay-now-form input[name=cardCode]').attr('maxlength') ) {
                 $('#participate-pay-button').attr('disabled', true).addClass('disabled-btn');
             } else {
                 $('#participate-pay-button').removeAttr('disabled', true).removeClass('disabled-btn');
@@ -374,6 +523,9 @@ var actiongolfLogin = {
             },
             success: function(xhr, status) {
                 $('#pageLoad').hide();
+                $('#addMembers').removeClass('hide');
+                _this.addMemberJS(xhr.participating, xhr.entryFee);
+                $('#currentBalance').html('$' + tournamentDetails.balanceAmount);
                 if (xhr && xhr.tournamentTeam && xhr.tournamentTeam.tournamentTeamMembers && xhr.tournamentTeam.tournamentTeamMembers.length) {
                     $('#yourTeam').removeClass('hide');
                     var listTeamsTemplate = Handlebars.compile($("[data-template='listTeamsTemplate']").html());
@@ -389,10 +541,9 @@ var actiongolfLogin = {
 
                 } else if (xhr && !xhr.participating && xhr.entryFee > loginUserData.balanceAmount) {
                     $('#payNow').removeClass('hide');
-                    $('#currentBalance').html('$' + tournamentDetails.balanceAmount);
-                    $('input[name=amount]').val(xhr.entryFee);
+                    $('#pay-now-form input[name=amount]').val(xhr.entryFee);
 
-                    $('.number-only').on('keypress', function(event) {
+                    $('#pay-now-form .number-only').on('keypress', function(event) {
                         var charCode = (event.which) ? event.which : event.keyCode,
                             element = $(event.target),
                             maxlength = element.attr('maxlength');
@@ -406,16 +557,16 @@ var actiongolfLogin = {
                         }
                     }.bind(this));
 
-                    $('.number-only').on('keyup', function(event) {
-                        validateFields();
+                    $('#pay-now-form .number-only').on('keyup', function(event) {
+                        validatePaymentFields();
                     });
 
-                    $('input[name=expMonth]').on('blur', function(event) {
+                    $('#pay-now-form input[name=expMonth]').on('blur', function(event) {
                         if ($(this).val().toString().length == 1) {
                             $(this).val('0' + $(this).val());
                         }
 
-                        validateFields();
+                        validatePaymentFields();
                     });
 
                     $('#participate-pay-button').on('click', function(event) {
@@ -516,49 +667,8 @@ var actiongolfLogin = {
 
                     });
                 } else if (xhr && !xhr.participating) {
-                    $('#participateNow').removeClass('hide');
 
-                    if (xhr.entryFee !== 0 && xhr.entryFee <= loginUserData.balanceAmount) {
-                        $('#entryFee').html('$' + xhr.entryFee);
-                        $('#entryFeeDeduction').removeClass('hide');
-                    }
 
-                    $('#participate-button').on('click', function(event) {
-                        var ajaxUrl = _this.getApiUrl('participate'),
-                            requestData = {};
-
-                        $('#participate-button').parent('.button-wrapper').addClass('loading');
-                        $('.screen-message.error-message').addClass('hide');
-
-                        requestData.userProfileId = userProfileId;
-                        requestData.tournamentId = tournamentId;
-
-                        $.ajax({
-                            type: "POST",
-                            url: ajaxUrl,
-                            contentType: "application/json",
-                            dataType: "json",
-                            timeout: 0,
-                            data: JSON.stringify(requestData),
-                            success: function(xhr, status) {
-                                $('#participate-button').parent('.button-wrapper').removeClass('loading');
-                                $('#participateNow').addClass('hide');
-                                $('#createTeam').removeClass('hide');
-
-                                if (tournamentDetails.teamSize > 1) {
-                                    _this.openParticipantsDetails();
-                                } else {
-                                    $('#alreadyParticipated').removeClass('hide');
-                                    $('#tournamentCategoryDesc').html(tournamentDetails.tournamentCategoryDesc);
-                                }
-                            }.bind(this),
-                            error:  function(xhr, status, error) {
-                                $('.screen-message.error-message').removeClass('hide');
-                                $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
-                                $('#participate-button').parent('.button-wrapper').removeClass('loading');
-                            }.bind(this)
-                        });
-                    });
                 } else if (xhr && xhr.participating) {
                     if (tournamentDetails.teamSize > 1) {
                         $('#createTeam').removeClass('hide');
