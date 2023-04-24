@@ -308,7 +308,14 @@ var actiongolfLogin = {
 
         if (_this.getAuthSession('memberList')) {
             addMemberObj.addedMembers = _this.getAuthSession('memberList');
+            addMemberObj.entryFee = entryFee  * addMemberObj.addedMembers.length;
+            addMemberObj.participateNow = addMemberObj.entryFee <= loginUserData.balanceAmount;
             window.localStorage.removeItem('memberList');
+
+            if (addMemberObj.entryFee > loginUserData.balanceAmount) {
+                _this.setAuthSession('memberList', addMemberObj.addedMembers);
+                _this.paymentBlock();
+            }
         }
 
         var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
