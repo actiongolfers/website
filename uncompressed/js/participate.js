@@ -316,14 +316,7 @@ var actiongolfLogin = {
                 _this.setAuthSession('memberList', addMemberObj.addedMembers);
                 _this.paymentBlock();
             }
-        }
-
-        var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
-        $('.added-members-list').html(addedMembersList(addMemberObj));
-
-        addMemberEvents();
-
-        if (!participating) {
+        } else if (!participating) {
             addMemberObj.addedMembers.push(
                 {
                     name: loginUserData.firstName,
@@ -332,6 +325,11 @@ var actiongolfLogin = {
                 }
             );
         }
+
+        var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
+        $('.added-members-list').html(addedMembersList(addMemberObj));
+
+        addMemberEvents();
 
         function validateAddMembersFields() {
             if (!$('#addMembers input[name=name]').val().trim() || $('#addMembers input[name=phoneNumber]').val().toString().length != $('#addMembers input[name=phoneNumber]').attr('maxlength') ) {
@@ -420,12 +418,15 @@ var actiongolfLogin = {
                 });
 
                 addMemberObj.entryFee = entryFee  * addMemberObj.addedMembers.length;
+                addMemberObj.participateNow = addMemberObj.entryFee <= loginUserData.balanceAmount;
 
                 var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
                 $('.added-members-list').html(addedMembersList(addMemberObj));
 
-                if(addMemberObj.entryFee > loginUserData.balanceAmount) {
+                if (addMemberObj.entryFee > loginUserData.balanceAmount) {
                     _this.paymentBlock();
+                } else {
+                    $('#payNow').removeClass('hide');
                 }
                 addMemberEvents();
             });
