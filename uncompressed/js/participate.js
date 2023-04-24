@@ -304,7 +304,12 @@ var actiongolfLogin = {
         addMemberObj.addedMembers = [];
         addMemberObj.participating = participating;
         addMemberObj.entryFee = entryFee;
-        addMemberObj.participateNow = !participating && entryFee <= loginUserData.balanceAmount;
+        addMemberObj.participateNow = entryFee <= loginUserData.balanceAmount;
+
+        if (_this.getAuthSession('memberList')) {
+            addMemberObjaddedMembers = _this.getAuthSession('memberList');
+            window.sessionStorage.removeItem('memberList');
+        }
 
         var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
         $('.added-members-list').html(addedMembersList(addMemberObj));
@@ -382,12 +387,13 @@ var actiongolfLogin = {
             );
 
             addMemberObj.entryFee = entryFee  * addMemberObj.addedMembers.length;
-            addMemberObj.participateNow = !participating && addMemberObj.entryFee <= loginUserData.balanceAmount;
+            addMemberObj.participateNow = addMemberObj.entryFee <= loginUserData.balanceAmount;
 
             var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
             $('.added-members-list').html(addedMembersList(addMemberObj));
 
-            if(addMemberObj.entryFee > loginUserData.balanceAmount) {
+            if (addMemberObj.entryFee > loginUserData.balanceAmount) {
+                _this.setAuthSession('memberList', addMemberObj.addedMembers);
                 _this.paymentBlock();
             }
 
