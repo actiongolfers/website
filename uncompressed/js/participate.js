@@ -304,6 +304,7 @@ var actiongolfLogin = {
         addMemberObj.addedMembers = [];
         addMemberObj.participating = participating;
         addMemberObj.entryFee = entryFee;
+        addMemberObj.participateNow = !participating && entryFee <= loginUserData.balanceAmount;
 
         var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
         $('.added-members-list').html(addedMembersList(addMemberObj));
@@ -381,6 +382,7 @@ var actiongolfLogin = {
             );
 
             addMemberObj.entryFee = entryFee  * addMemberObj.addedMembers.length;
+            addMemberObj.participateNow = !participating && addMemberObj.entryFee <= loginUserData.balanceAmount;
 
             var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
             $('.added-members-list').html(addedMembersList(addMemberObj));
@@ -532,7 +534,7 @@ var actiongolfLogin = {
 
                 } else if (xhr && !xhr.participating && xhr.entryFee > loginUserData.balanceAmount) {
                     $('#payNow').removeClass('hide');
-                    $('#pay-now-form input[name=amount]').val(xhr.entryFee);
+                    //$('#pay-now-form input[name=amount]').val(xhr.entryFee);
 
                     $('#pay-now-form .number-only').on('keypress', function(event) {
                         var charCode = (event.which) ? event.which : event.keyCode,

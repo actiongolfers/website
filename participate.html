@@ -305,7 +305,6 @@
                 {{/if}}
             </script>
             
-            
             <script type="text/x-handlebars-template" data-template="userTournamentDetails">
                 <div class="usection usection-name"><strong>Tournament Name:</strong> <span>{{tournamentName}}</span> </div>
                 <div class="user-tournament-details">
@@ -337,12 +336,14 @@
                         {{/each}}
                     </div>
                     <h4><span>${{entryFee}}</span> will be deducting from your wallet.</h4>
+                    {{#if participateNow}}
                     <div class="button-wrapper">
                         <button id="participate-button" class="primary-btn">{{#if participating}} Add members {{else}} Participate now {{/if}}</button>
                         <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                     </div>
+                    {{/if}}
                 {{else}}
-                    {{#unless participating}}
+                    {{#if participateNow}}
                         <div class="participate-now">
                             <br />
                             <h3>Click below button to particpate the tournament</h3>
@@ -352,7 +353,7 @@
                                 <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                             </div>
                         </div>
-                    {{/unless}}
+                    {{/if}}
                 {{/if}}
             </script>
 
