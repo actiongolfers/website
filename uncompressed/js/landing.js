@@ -28,7 +28,7 @@ var actiongolfLanding = {
 
                     var otpValidationParticipate = $('.otp-validation-slide').length;
 
-                    $('#participate-submit').on('click', function(event) {
+                    $('#participate-submit, #participate-submit-header').on('click', function(event) {
                         event.preventDefault();
 
                         if (!otpValidationParticipate) {

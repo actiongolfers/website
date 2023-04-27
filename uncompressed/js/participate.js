@@ -332,7 +332,7 @@ var actiongolfLogin = {
         addMemberEvents();
 
         function validateAddMembersFields() {
-            if (!$('#addMembers input[name=name]').val().trim() || $('#addMembers input[name=phoneNumber]').val().toString().length != $('#addMembers input[name=phoneNumber]').attr('maxlength') ) {
+            if (!$('#addMembers input[name=fname]').val().trim() || !$('#addMembers input[name=lname]').val().trim() || $('#addMembers input[name=phoneNumber]').val().toString().length != $('#addMembers input[name=phoneNumber]').attr('maxlength') ) {
                 $('#add-member-button').attr('disabled', true).addClass('disabled-btn');
             } else {
                 $('#add-member-button').removeAttr('disabled', true).removeClass('disabled-btn');
@@ -367,25 +367,29 @@ var actiongolfLogin = {
 
         $('#add-member-button').on('click', function(event) {
             event.preventDefault();
-            var aMName,
+            var aMFistName,
+                aMLastName,
                 aMCallingCode,
                 aMPhoneNumber;
 
-            aMName = $('#addMembers .add-members-input[name=name]').val();
+            aMFistName = $('#addMembers .add-members-input[name=fname]').val();
+            aMLastName = $('#addMembers .add-members-input[name=lname]').val();
             aMCallingCode = $('#addMembers .add-members-input[name=callingCode]').val() || '+1';
             aMPhoneNumber = $('#addMembers .add-members-input[name=phoneNumber]').val();
 
-            addMemberData(aMName, aMCallingCode + ' ' + aMPhoneNumber);
-            $('#addMembers .add-members-input[name=name]').val('');
+            addMemberData(aMFistName, aMLastName, aMCallingCode + ' ' + aMPhoneNumber);
+            $('#addMembers .add-members-input[name=fname]').val('');
+            $('#addMembers .add-members-input[name=lname]').val('');
             $('#addMembers .add-members-input[name=callingCode]').val('');
             $('#addMembers .add-members-input[name=phoneNumber]').val('');
             $('#add-member-button').attr('disabled', true).addClass('disabled-btn');
         });
 
-        function addMemberData(aMName, aMPhoneNumber) {
+        function addMemberData(aMFistName, aMLastName, aMPhoneNumber) {
             addMemberObj.addedMembers.push(
                 {
-                    name: aMName,
+                    firstName: aMFistName,
+                    lastName: aMLastName,
                     phoneNumber: aMPhoneNumber,
                     currentUser: false
                 }

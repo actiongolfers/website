@@ -2326,7 +2326,7 @@ footer {
             }
         }
 
-        .learn-more {
+        .landing-primary-btn {
             border-radius: 4px;
             padding: 0 30px;
             line-height: 46px;
@@ -2338,7 +2338,28 @@ footer {
             border: none;
             cursor: pointer;
             display: inline-block;
-            margin: 10px 0 0;
+            margin: 20px 0 0;
+            text-shadow: none !important;
+
+            &:hover {
+                text-decoration: none !important;
+                transform: scale(1.05);
+            }
+        }
+
+        .landing-secondary-btn {
+            border-radius: 4px;
+            padding: 0 30px;
+            line-height: 46px;
+            height: 46px;
+            color: @brandColor;
+            background: @white;
+            font-family: @actionGolfSemiBold;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            margin: 20px 0 0 12px;
             text-shadow: none !important;
 
             &:hover {
@@ -3148,10 +3169,12 @@ footer {
 
         .add-member-input {
             width: 100%;
+            max-width: 768px;
 
             @media screen and (min-width:768px) {
                 .col-12 {
                     display: flex;
+                    gap: 15px;
                     flex-direction: row;
                 }
             }
@@ -3178,7 +3201,6 @@ footer {
                 }
 
                 @media screen and (min-width:768px) {
-                    margin-left: 14px;;
                     display: flex;
                     align-items: center;
 
