@@ -71,6 +71,7 @@ var actiongolfLogin = {
         $('#addedMemberList').addClass('hide');
         $('#participateConfirm').removeClass('hide');
         $('#pageLoad').hide();
+        window.localStorage.removeItem('memberList');
 
         var participateConfirmTemplate = Handlebars.compile($("[data-template='participateConfirmTemplate']").html());
         $('.participate_confirm').html(participateConfirmTemplate(response));
