@@ -748,6 +748,8 @@ var actiongolfLogin = {
         $('#payment-title').addClass('hide');
         $('#transID').html(xhr.transactionResponse.transId);
         $('#pay-now-success').removeClass('hide');
+        $('body').addClass('fixed-popup-body');
+        $('.pay-now-block').addClass('fixed-popup');
 
         $('#payment-complete').on('click', function() {
             $('#payment-complete').parent('.button-wrapper').addClass('loading');
