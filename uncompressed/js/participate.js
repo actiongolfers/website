@@ -8,6 +8,7 @@ let tournamentId,
     teamSize,
     auth = 'YWdkZXY6cGFzc3dvcmQ=',
     _this,
+    teamCreated = false,
     testPage = window.location.href.includes('participate-test.html') || false;
 
 var actiongolfLogin = {
@@ -74,8 +75,10 @@ var actiongolfLogin = {
         var participateConfirmTemplate = Handlebars.compile($("[data-template='participateConfirmTemplate']").html());
         $('.participate_confirm').html(participateConfirmTemplate(response));
 
-        $('#createTeam').removeClass('hide');
-        _this.openParticipantsDetails();
+        if (!teamCreated) {
+            $('#createTeam').removeClass('hide');
+            _this.openParticipantsDetails();
+        }
     },
 
     openParticipantsDetails: function() {
@@ -562,6 +565,7 @@ var actiongolfLogin = {
                 $('#currentBalance').html('$' + tournamentDetails.balanceAmount);
                 if (xhr && xhr.tournamentTeam && xhr.tournamentTeam.tournamentTeamMembers && xhr.tournamentTeam.tournamentTeamMembers.length) {
                     $('#yourTeam').removeClass('hide');
+                    teamCreated = true;
                     var listTeamsTemplate = Handlebars.compile($("[data-template='listTeamsTemplate']").html());
 
                     xhr.tournamentTeam.tournamentTeamMembers.map(function(op, i) {
