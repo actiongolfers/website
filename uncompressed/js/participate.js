@@ -664,6 +664,10 @@ var actiongolfLogin = {
 
             function responseHandler(response) {
                 if (response.messages.resultCode === "Error") {
+                    $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
+                    $('.screen-message.error-message').removeClass('hide');
+                    $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
+
                     var i = 0;
                     while (i < response.messages.message.length) {
                         console.log(
