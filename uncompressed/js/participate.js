@@ -588,6 +588,7 @@ var actiongolfLogin = {
                         $('#createTeam').removeClass('hide');
                         _this.openParticipantsDetails();
                     } else {
+                        teamCreated = true;
                         $('#alreadyParticipated').removeClass('hide');
                         $('#tournamentCategoryDesc').html(tournamentDetails.tournamentCategoryDesc);
                     }
