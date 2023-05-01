@@ -87,11 +87,12 @@ var actiongolfLogin = {
         var participateConfirmTemplate = Handlebars.compile($("[data-template='participateConfirmTemplate']").html());
         $('.participate_confirm').html(participateConfirmTemplate(response));
 
-
         if (!teamCreated) {
             $('#createTeam').removeClass('hide');
             _this.openParticipantsDetails();
         }
+
+        _this.getProfile();
     },
 
     openParticipantsDetails: function() {
@@ -209,6 +210,12 @@ var actiongolfLogin = {
         var ajaxUrl = _this.getApiUrl('getProfile');
 
         $('#pageLoad').show();
+        $('#participateUserDetails').addClass('hide');
+        $('#ajaxParticipateForm').addClass('hide');
+        $('#alreadyParticipated').addClass('hide');
+        $('#payNow').addClass('hide');
+        $('#createTeam').addClass('hide');
+        $('#createTeam').addClass('hide');
 
         $.ajax({
             type: "GET",
