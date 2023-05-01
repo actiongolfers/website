@@ -10,7 +10,10 @@ let tournamentId,
     _this,
     teamCreated = false,
     userParticipating = false,
-    testPage = window.location.href.includes('participate-test.html') || false;
+    testPage = window.location.href.includes('participate-test.html') || false,
+    merchantAuthenticationName = testPage ? '9k9FP9khR' : '55qBy6J2aN73',
+    merchantAuthenticationClient = testPage ? '9E9u9bZhnz6AaaTxGqESm8Tr2AfuPXcex498Q9A9g7X9GG34yGpJGgh5cH4CNKZf' : '9X7ym9MuWS7wwc2VTdDE87w4AC8w5qW7fA6zqvqjnjq95wk8Z6ynm5ATfHQA838J',
+    merchantAuthenticationTrans = testPage ? '2tkP3CP85y76Vp6P' : '28UPsn88BWW3K4mZ';
 
 var actiongolfLogin = {
     init: function () {
@@ -63,7 +66,12 @@ var actiongolfLogin = {
                 window.sessionStorage.setItem('agReDirectPage', testPage ? '/participate-test.html' :'./participate.html');
                 window.location.href = './login.html';
             }
+        });
 
+        $('#add-member-expand').hide().removeClass('hide');
+
+        $('#add-member-expand-btn').on('click', function() {
+            $('#add-member-expand').slideToggle();
         });
     },
 
@@ -437,6 +445,10 @@ var actiongolfLogin = {
         }
 
         function addMemberEvents() {
+            $('#add-amount-scroll').off().on('click', function(event) {
+                $("html, body").animate({ scrollTop: $('#payNow').offset().top - 30 });
+            });
+
             $('.member-delete-active').off().on('click', function(event) {
                 event.preventDefault();
 
@@ -650,8 +662,8 @@ var actiongolfLogin = {
             $('.screen-message.error-message').addClass('hide');
 
             var authData = {};
-            authData.clientKey = "9E9u9bZhnz6AaaTxGqESm8Tr2AfuPXcex498Q9A9g7X9GG34yGpJGgh5cH4CNKZf";
-            authData.apiLoginID = "9k9FP9khR";
+            authData.clientKey = merchantAuthenticationClient;
+            authData.apiLoginID = merchantAuthenticationName;
 
             var cardData = {};
                 cardData.cardNumber = document.getElementById("cardNumber").value;
@@ -704,8 +716,8 @@ var actiongolfLogin = {
                 var requestData = {};
                 requestData.createTransactionRequest = {};
                 requestData.createTransactionRequest.merchantAuthentication = {};
-                requestData.createTransactionRequest.merchantAuthentication.name = '9k9FP9khR';
-                requestData.createTransactionRequest.merchantAuthentication.transactionKey = '2tkP3CP85y76Vp6P';
+                requestData.createTransactionRequest.merchantAuthentication.name = merchantAuthenticationName;
+                requestData.createTransactionRequest.merchantAuthentication.transactionKey = merchantAuthenticationTrans;
                 requestData.createTransactionRequest.refId = "123456";
                 requestData.createTransactionRequest.transactionRequest = {};
                 requestData.createTransactionRequest.transactionRequest.transactionType = 'authCaptureTransaction';

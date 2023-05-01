@@ -2604,6 +2604,16 @@ footer {
     }
 }
 
+.link-btn {
+    cursor: pointer;
+    color: @brandColor;
+    text-decoration: underline;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 .button-wrapper {
     position: relative;
 
@@ -3038,10 +3048,6 @@ footer {
         }
     }
 
-    @media screen and (min-width:1024px) {
-        margin: 0 0 60px;
-    }
-
     .usection-name {
         font-size: 25px;
         padding: 0;
@@ -3112,6 +3118,7 @@ footer {
     }
 
     min-width: 280px;
+    min-height: 300px;
 
     @media screen and (min-width:768px) {
         min-width: 684px;
@@ -3127,10 +3134,12 @@ footer {
 }
 
 .form-container .input-container.pay-now {
-    padding: 40px 0 0 ;
+    padding: 0;
+    margin:  0 0 30px;
 
     @media screen and (min-width:768px) {
         width: 100%;
+        margin:  0 0 40px;
     }
 }
 
@@ -3142,22 +3151,44 @@ footer {
         @media screen and (min-width:1024px) {
             font-size: 22px;
         }
-        padding: 0 0 8px;
+        margin: 0 0 8px;
     }
 }
 
 .add-members {
-    padding: 40px 0;
+    margin: 0 0 30px;
+
+    @media screen and (min-width:768px) {
+        margin:  0 0 40px;
+    }
 
     h3 {
         font-family: @actionGolfSemiBold;
-        font-size: 24px;
-        padding: 0 0 30px;
+        font-size: 15px;
+        margin: 0 0 15px;
     }
 
     h4 {
         font-family: @actionGolfSemiBold;
-        font-size: 16px;
+        font-size: 13px;
+        margin: 0 0 13px;
+    }
+
+    @media screen and (min-width:768px) {
+
+        h3 {
+            font-size: 20px;
+            margin: 0 0 20px;
+        }
+
+        h4 {
+            font-size: 16px;
+            margin: 0 0 16px;
+        }
+    }
+
+    .red {
+        color: @red;
     }
 
     .add-member-input-wrapper.input-container {
@@ -3238,10 +3269,24 @@ footer {
         }
     }
 
-    .added-members-list,
-    .participate_confirm {
+    .added-members-list-cnt,
+    .participate_confirm-cnt {
+        padding: 20px;
+        margin: 0 0 30px;
+        background: #e3f4ea;
+        border-radius: 20px;
+
+        @media screen and (min-width:768px) {
+            padding: 30px;
+            margin: 0 0 40px;
+        }
+
+        .button-wrapper {
+            margin-top: 0 !important;
+        }
+
         .member-list {
-            padding: 30px 0 10px;
+            padding: 0 0 20px;
             display: flex;
             gap: 12px;
             align-items: flex-start;
@@ -3263,9 +3308,10 @@ footer {
                 padding: 10px;
                 align-items: flex-start;
                 flex-direction: column;
-                border: 1px solid #ddd;
                 position: relative;
                 width: 100%;
+                background: @white;
+                border-radius: 8px;
 
                 @media screen and (min-width:768px) {
                     width: calc(50% - 12px);
@@ -3321,23 +3367,38 @@ footer {
 .pay-now {
     h3 {
         font-family: @actionGolfSemiBold;
-        font-size: 18px;
-        padding: 0 0 30px;
+        font-size: 15px;
+        padding: 0 0 15px;
+    }
+
+    @media screen and (min-width:768px) {
+        h3 {
+            font-size: 20px;
+            padding: 0 0 20px;
+        }
+    }
+
+    h5 {
+        font-family: @actionGolfSemiBold;
+        font-size: 12px;
+        padding: 0 0 24px;
+    }
+
+    @media screen and (min-width:768px) {
+        h5 {
+            font-size: 16px;
+            padding: 0 0 32px;
+        }
     }
 
     .pay-now-block {
         width: 100%;
-        padding: 16px;
+        padding: 20px;
         background: #efefef;
-        border-radius: 8px;
+        border-radius: 20px;
 
-        @media screen and (min-width:1024px) {
-            padding: 24px;
-        }
-
-        h5{
-            font-size: 16px;
-            padding-bottom: 24px;
+        @media screen and (min-width:768px) {
+            padding: 30px;
         }
 
         .col-12 .styled-input {
@@ -3459,16 +3520,17 @@ body.fixed-popup-body {
 
 .list-participate-wrapper,
 .list-team-wrapper {
-    padding: 20px 0 0;
-
-    @media screen and (min-width:1024px) {
-        padding: 50px 0 0;
+    h3 {
+        font-family: @actionGolfSemiBold;
+        font-size: 18px;
+        padding: 0 0 15px;
     }
 
-    h5 {
-        font-size: 24px;
-        padding: 0 0 18px;
-        font-family: @actionGolfSemiBold;
+    @media screen and (min-width:768px) {
+        h3 {
+            font-size: 24px;
+            padding: 0 0 24px;
+        }
     }
 
     #teamMemberMessage {
@@ -3483,7 +3545,7 @@ body.fixed-popup-body {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        margin: 20px -10px 0;
+        margin: 15px -10px;
 
         h3 {
             font-size: 20px;
@@ -3679,6 +3741,7 @@ body.fixed-popup-body {
         align-items: center;
         max-width: 100%;
         width: 400px;
+        padding: 0;
 
         &.input-container .styled-input {
             margin-bottom: 0;
@@ -3687,17 +3750,13 @@ body.fixed-popup-body {
 
         .button-wrapper {
             margin-top: 0;
-            margin-left: 15px;
+            margin-left: ;
         }
     }
 }
 
 .list-team-wrapper .list-participates .participates-item {
     cursor: default;
-}
-
-.participate_confirm {
-    padding: 30px 0 0;
 }
 
 @keyframes hamburgermenu {

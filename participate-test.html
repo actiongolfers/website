@@ -82,8 +82,11 @@
                             </div>
             
                             <div id="addMembers" class="add-members hide">
-                                <h3>Add member to this tournament</h3>
-                                <div class="input-container add-member-input-wrapper">
+                                <div id="addedMemberList" class="added-members-list"></div>
+                                <div id="participateConfirm" class="participate_confirm hide"></div>
+            
+                                <h3>Would you like to add your friends to this tournament? <a id="add-member-expand-btn" class="link-btn" >Add members</a></h3>
+                                <div class="input-container add-member-input-wrapper hide" id="add-member-expand">
                                     <div class="add-member-input">
                                         <div class="col-12">
                                             <div class="col-6">
@@ -135,10 +138,6 @@
                                             </div>
                                         </div>
                                     </div>
-            
-                                    <div id="addedMemberList" class="added-members-list"></div>
-            
-                                    <div id="participateConfirm" class="participate_confirm hide"></div>
                                 </div>
                             </div>
             
@@ -260,7 +259,7 @@
             </section>
             
             <script type="text/x-handlebars-template" data-template="listParticipatesTemplate">
-                <h5>Create team</h5>
+                <h3>Create team</h3>
                 <div class="create-team-wrapper input-container">
                     <div class="styled-input">
                         <input type="text" name="teamName" required
@@ -301,7 +300,7 @@
             </script>
             
             <script type="text/x-handlebars-template" data-template="listTeamsTemplate">
-                <h5>Your Team</h5>
+                <h3>Your Team</h3>
                 {{#if tournamentTeamMembers}}
                     Team Name - {{teamName}}
                     <div class="list-participates">
@@ -339,7 +338,7 @@
                             </div>
                         </div>
                         <div class="current-balance">
-                            Wallet Balance - <span id="currentBalance"></span>
+                            Wallet Balance: <span id="currentBalance"></span>
                         </div>
                     </div>
                 </div>
@@ -347,6 +346,8 @@
             
             <script type="text/x-handlebars-template" data-template="addedMembersListTemplate">
                 {{#if addedMembers}}
+                <div class="added-members-list-cnt">
+                <h3>Participation member details</h3>
                     <div class="member-list">
                         <div class="member-item member-item-head">
                             <span>Name</span> <span>Phone Number</span>
@@ -357,17 +358,21 @@
                         </div>
                         {{/each}}
                     </div>
-                    <h4><span>${{entryFee}}</span> will be deducting from your wallet.</h4>
-                    {{#if participateNow}}
+                    <h4>
+                        <span>${{entryFee}}</span> will be deducting from your wallet.
+                        {{#unless participateNow}}
+                        <span class="red">(Insufficient Balance) <a id="add-amount-scroll" class="link-btn" >Add to wallet</a>
+                        </span>
+                        {{/unless}}
+                    </h4>
+            
                     <div class="button-wrapper">
-                        <button id="participate-button" class="primary-btn">Participate</button>
+                        <button id="participate-button" class="primary-btn {{#unless participateNow}} disabled-btn{{/unless}}" {{#unless participateNow}} disabled {{/unless}}>Participate</button>
                         <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                     </div>
-                    {{/if}}
                 {{else}}
                     {{#if participateNow}}
                         <div class="participate-now">
-                            <br />
                             <h3>Click below button to particpate the tournament</h3>
                             <h4><span>${{entryFee}}</span> will be deducting from your wallet.</h4>
                             <div class="button-wrapper center-align">
@@ -376,11 +381,13 @@
                             </div>
                         </div>
                     {{/if}}
+                </div>
                 {{/if}}
             </script>
             
             <script type="text/x-handlebars-template" data-template="participateConfirmTemplate">
                 {{#if participants}}
+                <div class="participate_confirm-cnt">
                     <h3>Thank you for participation, please find the status of member paricipation</h3>
                     <div class="member-list">
                         <div class="member-item member-item-head">
@@ -394,6 +401,7 @@
                         {{/each}}
                     </div>
                     Amount deducted: ${{deductedAmount}}
+                </div>
                 {{/if}}
             </script>
 
