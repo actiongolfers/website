@@ -10,6 +10,7 @@ let tournamentId,
     _this,
     teamCreated = false,
     userParticipating = false,
+    addMemberObj = {},
     testPage = window.location.href.includes('participate-test.html') || false,
     merchantAuthenticationName = testPage ? '9k9FP9khR' : '55qBy6J2aN73',
     merchantAuthenticationClient = testPage ? '9E9u9bZhnz6AaaTxGqESm8Tr2AfuPXcex498Q9A9g7X9GG34yGpJGgh5cH4CNKZf' : '9X7ym9MuWS7wwc2VTdDE87w4AC8w5qW7fA6zqvqjnjq95wk8Z6ynm5ATfHQA838J',
@@ -81,9 +82,11 @@ var actiongolfLogin = {
         $('#participateConfirm').removeClass('hide');
         $('#pageLoad').hide();
         window.localStorage.removeItem('memberList');
+        addMemberObj.addedMembers = [];
 
         var participateConfirmTemplate = Handlebars.compile($("[data-template='participateConfirmTemplate']").html());
         $('.participate_confirm').html(participateConfirmTemplate(response));
+
 
         if (!teamCreated) {
             $('#createTeam').removeClass('hide');
@@ -326,8 +329,6 @@ var actiongolfLogin = {
     },
 
     addMemberJS: function(participating, entryFee) {
-        var addMemberObj = {};
-
         userParticipating = participating;
 
         addMemberObj.addedMembers = [];

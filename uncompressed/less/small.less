@@ -3143,363 +3143,612 @@ footer {
     }
 }
 
-.participate-now {
-    h3 {
-        font-family: @actionGolfSemiBold;
-        font-size: 18px;
+.participate-content {
+    .participate-now {
+        h3 {
+            font-family: @actionGolfSemiBold;
+            font-size: 18px;
 
-        @media screen and (min-width:1024px) {
-            font-size: 22px;
+            @media screen and (min-width:1024px) {
+                font-size: 22px;
+            }
+            margin: 0 0 8px;
+            padding: 0;
         }
-        margin: 0 0 8px;
-    }
-}
-
-.add-members {
-    margin: 0 0 30px;
-
-    @media screen and (min-width:768px) {
-        margin:  0 0 40px;
     }
 
-    h3 {
-        font-family: @actionGolfSemiBold;
-        font-size: 15px;
-        margin: 0 0 15px;
-    }
+    .add-members {
+        margin: 0 0 30px;
 
-    h4 {
-        font-family: @actionGolfSemiBold;
-        font-size: 13px;
-        margin: 0 0 13px;
-    }
-
-    @media screen and (min-width:768px) {
+        @media screen and (min-width:768px) {
+            margin:  0 0 40px;
+        }
 
         h3 {
-            font-size: 20px;
-            margin: 0 0 20px;
+            font-family: @actionGolfSemiBold;
+            font-size: 15px;
+            margin: 0 0 15px;
+            padding: 0;
         }
 
         h4 {
-            font-size: 16px;
-            margin: 0 0 16px;
+            font-family: @actionGolfSemiBold;
+            font-size: 13px;
+            margin: 0 0 13px;
+            padding: 0;
         }
-    }
-
-    .red {
-        color: @red;
-    }
-
-    .add-member-input-wrapper.input-container {
-        padding: 0;
 
         @media screen and (min-width:768px) {
-            width: 100%;
+
+            h3 {
+                font-size: 20px;
+                margin: 0 0 20px;
+            }
+
+            h4 {
+                font-size: 16px;
+                margin: 0 0 16px;
+            }
         }
 
-        .add-member-input {
-            width: 100%;
-            max-width: 768px;
+        .red {
+            color: @red;
+        }
+
+        .add-member-input-wrapper.input-container {
+            padding: 0;
 
             @media screen and (min-width:768px) {
-                .col-12 {
-                    display: flex;
-                    gap: 15px;
-                    flex-direction: row;
-                }
-            }
-
-            .styled-input {
-                margin-bottom: 20px;
-                background-color: @white;
-            }
-
-            .add-member-button-wrapper {
-                .button-wrapper {
-                    .primary-btn {
-                        width: 100%;
-                        margin-right: 0;
-
-                        span.icon {
-                            display: none;
-                        }
-
-                        span.text {
-                            display: inline;
-                        }
-                    }
-                }
-
-                @media screen and (min-width:768px) {
-                    display: flex;
-                    align-items: center;
-
-                    .form-field {
-                        width: 100%;
-                    }
-
-                    .button-wrapper {
-                        .primary-btn {
-                            width: 50px;
-                            border-radius: 100%;
-                            height: 50px;
-                            text-align: center;
-                            padding: 0;
-                            margin-top: 6px;
-
-                            span.icon {
-                                display: inline-block;
-                                background: url(@plus) no-repeat center center;
-                                width: 100%;
-                                height: 100%;
-                                background-size: 22px;
-                            }
-
-                            span.text {
-                                display: none;
-                            }
-                        }
-
-                        margin-top: 1px;
-                        margin-left: 14px;
-                    }
-                }
-            }
-        }
-    }
-
-    .added-members-list-cnt,
-    .participate_confirm-cnt {
-        padding: 20px;
-        margin: 0 0 30px;
-        background: #e3f4ea;
-        border-radius: 20px;
-
-        @media screen and (min-width:768px) {
-            padding: 30px;
-            margin: 0 0 40px;
-        }
-
-        .button-wrapper {
-            margin-top: 0 !important;
-        }
-
-        .member-list {
-            padding: 0 0 20px;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            flex-direction: column;
-
-            @media screen and (min-width:768px) {
-                align-items: flex-start;
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-
-            .member-item {
-                &.member-item-head {
-                    display: none;
-                    font-family: @actionGolfSemiBold;
-                }
-
-                display: flex;
-                padding: 10px;
-                align-items: flex-start;
-                flex-direction: column;
-                position: relative;
                 width: 100%;
-                background: @white;
-                border-radius: 8px;
+            }
+
+            .add-member-input {
+                width: 100%;
+                max-width: 768px;
 
                 @media screen and (min-width:768px) {
-                    width: calc(50% - 12px);
-                }
-
-                @media screen and (min-width:1024px) {
-                    width: calc(33.33% - 24px);
-                }
-
-                span {
-                    flex-grow: 1;
-                    width: 100%;
-                    padding: 5px;
-
-                    &:first-child {
-                        font-family: @actionGolfSemiBold;
+                    .col-12 {
+                        display: flex;
+                        gap: 15px;
+                        flex-direction: row;
                     }
-
-                    &.status {
-
-
-                        &.already {
-                            color: red;
-                        }
-
-                        &.added {
-                            color: green;
-                        }
-                    }
-                }
-
-                .member-delete {
-                    pointer-events: none;
-                    width: 20px;
-                    height: 20px;
-                    display: block;
-                    position: absolute;
-                    right: 12px;
-                    top: 12px;
-
-                    &.member-delete-active {
-                        pointer-events: all;
-                        background: url(@close) no-repeat center center;
-                        background-size: 20px;
-                        cursor: pointer;
-                    }
-                }
-            }
-        }
-    }
-}
-
-.pay-now {
-    h3 {
-        font-family: @actionGolfSemiBold;
-        font-size: 15px;
-        padding: 0 0 15px;
-    }
-
-    @media screen and (min-width:768px) {
-        h3 {
-            font-size: 20px;
-            padding: 0 0 20px;
-        }
-    }
-
-    h5 {
-        font-family: @actionGolfSemiBold;
-        font-size: 12px;
-        padding: 0 0 24px;
-    }
-
-    @media screen and (min-width:768px) {
-        h5 {
-            font-size: 16px;
-            padding: 0 0 32px;
-        }
-    }
-
-    .pay-now-block {
-        width: 100%;
-        padding: 20px;
-        background: #efefef;
-        border-radius: 20px;
-
-        @media screen and (min-width:768px) {
-            padding: 30px;
-        }
-
-        .col-12 .styled-input {
-            width: 100%;
-            max-width: 400px;
-
-            input#cardNumber {
-                letter-spacing: 4px;
-
-                @media screen and (min-width:768px) {
-                    letter-spacing: 6px;
-                }
-            }
-
-            input[type=text] {
-                background: @white;
-            }
-        }
-
-        .card-exp-cvv {
-            display: flex;
-            justify-content: space-between;
-            flex-direction: row;
-            gap: 10px;
-            max-width: 400px;
-
-            .card-fields {
-                &:first-child {
-                    width: 116px;
-                }
-
-                &:last-child {
-                    width: 150px;
                 }
 
                 .styled-input {
-                    margin-bottom: 12px;
+                    margin-bottom: 20px;
+                    background-color: @white;
+                }
+
+                .add-member-button-wrapper {
+                    .button-wrapper {
+                        .primary-btn {
+                            width: 100%;
+                            margin-right: 0;
+
+                            span.icon {
+                                display: none;
+                            }
+
+                            span.text {
+                                display: inline;
+                            }
+                        }
+                    }
+
+                    @media screen and (min-width:768px) {
+                        display: flex;
+                        align-items: center;
+
+                        .form-field {
+                            width: 100%;
+                        }
+
+                        .button-wrapper {
+                            .primary-btn {
+                                width: 50px;
+                                border-radius: 100%;
+                                height: 50px;
+                                text-align: center;
+                                padding: 0;
+                                margin-top: 6px;
+
+                                span.icon {
+                                    display: inline-block;
+                                    background: url(@plus) no-repeat center center;
+                                    width: 100%;
+                                    height: 100%;
+                                    background-size: 22px;
+                                }
+
+                                span.text {
+                                    display: none;
+                                }
+                            }
+
+                            margin-top: 1px;
+                            margin-left: 14px;
+                        }
+                    }
                 }
             }
         }
 
-        #participate-pay-button {
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .authorize-seal {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-
-        .pay-now-success {
-            background: url(@successMessage) no-repeat center 10px;
-            padding: 85px 12px 20px;
-            background-size: 60px;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        &.fixed-popup {
-            position: fixed;
-            width: calc(100% - 80px);
-            left: 40px;
-            top: calc(50% - 120px);
-            z-index: 999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid #00ac5a;
+        .added-members-list-cnt,
+        .participate_confirm-cnt {
+            padding: 20px;
+            margin: 0 0 30px;
+            background: #e3f4ea;
+            border-radius: 20px;
 
             @media screen and (min-width:768px) {
-                width: 700px;
-                left: calc(50% - 350px);
+                padding: 30px;
+                margin: 0 0 40px;
+            }
+
+            .button-wrapper {
+                margin-top: 0 !important;
+            }
+
+            .member-list {
+                padding: 0 0 20px;
+                display: flex;
+                gap: 12px;
+                align-items: flex-start;
+                flex-direction: column;
+
+                @media screen and (min-width:768px) {
+                    align-items: flex-start;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                }
+
+                .member-item {
+                    &.member-item-head {
+                        display: none;
+                        font-family: @actionGolfSemiBold;
+                    }
+
+                    display: flex;
+                    padding: 10px;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    position: relative;
+                    width: 100%;
+                    background: @white;
+                    border-radius: 8px;
+
+                    @media screen and (min-width:768px) {
+                        width: calc(50% - 12px);
+                    }
+
+                    @media screen and (min-width:1024px) {
+                        width: calc(33.33% - 24px);
+                    }
+
+                    span {
+                        flex-grow: 1;
+                        width: 100%;
+                        padding: 5px;
+
+                        &:first-child {
+                            font-family: @actionGolfSemiBold;
+                        }
+
+                        &.status {
+
+
+                            &.already {
+                                color: red;
+                            }
+
+                            &.added {
+                                color: green;
+                            }
+                        }
+                    }
+
+                    .member-delete {
+                        pointer-events: none;
+                        width: 20px;
+                        height: 20px;
+                        display: block;
+                        position: absolute;
+                        right: 12px;
+                        top: 12px;
+
+                        &.member-delete-active {
+                            pointer-events: all;
+                            background: url(@close) no-repeat center center;
+                            background-size: 20px;
+                            cursor: pointer;
+                        }
+                    }
+                }
             }
         }
     }
 
-    input[type=submit] {
-        border-radius: 4px;
-        padding: 0 20px;
-        line-height: 38px;
-        height: 38px;
-        color: @white;
-        font-family: @actionGolfSemiBold;
-        font-size: 14px;
-        border: none;
-        cursor: pointer;
-        margin-right: 10px;
-        display: inline-block;
-        background: @brandColor;
-
-        &:hover,
-        &:focus {
-            opacity: 0.9;
-            transform: scale(1.05);
+    .pay-now {
+        h3 {
+            font-family: @actionGolfSemiBold;
+            font-size: 15px;
+            padding: 0 0 15px;
         }
+
+        @media screen and (min-width:768px) {
+            h3 {
+                font-size: 20px;
+                padding: 0 0 20px;
+            }
+        }
+
+        h5 {
+            font-family: @actionGolfSemiBold;
+            font-size: 12px;
+            padding: 0 0 24px;
+        }
+
+        @media screen and (min-width:768px) {
+            h5 {
+                font-size: 16px;
+                padding: 0 0 32px;
+            }
+        }
+
+        .pay-now-block {
+            width: 100%;
+            padding: 20px;
+            background: #efefef;
+            border-radius: 20px;
+
+            @media screen and (min-width:768px) {
+                padding: 30px;
+            }
+
+            .col-12 .styled-input {
+                width: 100%;
+                max-width: 400px;
+
+                input#cardNumber {
+                    letter-spacing: 4px;
+
+                    @media screen and (min-width:768px) {
+                        letter-spacing: 6px;
+                    }
+                }
+
+                input[type=text] {
+                    background: @white;
+                }
+            }
+
+            .card-exp-cvv {
+                display: flex;
+                justify-content: space-between;
+                flex-direction: row;
+                gap: 10px;
+                max-width: 400px;
+
+                .card-fields {
+                    &:first-child {
+                        width: 116px;
+                    }
+
+                    &:last-child {
+                        width: 150px;
+                    }
+
+                    .styled-input {
+                        margin-bottom: 12px;
+                    }
+                }
+            }
+
+            #participate-pay-button {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .authorize-seal {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+
+            .pay-now-success {
+                background: url(@successMessage) no-repeat center 10px;
+                padding: 85px 12px 20px;
+                background-size: 60px;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            &.fixed-popup {
+                position: fixed;
+                width: calc(100% - 40px);
+                left: 20px;
+                top: calc(50% - 120px);
+                z-index: 999;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid #00ac5a;
+
+                @media screen and (min-width:768px) {
+                    width: 700px;
+                    left: calc(50% - 350px);
+                }
+            }
+        }
+
+        input[type=submit] {
+            border-radius: 4px;
+            padding: 0 20px;
+            line-height: 38px;
+            height: 38px;
+            color: @white;
+            font-family: @actionGolfSemiBold;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+            display: inline-block;
+            background: @brandColor;
+
+            &:hover,
+            &:focus {
+                opacity: 0.9;
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    .list-participate-wrapper,
+    .list-team-wrapper {
+        h3 {
+            font-family: @actionGolfSemiBold;
+            font-size: 18px;
+            padding: 0 0 15px;
+            margin: 0;
+        }
+
+        @media screen and (min-width:768px) {
+            h3 {
+                font-size: 24px;
+                padding: 0 0 24px;
+                margin: 0;
+            }
+        }
+
+        #teamMemberMessage {
+            color: @red;
+
+            &.shakeme {
+                animation: shake 1s ease-in-out 0.2s 2;
+            }
+        }
+
+        .list-participates {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin: 15px -10px;
+
+            h3 {
+                font-size: 20px;
+                padding: 0 30px 20px 0;
+                margin: 0;
+            }
+
+            .participates-item {
+                cursor: pointer;
+                box-shadow: 3px 4px 30px @greyButton;
+                margin: 10px;
+                display: inline-block;
+                width: calc(50% - 20px);
+                border-radius: 8px;
+                padding: 10px;
+                background-size: 30px;
+                background-repeat: no-repeat;
+                background-position: calc(100% - 10px) 10px;
+                aspect-ratio: 1 / 1;
+                border: 3px solid transparent;
+                position: relative;
+                min-width: 150px;
+                word-break: break-word;
+
+                &.lead {
+                    &::after {
+                        display: block;
+                        content: 'Lead';
+                        width: auto;
+                        height: 20px;
+                        background: url(@successMessage) no-repeat 4px 3px;
+                        background-size: 20px;
+                        position: absolute;
+                        top: 14px;
+                        padding: 3px 11px 3px 30px;
+                        font-size: 15px;
+                        right: 14px;
+                        background-color: @white;
+                        border: 1px solid @brandColor;
+                        border-radius: 14px;
+                        line-height: 19px;
+                        box-shadow: 2px 4px 6px -3px @brandColor;
+                    }
+                }
+
+                @media screen and (min-width:768px) {
+                    min-width: 210px;
+                }
+
+                .styledradio {
+                    opacity: 0;
+                    position: absolute;
+                    top: 16px;
+                    background: @white;
+                    padding: 5px 7px;
+                    border-radius: 14px;
+                    right: 16px;
+
+                    --active: #275EFE;
+                    --active-inner: #fff;
+                    --focus: 2px rgba(39, 94, 254, .3);
+                    --border: #BBC1E1;
+                    --border-hover: #275EFE;
+                    --background: #fff;
+                    --disabled: #F6F8FF;
+                    --disabled-inner: #E1E6F9;
+
+                    input[type='radio'] {
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+
+                        width: 38px;
+                        border-radius: 11px;
+                        height: 21px;
+                        outline: none;
+                        display: inline-block;
+                        vertical-align: top;
+                        position: relative;
+                        margin: 0;
+                        cursor: pointer;
+                        border: 1px solid var(--bc, var(--border));
+                        background: var(--b, var(--background));
+                        transition: background .3s, border-color .3s, box-shadow .2s;
+
+                        & + label {
+                            font-size: 14px;
+                            line-height: 21px;
+                            display: inline-block;
+                            vertical-align: top;
+                            cursor: pointer;
+                            margin-left: 4px;
+                        }
+
+                        &:after {
+                            content: '';
+                            display: block;
+                            left: 0;
+                            top: 0;
+                            position: absolute;
+                            transition: transform var(--d-t, .3s) var(--d-t-e, ease), opacity var(--d-o, .2s);
+                            left: 2px;
+                            top: 2px;
+                            border-radius: 50%;
+                            width: 15px;
+                            height: 15px;
+                            background: var(--ab, var(--border));
+                            transform: translateX(var(--x, 0));
+                        }
+
+                        &:checked {
+                            --b: var(--active);
+                            --bc: var(--active);
+                            --d-o: .3s;
+                            --d-t: .6s;
+                            --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
+                        --ab: var(--active-inner);
+                        --x: 17px;
+                        }
+                    }
+                }
+                &.selected {
+                    border-color: @brandColor;
+
+                    .styledradio{
+                        opacity: 1;
+                    }
+                }
+
+                @media screen and (min-width: 768px) {
+                    width: calc(33.33% - 20px);
+                }
+
+                @media screen and (min-width:1024px) {
+                    width: calc(20% - 20px);
+                }
+
+                .player {
+                    position: relative;
+                    margin: 0 0 20px 0;
+
+                    .phone {
+                        display: inline-block;
+                        font-style: italic;
+                    }
+
+                    .name {
+                        font-size: 20px;
+                        line-height: 1;
+                        padding: 8px 0;
+                    }
+
+                    .photo {
+                        width: 100%;
+                        aspect-ratio: 1 / 1;
+                        img {
+                            border-radius: 8px 8px 0 0;
+                            width: 100%;
+                            height: 100%;
+                        }
+
+                        &.icon {
+                            img {
+                                visibility: hidden;
+                            }
+
+                            &::after {
+                                content: '';
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                background: url(@playerIcon) no-repeat 0 0;
+                                width: 100%;
+                                aspect-ratio: 1 / 1;
+                                background-size: cover;
+                                border-radius: 8px 8px 0 0;
+                            }
+                        }
+
+                    }
+                }
+
+                &:nth-child(2n) .player::after{
+                    background-color: #0000ff;
+                }
+
+                &:nth-child(3n) .player::after{
+                    background-color: @black;
+                }
+            }
+        }
+
+        .create-team-wrapper {
+            display: flex;
+            align-items: center;
+            max-width: 100%;
+            width: 400px;
+            padding: 0;
+
+            &.input-container .styled-input {
+                margin-bottom: 0;
+                width: 100%;
+            }
+
+            .button-wrapper {
+                margin-top: 0;
+                margin-left: ;
+            }
+        }
+    }
+
+    .list-team-wrapper .list-participates .participates-item {
+        cursor: default;
     }
 }
 body.fixed-popup-body {
@@ -3518,246 +3767,7 @@ body.fixed-popup-body {
     }
 }
 
-.list-participate-wrapper,
-.list-team-wrapper {
-    h3 {
-        font-family: @actionGolfSemiBold;
-        font-size: 18px;
-        padding: 0 0 15px;
-    }
 
-    @media screen and (min-width:768px) {
-        h3 {
-            font-size: 24px;
-            padding: 0 0 24px;
-        }
-    }
-
-    #teamMemberMessage {
-        color: @red;
-
-        &.shakeme {
-            animation: shake 1s ease-in-out 0.2s 2;
-        }
-    }
-
-    .list-participates {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        margin: 15px -10px;
-
-        h3 {
-            font-size: 20px;
-            padding: 0 30px 20px 0;
-        }
-
-        .participates-item {
-            cursor: pointer;
-            box-shadow: 3px 4px 30px @greyButton;
-            margin: 10px;
-            display: inline-block;
-            width: calc(50% - 20px);
-            border-radius: 8px;
-            padding: 10px;
-            background-size: 30px;
-            background-repeat: no-repeat;
-            background-position: calc(100% - 10px) 10px;
-            aspect-ratio: 1 / 1;
-            border: 3px solid transparent;
-            position: relative;
-            min-width: 150px;
-            word-break: break-word;
-
-            &.lead {
-                &::after {
-                    display: block;
-                    content: 'Lead';
-                    width: auto;
-                    height: 20px;
-                    background: url(@successMessage) no-repeat 4px 3px;
-                    background-size: 20px;
-                    position: absolute;
-                    top: 14px;
-                    padding: 3px 11px 3px 30px;
-                    font-size: 15px;
-                    right: 14px;
-                    background-color: @white;
-                    border: 1px solid @brandColor;
-                    border-radius: 14px;
-                    line-height: 19px;
-                    box-shadow: 2px 4px 6px -3px @brandColor;
-                }
-            }
-
-            @media screen and (min-width:768px) {
-                min-width: 210px;
-            }
-
-            .styledradio {
-                opacity: 0;
-                position: absolute;
-                top: 16px;
-                background: @white;
-                padding: 5px 7px;
-                border-radius: 14px;
-                right: 16px;
-
-                --active: #275EFE;
-                --active-inner: #fff;
-                --focus: 2px rgba(39, 94, 254, .3);
-                --border: #BBC1E1;
-                --border-hover: #275EFE;
-                --background: #fff;
-                --disabled: #F6F8FF;
-                --disabled-inner: #E1E6F9;
-
-                input[type='radio'] {
-                    -webkit-appearance: none;
-                    -moz-appearance: none;
-
-                    width: 38px;
-                    border-radius: 11px;
-                    height: 21px;
-                    outline: none;
-                    display: inline-block;
-                    vertical-align: top;
-                    position: relative;
-                    margin: 0;
-                    cursor: pointer;
-                    border: 1px solid var(--bc, var(--border));
-                    background: var(--b, var(--background));
-                    transition: background .3s, border-color .3s, box-shadow .2s;
-
-                    & + label {
-                        font-size: 14px;
-                        line-height: 21px;
-                        display: inline-block;
-                        vertical-align: top;
-                        cursor: pointer;
-                        margin-left: 4px;
-                    }
-
-                    &:after {
-                        content: '';
-                        display: block;
-                        left: 0;
-                        top: 0;
-                        position: absolute;
-                        transition: transform var(--d-t, .3s) var(--d-t-e, ease), opacity var(--d-o, .2s);
-                        left: 2px;
-                        top: 2px;
-                        border-radius: 50%;
-                        width: 15px;
-                        height: 15px;
-                        background: var(--ab, var(--border));
-                        transform: translateX(var(--x, 0));
-                    }
-
-                    &:checked {
-                        --b: var(--active);
-                        --bc: var(--active);
-                        --d-o: .3s;
-                        --d-t: .6s;
-                        --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
-                      --ab: var(--active-inner);
-                      --x: 17px;
-                    }
-                }
-            }
-            &.selected {
-                border-color: @brandColor;
-
-                .styledradio{
-                    opacity: 1;
-                }
-            }
-
-            @media screen and (min-width: 768px) {
-                width: calc(33.33% - 20px);
-            }
-
-            @media screen and (min-width:1024px) {
-                width: calc(20% - 20px);
-            }
-
-            .player {
-                position: relative;
-                margin: 0 0 20px 0;
-
-                .phone {
-                    display: inline-block;
-                    font-style: italic;
-                }
-
-                .name {
-                    font-size: 20px;
-                    line-height: 1;
-                    padding: 8px 0;
-                }
-
-                .photo {
-                    width: 100%;
-                    aspect-ratio: 1 / 1;
-                    img {
-                        border-radius: 8px 8px 0 0;
-                        width: 100%;
-                        height: 100%;
-                    }
-
-                    &.icon {
-                        img {
-                            visibility: hidden;
-                        }
-
-                        &::after {
-                            content: '';
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            background: url(@playerIcon) no-repeat 0 0;
-                            width: 100%;
-                            aspect-ratio: 1 / 1;
-                            background-size: cover;
-                            border-radius: 8px 8px 0 0;
-                        }
-                    }
-
-                }
-            }
-
-            &:nth-child(2n) .player::after{
-                background-color: #0000ff;
-            }
-
-            &:nth-child(3n) .player::after{
-                background-color: @black;
-            }
-        }
-    }
-
-    .create-team-wrapper {
-        display: flex;
-        align-items: center;
-        max-width: 100%;
-        width: 400px;
-        padding: 0;
-
-        &.input-container .styled-input {
-            margin-bottom: 0;
-            width: 100%;
-        }
-
-        .button-wrapper {
-            margin-top: 0;
-            margin-left: ;
-        }
-    }
-}
-
-.list-team-wrapper .list-participates .participates-item {
-    cursor: default;
-}
 
 @keyframes hamburgermenu {
     0% {
