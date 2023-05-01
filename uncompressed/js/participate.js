@@ -7,7 +7,8 @@ let tournamentId,
     publicAgLoginAuth,
     teamSize,
     auth = 'YWdkZXY6cGFzc3dvcmQ=',
-    _this;
+    _this,
+    testPage = window.location.href.includes('participate-test.html') || false;
 
 var actiongolfLogin = {
     init: function () {
@@ -57,11 +58,24 @@ var actiongolfLogin = {
             if (previousLandingPage && previousLandingPage.href) {
                 window.location.href = previousLandingPage.href;
             } else {
-                window.sessionStorage.setItem('agReDirectPage', './participate.html');
+                window.sessionStorage.setItem('agReDirectPage', testPage ? '/participate-test.html' :'./participate.html');
                 window.location.href = './login.html';
             }
 
         });
+    },
+
+    participateSuccess: function(response) {
+        $('#addMembers').removeClass('hide');
+        $('#addedMemberList').addClass('hide');
+        $('#participateConfirm').removeClass('hide');
+        $('#pageLoad').hide();
+
+        var participateConfirmTemplate = Handlebars.compile($("[data-template='participateConfirmTemplate']").html());
+        $('.participate_confirm').html(participateConfirmTemplate(response));
+
+        $('#createTeam').removeClass('hide');
+        _this.openParticipantsDetails();
     },
 
     openParticipantsDetails: function() {
@@ -319,15 +333,16 @@ var actiongolfLogin = {
         } else if (!participating) {
             addMemberObj.addedMembers.push(
                 {
-                    name: loginUserData.firstName,
-                    phoneNumber: loginUserData.phoneNumber,
+                    firstName: loginUserData.firstName,
+                    lastName: loginUserData.lastName,
+                    tele: loginUserData.phoneNumber,
                     currentUser: true
                 }
             );
         }
 
-        var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
-        $('.added-members-list').html(addedMembersList(addMemberObj));
+        var addedMembersListTemplate = Handlebars.compile($("[data-template='addedMembersListTemplate']").html());
+        $('.added-members-list').html(addedMembersListTemplate(addMemberObj));
 
         addMemberEvents();
 
@@ -383,6 +398,9 @@ var actiongolfLogin = {
             $('#addMembers .add-members-input[name=callingCode]').val('');
             $('#addMembers .add-members-input[name=phoneNumber]').val('');
             $('#add-member-button').attr('disabled', true).addClass('disabled-btn');
+
+            $('#addedMemberList').removeClass('hide');
+            $('#participateConfirm').addClass('hide');
         });
 
         function addMemberData(aMFistName, aMLastName, aMPhoneNumber) {
@@ -390,7 +408,7 @@ var actiongolfLogin = {
                 {
                     firstName: aMFistName,
                     lastName: aMLastName,
-                    phoneNumber: aMPhoneNumber,
+                    tele: aMPhoneNumber,
                     currentUser: false
                 }
             );
@@ -398,8 +416,8 @@ var actiongolfLogin = {
             addMemberObj.entryFee = entryFee  * addMemberObj.addedMembers.length;
             addMemberObj.participateNow = addMemberObj.entryFee <= loginUserData.balanceAmount;
 
-            var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
-            $('.added-members-list').html(addedMembersList(addMemberObj));
+            var addedMembersListTemplate = Handlebars.compile($("[data-template='addedMembersListTemplate']").html());
+            $('.added-members-list').html(addedMembersListTemplate(addMemberObj));
 
             if (addMemberObj.entryFee > loginUserData.balanceAmount) {
                 _this.setAuthSession('memberList', addMemberObj.addedMembers);
@@ -415,17 +433,17 @@ var actiongolfLogin = {
             $('.member-delete-active').off().on('click', function(event) {
                 event.preventDefault();
 
-                var phoneNumber = $(this).data('pid');
+                var tele = $(this).data('pid');
 
                 addMemberObj.addedMembers.splice(addMemberObj.addedMembers.findIndex(function(i){
-                    return i.phoneNumber === phoneNumber;
+                    return i.tele === tele;
                 }), 1);
 
                 addMemberObj.entryFee = entryFee  * addMemberObj.addedMembers.length;
                 addMemberObj.participateNow = addMemberObj.entryFee <= loginUserData.balanceAmount;
 
-                var addedMembersList = Handlebars.compile($("[data-template='addedMembersList']").html());
-                $('.added-members-list').html(addedMembersList(addMemberObj));
+                var addedMembersListTemplate = Handlebars.compile($("[data-template='addedMembersListTemplate']").html());
+                $('.added-members-list').html(addedMembersListTemplate(addMemberObj));
 
                 if (addMemberObj.entryFee > loginUserData.balanceAmount) {
                     _this.paymentBlock();
@@ -437,14 +455,19 @@ var actiongolfLogin = {
 
             $('#participate-button').off().on('click', function(event) {
                 event.preventDefault();
-                var ajaxUrl = _this.getApiUrl('participate'),
+                var ajaxUrl = _this.getApiUrl('groupParticipate'),
                     requestData = {};
 
                 $('#participate-button').parent('.button-wrapper').addClass('loading');
                 $('.screen-message.error-message').addClass('hide');
 
                 requestData.userProfileId = userProfileId;
-                requestData.tournamentId = tournamentId;
+                requestData.tournamentId = parseInt(tournamentId);;
+                requestData.members = addMemberObj.addedMembers || [];
+
+                requestData.members.forEach(object => {
+                    delete object.currentUser;
+                });
 
                 $.ajax({
                     type: "POST",
@@ -454,7 +477,7 @@ var actiongolfLogin = {
                     timeout: 0,
                     data: JSON.stringify(requestData),
                     success: function(xhr, status) {
-                        window.location.reload();
+                        _this.participateSuccess(xhr);
                     }.bind(this),
                     error:  function(xhr, status, error) {
                         $('.screen-message.error-message').removeClass('hide');
@@ -495,7 +518,7 @@ var actiongolfLogin = {
                 $('#ajaxParticipateForm').addClass('hide');
                 $('#participateUserDetails').removeClass('hide');
 
-                var userTournamentDetails = Handlebars.compile($("[data-template='userTournamentDetails']").html()),
+                var userTournamentDetailsTemplate = Handlebars.compile($("[data-template='userTournamentDetailsTemplate']").html()),
                     userTournamentData = {};
 
                 userTournamentData.firstName = loginUserData.firstName || '';
@@ -509,7 +532,7 @@ var actiongolfLogin = {
                 userTournamentData.tournamentCategory = tournamentDetails.tournamentCategoryDesc || '';
                 userTournamentData.teamSize = tournamentDetails.teamSize || '';
 
-                $('.participate-user-details').html(userTournamentDetails(userTournamentData));
+                $('.participate-user-details').html(userTournamentDetailsTemplate(userTournamentData));
                 _this.getPartcipateStatus();
 
             }.bind(this),
@@ -846,7 +869,8 @@ var actiongolfLogin = {
     },
 
     getApiUrl: function(source) {
-        var apiUrls = {
+        var authorizePayment = testPage ? 'https://apitest.authorize.net/xml/v1/request.api' : 'https://api.authorize.net/xml/v1/request.api',
+            apiUrls = {
                 test : {
                     login: 'https://beta.actiongolfers.com/auth/verifyRequest',
                     verify: 'https://beta.actiongolfers.com/auth/verify',
@@ -854,8 +878,8 @@ var actiongolfLogin = {
                     tournamentUserDetails: `https://beta.actiongolfers.com/tournament/${tournamentId}/profiles/${userProfileId}`,
                     openParticipants: `https://beta.actiongolfers.com/tournament/openParticipants?userProfileId=${userProfileId}&tournamentId=${tournamentId}`,
                     createTeam: 'https://beta.actiongolfers.com//tournament/createTeamV2',
-                    authorize: 'https://apitest.authorize.net/xml/v1/request.api',
-                    participate: 'https://beta.actiongolfers.com/tournament/participate',
+                    authorize: authorizePayment,
+                    groupParticipate: 'https://beta.actiongolfers.com/website/groupParticipate',
                     updatePayment: 'https://beta.actiongolfers.com/payment/ag_transaction',
                     getProfile: `https://beta.actiongolfers.com/profile/get/${userProfileId}`,
                     getTournamentDetails: 'https://beta.actiongolfers.com/tournament/get',
@@ -867,8 +891,8 @@ var actiongolfLogin = {
                     tournamentUserDetails: `https://api.actiongolfers.com/tournament/${tournamentId}/profiles/${userProfileId}`,
                     openParticipants: `https://api.actiongolfers.com/tournament/openParticipants?userProfileId=${userProfileId}&tournamentId=${tournamentId}`,
                     createTeam: 'https://api.actiongolfers.com//tournament/createTeamV2',
-                    authorize: 'https://api.authorize.net/xml/v1/request.api',
-                    participate: 'https://api.actiongolfers.com/tournament/participate',
+                    authorize: authorizePayment,
+                    groupParticipate: 'https://api.actiongolfers.com/website/groupParticipate',
                     updatePayment: 'https://api.actiongolfers.com/payment/ag_transaction',
                     getProfile: `https://api.actiongolfers.com/profile/get/${userProfileId}`,
                     getTournamentDetails: 'https://api.actiongolfers.com/tournament/get',

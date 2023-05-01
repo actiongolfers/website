@@ -58,12 +58,11 @@
                     </div>
                 </form>
 
-                <div id="alreadyParticipated" class="hide participate-now">
+                <div id="alreadyParticipated" class="participate-now hide">
                     <h3>Thank you, you are now participating in this <span id="tournamentCategoryDesc"></span></h3>
                 </div>
 
-
-                <div class="add-members hide" id="addMembers">
+                <div id="addMembers" class="add-members hide">
                     <h3>Add member to this tournament</h3>
                     <div class="input-container add-member-input-wrapper">
                         <div class="add-member-input">
@@ -118,7 +117,9 @@
                             </div>
                         </div>
 
-                        <div class="added-members-list"></div>
+                        <div id="addedMemberList" class="added-members-list"></div>
+
+                        <div id="participateConfirm" class="participate_confirm hide"></div>
                     </div>
                 </div>
 
@@ -300,7 +301,7 @@
     \{{/if}}
 </script>
 
-<script type="text/x-handlebars-template" data-template="userTournamentDetails">
+<script type="text/x-handlebars-template" data-template="userTournamentDetailsTemplate">
     <div class="usection usection-name"><span>\{{tournamentName}}</span>  <div class="usection-fee">Entry Fee: <span>\{{entryFee}}</span></div></div>
     <div class="user-tournament-details">
         <div class="tournament-details">
@@ -325,7 +326,7 @@
     </div>
 </script>
 
-<script type="text/x-handlebars-template" data-template="addedMembersList">
+<script type="text/x-handlebars-template" data-template="addedMembersListTemplate">
     \{{#if addedMembers}}
         <div class="member-list">
             <div class="member-item member-item-head">
@@ -333,7 +334,7 @@
             </div>
             \{{#each addedMembers}}
             <div class="member-item">
-                <span>\{{firstName}} \{{lastName}}</span> <span>\{{phoneNumber}}</span> \{{#if currentUser}} <a class="member-delete"></a> \{{else}} <a data-pid="\{{phoneNumber}}" class="member-delete member-delete-active"></a> \{{/if}}
+                <span>\{{firstName}} \{{lastName}}</span> <span>\{{tele}}</span> \{{#if currentUser}} <a class="member-delete"></a> \{{else}} <a data-pid="\{{tele}}" class="member-delete member-delete-active"></a> \{{/if}}
             </div>
             \{{/each}}
         </div>
@@ -356,5 +357,23 @@
                 </div>
             </div>
         \{{/if}}
+    \{{/if}}
+</script>
+
+<script type="text/x-handlebars-template" data-template="participateConfirmTemplate">
+    \{{#if participants}}
+        <h3>Thank you for participation, please find the status of member paricipation</h3>
+        <div class="member-list">
+            <div class="member-item member-item-head">
+                <span>Name</span> <span>Phone Number</span>
+                <span class="status"></span>
+            </div>
+            \{{#each participants}}
+            <div class="member-item">
+                <span>\{{firstName}} \{{lastName}}</span> <span>\{{phoneNumber}}</span> <span class="status \{{#if isParticipant}} already \{{else}} added \{{/if}}">\{{#if isParticipant}} Already participated \{{else}} Added \{{/if}}</span>
+            </div>
+            \{{/each}}
+        </div>
+        Amount deducted: $\{{deductedAmount}}
     \{{/if}}
 </script>

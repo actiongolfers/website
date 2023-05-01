@@ -3238,26 +3238,63 @@ footer {
         }
     }
 
-    .added-members-list {
+    .added-members-list,
+    .participate_confirm {
         .member-list {
-            background: #fafafa;
-            padding: 10px;
+            padding: 30px 0 10px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            flex-direction: column;
 
+            @media screen and (min-width:768px) {
+                align-items: flex-start;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
 
             .member-item {
                 &.member-item-head {
+                    display: none;
                     font-family: @actionGolfSemiBold;
                 }
 
                 display: flex;
                 padding: 10px;
-                align-items: center;
-                border-bottom: 1px solid #ddd;
+                align-items: flex-start;
+                flex-direction: column;
+                border: 1px solid #ddd;
+                position: relative;
+                width: 100%;
+
+                @media screen and (min-width:768px) {
+                    width: calc(50% - 12px);
+                }
+
+                @media screen and (min-width:1024px) {
+                    width: calc(33.33% - 24px);
+                }
 
                 span {
                     flex-grow: 1;
-                    width: 50%;
+                    width: 100%;
                     padding: 5px;
+
+                    &:first-child {
+                        font-family: @actionGolfSemiBold;
+                    }
+
+                    &.status {
+
+
+                        &.already {
+                            color: red;
+                        }
+
+                        &.added {
+                            color: green;
+                        }
+                    }
                 }
 
                 .member-delete {
@@ -3265,7 +3302,9 @@ footer {
                     width: 20px;
                     height: 20px;
                     display: block;
-
+                    position: absolute;
+                    right: 12px;
+                    top: 12px;
 
                     &.member-delete-active {
                         pointer-events: all;
@@ -3278,7 +3317,6 @@ footer {
         }
     }
 }
-
 
 .pay-now {
     h3 {
@@ -3364,7 +3402,6 @@ footer {
             }
         }
     }
-
 
     input[type=submit] {
         border-radius: 4px;
@@ -3625,6 +3662,10 @@ footer {
 
 .list-team-wrapper .list-participates .participates-item {
     cursor: default;
+}
+
+.participate_confirm {
+    padding: 30px 0 0;
 }
 
 @keyframes hamburgermenu {

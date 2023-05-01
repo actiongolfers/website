@@ -234,6 +234,17 @@ module.exports = function ( grunt ) {
                 basePath: '/'
             }
         },
+        participateTest: {
+            files: {
+                'participate-test.html': 'pages/participate-test.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
+        },
     });
 
   grunt.loadNpmTasks( 'grunt-handlebars-layouts' );
