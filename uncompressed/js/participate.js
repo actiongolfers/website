@@ -210,12 +210,6 @@ var actiongolfLogin = {
         var ajaxUrl = _this.getApiUrl('getProfile');
 
         $('#pageLoad').show();
-        $('#participateUserDetails').addClass('hide');
-        $('#ajaxParticipateForm').addClass('hide');
-        $('#alreadyParticipated').addClass('hide');
-        $('#payNow').addClass('hide');
-        $('#createTeam').addClass('hide');
-        $('#createTeam').addClass('hide');
 
         $.ajax({
             type: "GET",
@@ -353,7 +347,8 @@ var actiongolfLogin = {
                 _this.setAuthSession('memberList', addMemberObj.addedMembers);
                 _this.paymentBlock();
             }
-        } else if (!participating) {
+        }
+        if (!participating) {
             addMemberObj.addedMembers.push(
                 {
                     firstName: loginUserData.firstName,

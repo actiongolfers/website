@@ -2941,6 +2941,7 @@ footer {
 
     div {
         position: absolute;
+        z-index: 3;
         top: 18px;
         width: 8px;
         height: 8px;
@@ -3112,9 +3113,22 @@ footer {
 
     #pageLoad {
         display: block;
-        top: calc(50% - 22px);
+        top: 100px;
         left: calc(50% - 43px);
         right: auto;
+
+        &:after {
+            position: fixed;
+            display: block;
+            content: '';
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: @white;
+            opacity: .5;
+            z-index: 2;
+        }
     }
 
     min-width: 280px;
