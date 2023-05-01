@@ -9,6 +9,7 @@ let tournamentId,
     auth = 'YWdkZXY6cGFzc3dvcmQ=',
     _this,
     teamCreated = false,
+    userParticipating = false,
     testPage = window.location.href.includes('participate-test.html') || false;
 
 var actiongolfLogin = {
@@ -319,6 +320,8 @@ var actiongolfLogin = {
     addMemberJS: function(participating, entryFee) {
         var addMemberObj = {};
 
+        userParticipating = participating;
+
         addMemberObj.addedMembers = [];
         addMemberObj.participating = participating;
         addMemberObj.entryFee = entryFee;
@@ -444,7 +447,7 @@ var actiongolfLogin = {
                 }), 1);
 
                 addMemberObj.entryFee = entryFee  * addMemberObj.addedMembers.length;
-                addMemberObj.participateNow = addMemberObj.entryFee <= loginUserData.balanceAmount;
+                addMemberObj.participateNow = addMemberObj.entryFee <= loginUserData.balanceAmount && (!userParticipating || addMemberObj.addedMembers.length);
 
                 var addedMembersListTemplate = Handlebars.compile($("[data-template='addedMembersListTemplate']").html());
                 $('.added-members-list').html(addedMembersListTemplate(addMemberObj));
