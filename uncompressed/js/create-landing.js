@@ -186,7 +186,8 @@ var actiongolfCL = {
                 golfCourseName: data && data.tournamentInfo.golfCourseName,
                 learnMore: 'Learn More',
                 titleBackgroundImage: titleBackgroundImage ||data && data.tournamentInfo.titleBackgroundImage,
-                titleBackgroundMediaId: data && data.tournamentInfo.titleBackgroundMediaId
+                titleBackgroundMediaId: data && data.tournamentInfo.titleBackgroundMediaId,
+                singleDay: data && this.dateConversion(data.tournamentInfo.startDate) === this.dateConversion(data.tournamentInfo.endDate)
             };
 
             details.webPageBlob = webPageBlobContent;

@@ -47,9 +47,13 @@
                                     "
                                     {{/if}}
                                 >
-                                    <h5>{{webPageTitle}}</h5>
+                                    <h5>{{{webPageTitle}}}</h5>
                                     <div class="subdetails">
+                                        {{#if singleDay}}
+                                        <p>{{startDate}}</p>
+                                        {{else}}
                                         <p>{{startDate}} - {{endDate}}</p>
+                                        {{/if}}
                                         <a>{{golfCourseName}}</a>
                                     </div>
                                     <a href="./" class="landing-primary-btn">{{learnMore}}</a>
