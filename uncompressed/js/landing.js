@@ -140,7 +140,7 @@ var actiongolfLanding = {
             details.prizes = data.prizes;
         }
 
-        $('title').html(details.webPageTitle);
+        $('title').html(details.webPageTitle.replaceAll('<br>', ''));
         $('.landing-content').html(landingTemplate(details));
     },
 
