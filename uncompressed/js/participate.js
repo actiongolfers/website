@@ -398,7 +398,7 @@ var actiongolfLogin = {
             validateAddMembersFields();
         });
 
-        $('#add-member-button').on('click', function(event) {
+        $('#add-member-button').off().on('click', function(event) {
             event.preventDefault();
             var aMFistName,
                 aMLastName,
