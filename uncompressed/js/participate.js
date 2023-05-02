@@ -560,6 +560,8 @@ var actiongolfLogin = {
             }.bind(this),
             error:  function(xhr, status, error) {
                 $('#pageLoad').hide();
+                $('.screen-message.error-message').removeClass('hide');
+                $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
             }.bind(this)
         });
     },
