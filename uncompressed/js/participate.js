@@ -715,6 +715,7 @@ var actiongolfLogin = {
                 document.getElementById("expYear").value = "";
                 document.getElementById("cardCode").value = "";
                 $('#participate-pay-button').attr('disabled', true).addClass('disabled-btn');
+                $('#participate-pay-button').parent('.button-wrapper').find('.red').addClass('hide');
 
                 var ajaxUrl = _this.getApiUrl('authorize');
 
@@ -748,7 +749,13 @@ var actiongolfLogin = {
                     success: function(xhr, status) {
                         if (xhr && xhr.messages && xhr.messages.resultCode === 'Ok' && xhr.refId === requestData.createTransactionRequest.refId && xhr.transactionResponse.responseCode === '1' && xhr.transactionResponse.transId) {
                             _this.updatePayment(xhr, amount);
-                        } else {
+                        } else if (xhr && xhr.messages && xhr.messages.resultCode === 'Ok' && xhr.refId === requestData.createTransactionRequest.refId && xhr.transactionResponse.responseCode === '2' && xhr.transactionResponse.transId) {
+                            if (xhr.transactionResponse.errors[1].errorCode === '2') {
+                                $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
+                                $('#participate-pay-button').parent('.button-wrapper').find('.red').removeClass('hide').html(xhr.transactionResponse.errors[1].errorText);
+                            }
+                        }
+                        else {
                             $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
                         }
                     }.bind(this),
@@ -806,6 +813,8 @@ var actiongolfLogin = {
                     $('.screen-message.error-message').removeClass('hide');
                     $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
                     $('#payment-complete').parent('.button-wrapper').removeClass('loading');
+                    $('#payment-complete').addClass('disabled-btn');
+                    $('#payment-complete').parent('.button-wrapper').find('.red').removeClass('hide');
                 }.bind(this)
             });
 
