@@ -108,7 +108,7 @@ var actiongolfLanding = {
                 startDate: this.dateConversion(data.tournamentInfo.startDate),
                 endDate: this.dateConversion(data.tournamentInfo.endDate),
                 golfCourseName : data.tournamentInfo.golfCourseName,
-                titleBackgroundImage: data.tournamentInfo.titleBackgroundImage,
+                titleBackgroundImage: (window.innerWidth < 768) ? data.tournamentInfo.titleBackgroundImage : (data.tournamentInfo.titleBackgroundHQImage || data.tournamentInfo.titleBackgroundImage),
                 learnMore: 'Learn More',
                 singleDay: data && this.dateConversion(data.tournamentInfo.startDate) === this.dateConversion(data.tournamentInfo.endDate)
             };
@@ -116,7 +116,7 @@ var actiongolfLanding = {
         if (data.tournamentImages && data.tournamentImages.length) {
             data.tournamentImages.forEach(function(img){
                 logoImages.push({
-                    image: img.imageUrl
+                    image: (window.innerWidth < 768) ? img.imageUrl : (img.hqImageUrl || img.imageUrl),
                 });
             });
         }
