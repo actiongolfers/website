@@ -116,7 +116,7 @@ var actiongolfLanding = {
         if (data.tournamentImages && data.tournamentImages.length) {
             data.tournamentImages.forEach(function(img){
                 logoImages.push({
-                    image: (window.innerWidth < 768) ? img.imageUrl : (img.hqImageUrl || img.imageUrl),
+                    image: img.hqImageUrl || img.imageUrl,
                 });
             });
         }
