@@ -108,7 +108,7 @@ var actiongolfLanding = {
                 startDate: this.dateConversion(data.tournamentInfo.startDate),
                 endDate: this.dateConversion(data.tournamentInfo.endDate),
                 golfCourseName : data.tournamentInfo.golfCourseName,
-                titleBackgroundImage: (window.innerWidth < 768) ? data.tournamentInfo.titleBackgroundImage : (data.tournamentInfo.titleBackgroundHQImage || data.tournamentInfo.titleBackgroundImage),
+                titleBackgroundImage: (data.tournamentInfo.titleBackgroundHQImage || data.tournamentInfo.titleBackgroundImage),
                 learnMore: 'Learn More',
                 singleDay: data && this.dateConversion(data.tournamentInfo.startDate) === this.dateConversion(data.tournamentInfo.endDate)
             };
