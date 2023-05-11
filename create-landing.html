@@ -136,7 +136,7 @@
                                 {{/each}}
                             {{/if}}
                             </div>
-                            <div class="content"
+                            <div class="content restyle"
                                 {{#if titleBackgroundImage}}
                                 style="
                                     background-color: transparent;
@@ -144,18 +144,24 @@
                                 "
                                 {{/if}}
                             >
+                            <div class="content-dts-parent">
                                 <h5>{{{webPageTitle}}}</h5>
-                                <div class="subdetails">
-                                    {{#if singleDay}}
-                                    <p>{{startDate}}</p>
-                                    {{else}}
-                                    <p>{{startDate}} - {{endDate}}</p>
-                                    {{/if}}
-                                    <a>{{golfCourseName}}</a>
+                                <div class="content-dts">
+                                    <div class="content-dts-l">
+                                        <div class="subdetails">
+                                            {{#if singleDay}}
+                                            <p>{{startDate}}</p>
+                                            {{else}}
+                                            <p>{{startDate}} - {{endDate}}</p>
+                                            {{/if}}
+                                            <a>{{golfCourseName}}</a>
+                                        </div>
+                                    </div>
+                                    <div class="content-dts-r">
+                                        <a id="participate-submit" class="landing-primary-btn" title="{{paricipateBtn}}">{{paricipateBtn}}</a>
+                                    </div>
                                 </div>
-            
-                                <a id="participate-submit" class="landing-primary-btn" title="Register Here">Register Here</a>
-                                </div>
+                            </div>
                             </div>
                         </div>
                         <div class="details">

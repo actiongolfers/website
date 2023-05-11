@@ -4,13 +4,14 @@ let tournamentId,
     selectedMembers = [],
     loginUserData,
     tournamentDetails,
-    publicAgLoginAuth,
+    participateAgLoginAuth,
     teamSize,
     auth = 'YWdkZXY6cGFzc3dvcmQ=',
     _this,
     teamCreated = false,
     userParticipating = false,
     addMemberObj = {},
+    participateSessionKey = 'participateAgLoginAuth',
     testPage = window.location.href.includes('participate-test.html') || false,
     merchantAuthenticationName = testPage ? '9k9FP9khR' : '55qBy6J2aN73',
     merchantAuthenticationClient = testPage ? '9E9u9bZhnz6AaaTxGqESm8Tr2AfuPXcex498Q9A9g7X9GG34yGpJGgh5cH4CNKZf' : '9X7ym9MuWS7wwc2VTdDE87w4AC8w5qW7fA6zqvqjnjq95wk8Z6ynm5ATfHQA838J',
@@ -18,12 +19,10 @@ let tournamentId,
 
 var actiongolfLogin = {
     init: function () {
-        var publicSessionKey = 'publicAgLoginAuth';
-
         _this = this;
 
         tournamentDetails = _this.getAuthSession('tournamentDetails');
-        publicAgLoginAuth = _this.getAuthSession(publicSessionKey);
+        participateAgLoginAuth = _this.getAuthSession(participateSessionKey);
 
         const urlSearchParams = new URLSearchParams(window.location.search);
         const params = Object.fromEntries(urlSearchParams.entries());
@@ -39,15 +38,15 @@ var actiongolfLogin = {
             return;
         }
 
-        if (!publicAgLoginAuth) {
+        if (!participateAgLoginAuth) {
             window.sessionStorage.setItem('agReDirectPage', window.location.href);
             window.location.href = './login.html';
 
             return;
         }
 
-        userProfileId = publicAgLoginAuth.userProfileId;
-        deviceId = publicAgLoginAuth.deviceId;
+        userProfileId = participateAgLoginAuth.userProfileId;
+        deviceId = participateAgLoginAuth.deviceId;
 
         _this.getProfile();
 
@@ -57,7 +56,7 @@ var actiongolfLogin = {
 
         $('.page-header-link').on('click', function() {
             window.localStorage.removeItem('tournamentDetails');
-            window.localStorage.removeItem('publicAgLoginAuth');
+            window.localStorage.removeItem('participateAgLoginAuth');
 
             var previousLandingPage = _this.getAuthSession('landingPage');
 
@@ -484,7 +483,7 @@ var actiongolfLogin = {
                 $('.screen-message.error-message').addClass('hide');
 
                 requestData.userProfileId = userProfileId;
-                requestData.tournamentId = parseInt(tournamentId);;
+                requestData.tournamentId = parseInt(tournamentId);
                 requestData.members = addMemberObj.addedMembers || [];
 
                 requestData.members.forEach(object => {
@@ -568,6 +567,7 @@ var actiongolfLogin = {
 
     getPartcipateStatus: function() {
         var ajaxUrl = _this.getApiUrl('tournamentUserDetails');
+        participateAgLoginAuth = _this.getAuthSession(participateSessionKey);
 
         $.ajax({
             type: "GET",
@@ -580,14 +580,22 @@ var actiongolfLogin = {
                 xhr.setRequestHeader("deviceId", deviceId)
             },
             success: function(xhr, status) {
+                participateAgLoginAuth.tournamentId = tournamentId;
+                participateAgLoginAuth.step = 1;
+
                 $('#pageLoad').hide();
                 $('#addMembers').removeClass('hide');
                 _this.addMemberJS(xhr.participating, xhr.entryFee);
                 $('#currentBalance').html('$' + tournamentDetails.balanceAmount);
+                if (xhr && !xhr.participating) {
+                    participateAgLoginAuth.step = 1;
+                }
+
                 if (xhr && xhr.tournamentTeam && xhr.tournamentTeam.tournamentTeamMembers && xhr.tournamentTeam.tournamentTeamMembers.length) {
                     $('#yourTeam').removeClass('hide');
                     teamCreated = true;
                     var listTeamsTemplate = Handlebars.compile($("[data-template='listTeamsTemplate']").html());
+                    participateAgLoginAuth.step = 3;
 
                     xhr.tournamentTeam.tournamentTeamMembers.map(function(op, i) {
                         if (op.isLead) {
@@ -602,17 +610,21 @@ var actiongolfLogin = {
                     _this.paymentBlock();
                 } else if (xhr && !xhr.participating) {
                     //already handled
-
                 } else if (xhr && xhr.participating) {
+
                     if (tournamentDetails.teamSize > 1) {
+                        participateAgLoginAuth.step = 2;
                         $('#createTeam').removeClass('hide');
                         _this.openParticipantsDetails();
                     } else {
+                        participateAgLoginAuth.step = 3;
                         teamCreated = true;
                         $('#alreadyParticipated').removeClass('hide');
                         $('#tournamentCategoryDesc').html(tournamentDetails.tournamentCategoryDesc);
                     }
                 }
+
+                _this.setAuthSession(participateSessionKey, participateAgLoginAuth);
             }.bind(this),
             error:  function(xhr, status, error) {
                 $('#pageLoad').hide();
@@ -858,11 +870,15 @@ var actiongolfLogin = {
         });
     },
 
-    getAuthSession: function(key) {
+    getAuthSession: function(key, noExpiry) {
         var stringValue = window.localStorage.getItem(key);
         if (stringValue !== null) {
             var value = JSON.parse(stringValue),
                 expirationDate = new Date(value.expirationDate);
+
+            if (noExpiry) {
+                return value.value;
+            }
 
             if (expirationDate > new Date() && value) {
                 return value.value;

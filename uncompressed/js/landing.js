@@ -1,5 +1,6 @@
 var localDevelopment = false,
-    friendlyName;
+    friendlyName,
+    participateSessionKey = 'participateAgLoginAuth';
 
 var actiongolfLanding = {
     init: function () {
@@ -35,8 +36,6 @@ var actiongolfLanding = {
                             return;
                         }
 
-                        var publicSessionKey = 'publicAgLoginAuth';
-
                         self.setAuthSession('tournamentDetails', {
                             tournamentId: xhr.tournamentInfo.tournamentId,
                             friendlyName: xhr.tournamentInfo.friendlyName,
@@ -47,8 +46,8 @@ var actiongolfLanding = {
                             href: window.location.href
                         });
 
-                        if (self.getAuthSession(publicSessionKey)) {
-                            self.setAuthSession(publicSessionKey, self.getAuthSession(publicSessionKey));
+                        if (self.getAuthSession(participateSessionKey)) {
+                            self.setAuthSession(participateSessionKey, self.getAuthSession(participateSessionKey));
                             window.location.href = "./participate.html";
                         } else {
                             $('.otp-validation-slide').toggleClass('open');
@@ -73,11 +72,15 @@ var actiongolfLanding = {
         });
     },
 
-    getAuthSession: function(key) {
+    getAuthSession: function(key, noExpiry) {
         var stringValue = window.localStorage.getItem(key);
         if (stringValue !== null) {
             var value = JSON.parse(stringValue),
                 expirationDate = new Date(value.expirationDate);
+
+            if (noExpiry) {
+                return value.value;
+            }
 
             if (expirationDate > new Date() && value) {
                 return value.value;
@@ -132,6 +135,24 @@ var actiongolfLanding = {
         details.webPageBlob = details.webPageBlob.replace('[[ENDDATE]]', details.endDate);
         details.webPageBlob = details.webPageBlob.replace('[[STARTDATEYEAR]]', this.dateConversion(data.tournamentInfo.startDate, true));
         details.webPageBlob = details.webPageBlob.replace('[[ENDDATEYEAR]]', this.dateConversion(data.tournamentInfo.endDate, true));
+
+        participateAgLoginAuth = this.getAuthSession(participateSessionKey);
+
+        details.paricipateBtn = 'Register Here';
+
+        if (participateAgLoginAuth && participateAgLoginAuth.tournamentId == data.tournamentInfo.tournamentId && participateAgLoginAuth.step) {
+            if (participateAgLoginAuth.step == 1) {
+                details.paricipateBtn = 'Register Here';
+            } else if (participateAgLoginAuth.step == 2) {
+                details.paricipateBtn = 'Create Team';
+            } else if (participateAgLoginAuth.step == 3) {
+                details.paricipateBtn = 'Your Team';
+            } else {
+                details.paricipateBtn = 'Register Here';
+            }
+        }
+
+        $('#participate-submit-header').html(details.paricipateBtn).attr('title', details.paricipateBtn).removeClass('hide');
 
         if (data.sponsorers && data.sponsorers.length) {
             details.sponsorers = data.sponsorers;

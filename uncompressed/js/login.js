@@ -13,7 +13,7 @@ var actiongolfLogin = {
             invalidMessage,
             deviceId,
             sessionKey = 'agLoginAuth',
-            publicSessionKey = 'publicAgLoginAuth',
+            participateSessionKey = 'participateAgLoginAuth',
             auth = 'YWdkZXY6cGFzc3dvcmQ=',
             reDirectUrl,
             otpValidationParticipate = $('.otp-validation-slide').length || (window.sessionStorage.getItem('agReDirectPage') && window.sessionStorage.getItem('agReDirectPage').includes('participate'));
@@ -163,7 +163,7 @@ var actiongolfLogin = {
                             };
                             reDirectUrl = window.sessionStorage.getItem('agReDirectPage');
                             window.sessionStorage.removeItem('agReDirectPage');
-                            this.setAuthSession( otpValidationParticipate ? publicSessionKey : sessionKey, sessionData);
+                            this.setAuthSession( otpValidationParticipate ? participateSessionKey : sessionKey, sessionData);
 
                             if (reDirectUrl) {
                                 window.location.href = reDirectUrl;
@@ -211,7 +211,7 @@ var actiongolfLogin = {
         return null;
     },
 
-    setAuthSession: function(key, value) {
+    setAuthSession: function(key, value,) {
         var expirationInMin = 600,
             expirationDate = new Date(new Date().getTime() + (60000 * expirationInMin)),
             newValue = {

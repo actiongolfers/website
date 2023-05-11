@@ -2390,6 +2390,94 @@ footer {
             justify-content: center;
             align-items: center;
 
+            &.restyle {
+                justify-content: end;
+                align-items: flex-start;
+                border-radius: 20px;
+                padding: 0;
+                margin: 0;
+
+                &::before {
+                    content: '';
+                    display: none;
+                }
+
+                .content-dts-parent {
+                    background: linear-gradient(transparent, #000);
+                    width: 100%;
+                    border-radius: 0 0 20px 20px;
+
+                    h5 {
+                        font-size: 20px;
+                        font-family: @actionGolfRegular;
+                        max-width: 100%;
+                        margin: 0;
+                        padding: 0 20px 20px;
+                        text-align: left;
+
+                        @media screen and (min-width:768px) {
+                            font-size: 25px;
+                            padding: 0 30px 20px;
+                        }
+                    }
+
+                    * {
+                        position: relative;
+                        z-index: 1;
+                        text-shadow: none;
+                    }
+
+                    .content-dts {
+                        padding: 0 20px 20px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: flex-end;
+                        width: 100%;
+
+                        .subdetails {
+                            display: block;
+                        }
+
+                        p, a {
+                            font-size: 12px;
+                            text-decoration: none !important;
+
+                            @media screen and (min-width:768px) {
+                                font-size: 16px;
+                            }
+                        }
+
+                        a {
+                            color: @brandColor;
+                        }
+
+                        @media screen and (min-width:768px) {
+                            padding: 0 30px 30px;
+                        }
+
+                        .content-dts-l {
+                            text-align: left;
+                        }
+
+                        .content-dts-r {
+                            display: flex;
+
+                            .landing-primary-btn {
+                                margin: 0;
+                                display: flex;
+                                line-height: normal;
+                                font-size: 16px;
+                                justify-content: center;
+                                align-items: center;
+                                padding-left: 16px;
+                                padding-right: 16px;
+                            }
+                        }
+                    }
+                }
+
+            }
 
             * {
                 position: relative;
