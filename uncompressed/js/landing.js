@@ -158,7 +158,7 @@ var actiongolfLanding = {
             } else if (participateAgLoginAuth.step == 2) {
                 details.paricipateBtn = 'Create Team';
             } else if (participateAgLoginAuth.step == 3) {
-                details.paricipateBtn = 'Your Team';
+                details.paricipateBtn = 'View Team';
             } else {
                 details.paricipateBtn = 'Register Here';
             }
