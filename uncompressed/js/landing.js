@@ -16,6 +16,10 @@ var actiongolfLanding = {
 
         var ajaxUrl= this.getApiUrl('landing') + (localDevelopment ? '' : friendlyName);
 
+        if (self.getAuthSession(participateSessionKey)) {
+            self.setAuthSession(participateSessionKey, self.getAuthSession(participateSessionKey));
+        }
+
         $.ajax({
             type: "GET",
             url: ajaxUrl,
@@ -40,14 +44,13 @@ var actiongolfLanding = {
                             tournamentId: xhr.tournamentInfo.tournamentId,
                             friendlyName: xhr.tournamentInfo.friendlyName,
                             teamSize: xhr.tournamentInfo.teamSize
-                        });
+                        }, true);
 
                         self.setAuthSession('landingPage', {
                             href: window.location.href
                         });
 
                         if (self.getAuthSession(participateSessionKey)) {
-                            self.setAuthSession(participateSessionKey, self.getAuthSession(participateSessionKey));
                             window.location.href = "./participate.html";
                         } else {
                             $('.otp-validation-slide').toggleClass('open');
@@ -73,12 +76,16 @@ var actiongolfLanding = {
     },
 
     getAuthSession: function(key, noExpiry) {
-        var stringValue = window.localStorage.getItem(key);
+        var stringValueSession = window.sessionStorage.getItem(key);
+        var stringValueLocal = window.localStorage.getItem(key);
+
+        var stringValue = stringValueSession != null ? stringValueSession : stringValueLocal;
+
         if (stringValue !== null) {
             var value = JSON.parse(stringValue),
                 expirationDate = new Date(value.expirationDate);
 
-            if (noExpiry) {
+            if (noExpiry || stringValueSession != null) {
                 return value.value;
             }
 
@@ -91,14 +98,19 @@ var actiongolfLanding = {
         return null;
     },
 
-    setAuthSession: function(key, value) {
+    setAuthSession: function(key, value, session) {
         var expirationInMin = 600,
             expirationDate = new Date(new Date().getTime() + (60000 * expirationInMin)),
             newValue = {
                 value: value,
-                expirationDate: expirationDate.toISOString()
+                expirationDate: session ? null : expirationDate.toISOString()
             };
-        window.localStorage.setItem(key, JSON.stringify(newValue));
+
+        if (session) {
+            window.sessionStorage.setItem(key, JSON.stringify(newValue));
+        } else {
+            window.localStorage.setItem(key, JSON.stringify(newValue));
+        }
     },
 
     updateData: function(data) {

@@ -624,7 +624,7 @@ var actiongolfLogin = {
                     }
                 }
 
-                _this.setAuthSession(participateSessionKey, participateAgLoginAuth);
+                _this.setAuthSession(participateSessionKey, participateAgLoginAuth, true);
             }.bind(this),
             error:  function(xhr, status, error) {
                 $('#pageLoad').hide();
@@ -871,12 +871,16 @@ var actiongolfLogin = {
     },
 
     getAuthSession: function(key, noExpiry) {
-        var stringValue = window.localStorage.getItem(key);
+        var stringValueSession = window.sessionStorage.getItem(key);
+        var stringValueLocal = window.localStorage.getItem(key);
+
+        var stringValue = stringValueSession != null ? stringValueSession : stringValueLocal;
+
         if (stringValue !== null) {
             var value = JSON.parse(stringValue),
                 expirationDate = new Date(value.expirationDate);
 
-            if (noExpiry) {
+            if (noExpiry || stringValueSession != null) {
                 return value.value;
             }
 
@@ -889,14 +893,19 @@ var actiongolfLogin = {
         return null;
     },
 
-    setAuthSession: function(key, value) {
+    setAuthSession: function(key, value, session) {
         var expirationInMin = 600,
             expirationDate = new Date(new Date().getTime() + (60000 * expirationInMin)),
             newValue = {
                 value: value,
-                expirationDate: expirationDate.toISOString()
+                expirationDate: session ? null : expirationDate.toISOString()
             };
-        window.localStorage.setItem(key, JSON.stringify(newValue));
+
+        if (session) {
+            window.sessionStorage.setItem(key, JSON.stringify(newValue));
+        } else {
+            window.localStorage.setItem(key, JSON.stringify(newValue));
+        }
     },
 
     isValidNumberField: function(userinput) {
