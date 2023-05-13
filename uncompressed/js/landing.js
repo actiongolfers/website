@@ -1,6 +1,10 @@
 var localDevelopment = false,
     friendlyName,
-    participateSessionKey = 'participateAgLoginAuth';
+    participateSessionKey = 'participateAgLoginAuth',
+    userProfileId,
+    tournamentId,
+    deviceId,
+    participateStep = 1;
 
 var actiongolfLanding = {
     init: function () {
@@ -18,6 +22,8 @@ var actiongolfLanding = {
 
         if (self.getAuthSession(participateSessionKey)) {
             self.setAuthSession(participateSessionKey, self.getAuthSession(participateSessionKey));
+            userProfileId = self.getAuthSession(participateSessionKey).userProfileId;
+            deviceId = self.getAuthSession(participateSessionKey).deviceId;
         }
 
         $.ajax({
@@ -29,7 +35,14 @@ var actiongolfLanding = {
             success: function(xhr, status) {
                 if (xhr && xhr.tournamentInfo) {
                     $('.landing-content').show();
-                    this.updateData(xhr);
+
+                    tournamentId = xhr.tournamentInfo.tournamentId;
+
+                    if (tournamentId && userProfileId && deviceId) {
+                        self.getPartcipateStatus(xhr);
+                    } else {
+                        self.updateData(xhr);
+                    }
 
                     var otpValidationParticipate = $('.otp-validation-slide').length;
 
@@ -42,6 +55,8 @@ var actiongolfLanding = {
                         friendlyName: xhr.tournamentInfo.friendlyName,
                         teamSize: xhr.tournamentInfo.teamSize
                     }, true);
+
+
 
                     $('#participate-submit, #participate-submit-header').on('click', function(event) {
                         event.preventDefault();
@@ -71,6 +86,42 @@ var actiongolfLanding = {
             error:  function(xhr, status, error) {
                 $('.landing-content').hide();
                 $('.screen-message').removeClass('hide');
+            }.bind(this)
+        });
+    },
+
+    getPartcipateStatus: function(xhrData) {
+        var ajaxUrl = this.getApiUrl('tournamentUserDetails');
+
+        $.ajax({
+            type: "GET",
+            url: ajaxUrl,
+            contentType: "application/json",
+            dataType: "json",
+            timeout: 0,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("userProfileId", userProfileId),
+                xhr.setRequestHeader("deviceId", deviceId)
+            },
+            success: function(xhr, status) {
+                if (xhr && xhr.participating) {
+                    if (xhr && xhr.tournamentTeam && xhr.tournamentTeam.tournamentTeamMembers && xhr.tournamentTeam.tournamentTeamMembers.length) {
+                        participateStep = 3;
+                    } else if (xhrData && xhrData.tournamentInfo && xhrData.tournamentInfo.teamSize > 1) {
+                        participateStep = 2;
+                    } else {
+                        participateStep = 0;
+
+                        if (xhrData && xhrData.tournamentInfo && !xhrData.tournamentInfo.teamSize) {
+                            participateStep = 1;
+                        }
+                    }
+                }
+
+                this.updateData(xhrData);
+            }.bind(this),
+            error:  function(xhr, status, error) {
+                this.updateData(xhrData);
             }.bind(this)
         });
     },
@@ -152,19 +203,23 @@ var actiongolfLanding = {
 
         details.paricipateBtn = 'Register Here';
 
-        if (participateAgLoginAuth && participateAgLoginAuth.tournamentId == data.tournamentInfo.tournamentId && participateAgLoginAuth.step) {
-            if (participateAgLoginAuth.step == 1) {
+        if (participateAgLoginAuth && participateAgLoginAuth.userProfileId) {
+            if (participateStep == 1) {
                 details.paricipateBtn = 'Register Here';
-            } else if (participateAgLoginAuth.step == 2) {
+            } else if (participateStep == 2) {
                 details.paricipateBtn = 'Create Team';
-            } else if (participateAgLoginAuth.step == 3) {
+            } else if (participateStep == 3) {
                 details.paricipateBtn = 'View Team';
+            } else if (participateStep == 0) {
+                details.paricipateBtn = false;
             } else {
                 details.paricipateBtn = 'Register Here';
             }
         }
 
-        $('#participate-submit-header').html(details.paricipateBtn).attr('title', details.paricipateBtn).removeClass('hide');
+        if (details.paricipateBtn) {
+            $('#participate-submit-header').html(details.paricipateBtn).attr('title', details.paricipateBtn).removeClass('hide');
+        }
 
         if (data.sponsorers && data.sponsorers.length) {
             details.sponsorers = data.sponsorers;
@@ -181,10 +236,12 @@ var actiongolfLanding = {
     getApiUrl: function(source) {
         var apiUrls = {
                 test : {
-                    landing: 'https://beta.actiongolfers.com/website/tournament?friendlyName='
+                    landing: 'https://beta.actiongolfers.com/website/tournament?friendlyName=',
+                    tournamentUserDetails: `https://beta.actiongolfers.com/tournament/${tournamentId}/profiles/${userProfileId}`,
                 },
                 prod : {
-                    landing: 'https://api.actiongolfers.com/website/tournament?friendlyName='
+                    landing: 'https://api.actiongolfers.com/website/tournament?friendlyName=',
+                    tournamentUserDetails: `https://api.actiongolfers.com/tournament/${tournamentId}/profiles/${userProfileId}`,
                 },
                 local : {
                     landing: 'http://localhost:8080/json/landing.json'

@@ -581,21 +581,16 @@ var actiongolfLogin = {
             },
             success: function(xhr, status) {
                 participateAgLoginAuth.tournamentId = tournamentId;
-                participateAgLoginAuth.step = 1;
 
                 $('#pageLoad').hide();
                 $('#addMembers').removeClass('hide');
                 _this.addMemberJS(xhr.participating, xhr.entryFee);
                 $('#currentBalance').html('$' + tournamentDetails.balanceAmount);
-                if (xhr && !xhr.participating) {
-                    participateAgLoginAuth.step = 1;
-                }
 
                 if (xhr && xhr.tournamentTeam && xhr.tournamentTeam.tournamentTeamMembers && xhr.tournamentTeam.tournamentTeamMembers.length) {
                     $('#yourTeam').removeClass('hide');
                     teamCreated = true;
                     var listTeamsTemplate = Handlebars.compile($("[data-template='listTeamsTemplate']").html());
-                    participateAgLoginAuth.step = 3;
 
                     xhr.tournamentTeam.tournamentTeamMembers.map(function(op, i) {
                         if (op.isLead) {
@@ -613,11 +608,9 @@ var actiongolfLogin = {
                 } else if (xhr && xhr.participating) {
 
                     if (tournamentDetails.teamSize > 1) {
-                        participateAgLoginAuth.step = 2;
                         $('#createTeam').removeClass('hide');
                         _this.openParticipantsDetails();
                     } else {
-                        participateAgLoginAuth.step = 3;
                         teamCreated = true;
                         $('#alreadyParticipated').removeClass('hide');
                         $('#tournamentCategoryDesc').html(tournamentDetails.tournamentCategoryDesc);
