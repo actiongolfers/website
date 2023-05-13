@@ -33,22 +33,22 @@ var actiongolfLanding = {
 
                     var otpValidationParticipate = $('.otp-validation-slide').length;
 
+                    self.setAuthSession('landingPage', {
+                        href: window.location.href
+                    }, true);
+
+                    self.setAuthSession('tournamentDetails', {
+                        tournamentId: xhr.tournamentInfo.tournamentId,
+                        friendlyName: xhr.tournamentInfo.friendlyName,
+                        teamSize: xhr.tournamentInfo.teamSize
+                    }, true);
+
                     $('#participate-submit, #participate-submit-header').on('click', function(event) {
                         event.preventDefault();
 
                         if (!otpValidationParticipate) {
                             return;
                         }
-
-                        self.setAuthSession('tournamentDetails', {
-                            tournamentId: xhr.tournamentInfo.tournamentId,
-                            friendlyName: xhr.tournamentInfo.friendlyName,
-                            teamSize: xhr.tournamentInfo.teamSize
-                        }, true);
-
-                        self.setAuthSession('landingPage', {
-                            href: window.location.href
-                        });
 
                         if (self.getAuthSession(participateSessionKey)) {
                             window.location.href = "./participate.html";
