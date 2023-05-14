@@ -163,7 +163,7 @@ var actiongolfLogin = {
                             };
                             reDirectUrl = window.sessionStorage.getItem('agReDirectPage');
                             window.sessionStorage.removeItem('agReDirectPage');
-                            this.setAuthSession( otpValidationParticipate ? participateSessionKey : sessionKey, sessionData);
+                            this.setAuthSession( otpValidationParticipate ? participateSessionKey : sessionKey, sessionData, true);
 
                             if (reDirectUrl) {
                                 window.location.href = reDirectUrl;
@@ -196,11 +196,19 @@ var actiongolfLogin = {
         }.bind(this));
     },
 
-    getAuthSession: function(key) {
-        var stringValue = window.localStorage.getItem(key);
+    getAuthSession: function(key, noExpiry) {
+        var stringValueSession = window.sessionStorage.getItem(key);
+        var stringValueLocal = window.localStorage.getItem(key);
+
+        var stringValue = stringValueSession != null ? stringValueSession : stringValueLocal;
+
         if (stringValue !== null) {
             var value = JSON.parse(stringValue),
                 expirationDate = new Date(value.expirationDate);
+
+            if (noExpiry || stringValueSession != null) {
+                return value.value;
+            }
 
             if (expirationDate > new Date() && value) {
                 return value.value;
@@ -211,14 +219,19 @@ var actiongolfLogin = {
         return null;
     },
 
-    setAuthSession: function(key, value,) {
+    setAuthSession: function(key, value, session) {
         var expirationInMin = 600,
             expirationDate = new Date(new Date().getTime() + (60000 * expirationInMin)),
             newValue = {
                 value: value,
-                expirationDate: expirationDate.toISOString()
+                expirationDate: session ? null : expirationDate.toISOString()
             };
-        window.localStorage.setItem(key, JSON.stringify(newValue));
+
+        if (session) {
+            window.sessionStorage.setItem(key, JSON.stringify(newValue));
+        } else {
+            window.localStorage.setItem(key, JSON.stringify(newValue));
+        }
     },
 
     isValidNumberField: function(userinput) {
