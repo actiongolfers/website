@@ -20,10 +20,13 @@ var actiongolfLanding = {
 
         var ajaxUrl= this.getApiUrl('landing') + (localDevelopment ? '' : friendlyName);
 
-        if (self.getAuthSession(participateSessionKey , true)) {
-            self.setAuthSession(participateSessionKey, self.getAuthSession(participateSessionKey));
-            userProfileId = self.getAuthSession(participateSessionKey, true).userProfileId;
-            deviceId = self.getAuthSession(participateSessionKey, true).deviceId;
+        var participateSession = self.getAuthSession(participateSessionKey , true);
+
+        if (participateSession) {
+            self.setAuthSession(participateSessionKey, participateSession);
+            self.setAuthSession(participateSessionKey, participateSession, true);
+            userProfileId = participateSession.userProfileId;
+            deviceId = participateSession.deviceId;
         }
 
         $.ajax({
@@ -150,7 +153,7 @@ var actiongolfLanding = {
     },
 
     setAuthSession: function(key, value, session) {
-        var expirationInMin = 600,
+        var expirationInMin = 6000,
             expirationDate = new Date(new Date().getTime() + (60000 * expirationInMin)),
             newValue = {
                 value: value,

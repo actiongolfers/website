@@ -272,7 +272,7 @@ var createTeams = {
     },
 
     setAuthSession: function(key, value) {
-        var expirationInMin = 600,
+        var expirationInMin = 6000,
             expirationDate = new Date(new Date().getTime() + (60000 * expirationInMin)),
             newValue = {
                 value: value,

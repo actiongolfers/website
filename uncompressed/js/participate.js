@@ -21,8 +21,8 @@ var actiongolfLogin = {
     init: function () {
         _this = this;
 
-        tournamentDetails = _this.getAuthSession('tournamentDetails');
-        participateAgLoginAuth = _this.getAuthSession(participateSessionKey);
+        tournamentDetails = _this.getAuthSession('tournamentDetails', true);
+        participateAgLoginAuth = _this.getAuthSession(participateSessionKey, true);
 
         const urlSearchParams = new URLSearchParams(window.location.search);
         const params = Object.fromEntries(urlSearchParams.entries());
@@ -57,8 +57,10 @@ var actiongolfLogin = {
         $('.page-header-link').on('click', function() {
             window.localStorage.removeItem('tournamentDetails');
             window.localStorage.removeItem('participateAgLoginAuth');
+            window.sessionStorage.removeItem('tournamentDetails');
+            window.sessionStorage.removeItem('participateAgLoginAuth');
 
-            var previousLandingPage = _this.getAuthSession('landingPage');
+            var previousLandingPage = _this.getAuthSession('landingPage', true);
 
             if (previousLandingPage && previousLandingPage.href) {
                 window.location.href = previousLandingPage.href;
@@ -80,7 +82,7 @@ var actiongolfLogin = {
         $('#addedMemberList').addClass('hide');
         $('#participateConfirm').removeClass('hide');
         $('#pageLoad').hide();
-        window.localStorage.removeItem('memberList');
+        window.sessionStorage.removeItem('memberList');
         addMemberObj.addedMembers = [];
 
         var participateConfirmTemplate = Handlebars.compile($("[data-template='participateConfirmTemplate']").html());
@@ -336,14 +338,14 @@ var actiongolfLogin = {
         addMemberObj.entryFee = entryFee;
         addMemberObj.participateNow = !participating && entryFee <= loginUserData.balanceAmount;
 
-        if (_this.getAuthSession('memberList')) {
-            addMemberObj.addedMembers = _this.getAuthSession('memberList');
+        if (_this.getAuthSession('memberList', true)) {
+            addMemberObj.addedMembers = _this.getAuthSession('memberList', true);
             addMemberObj.entryFee = entryFee  * addMemberObj.addedMembers.length;
             addMemberObj.participateNow = addMemberObj.entryFee <= loginUserData.balanceAmount;
             window.localStorage.removeItem('memberList');
 
             if (addMemberObj.entryFee > loginUserData.balanceAmount) {
-                _this.setAuthSession('memberList', addMemberObj.addedMembers);
+                _this.setAuthSession('memberList', addMemberObj.addedMembers, true);
                 _this.paymentBlock();
             }
         }
@@ -437,7 +439,7 @@ var actiongolfLogin = {
             $('.added-members-list').html(addedMembersListTemplate(addMemberObj));
 
             if (addMemberObj.entryFee > loginUserData.balanceAmount) {
-                _this.setAuthSession('memberList', addMemberObj.addedMembers);
+                _this.setAuthSession('memberList', addMemberObj.addedMembers, true);
                 _this.paymentBlock();
             } else {
                 $('#payNow').addClass('hide');
@@ -567,7 +569,7 @@ var actiongolfLogin = {
 
     getPartcipateStatus: function() {
         var ajaxUrl = _this.getApiUrl('tournamentUserDetails');
-        participateAgLoginAuth = _this.getAuthSession(participateSessionKey);
+        participateAgLoginAuth = _this.getAuthSession(participateSessionKey, true);
 
         $.ajax({
             type: "GET",
@@ -617,7 +619,7 @@ var actiongolfLogin = {
                     }
                 }
 
-                _this.setAuthSession(participateSessionKey, participateAgLoginAuth, true);
+                _this.setAuthSession(participateSessionKey, participateAgLoginAuth);
             }.bind(this),
             error:  function(xhr, status, error) {
                 $('#pageLoad').hide();
@@ -887,7 +889,7 @@ var actiongolfLogin = {
     },
 
     setAuthSession: function(key, value, session) {
-        var expirationInMin = 600,
+        var expirationInMin = 6000,
             expirationDate = new Date(new Date().getTime() + (60000 * expirationInMin)),
             newValue = {
                 value: value,
