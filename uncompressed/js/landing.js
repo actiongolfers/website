@@ -20,10 +20,10 @@ var actiongolfLanding = {
 
         var ajaxUrl= this.getApiUrl('landing') + (localDevelopment ? '' : friendlyName);
 
-        if (self.getAuthSession(participateSessionKey)) {
+        if (self.getAuthSession(participateSessionKey , true)) {
             self.setAuthSession(participateSessionKey, self.getAuthSession(participateSessionKey));
-            userProfileId = self.getAuthSession(participateSessionKey).userProfileId;
-            deviceId = self.getAuthSession(participateSessionKey).deviceId;
+            userProfileId = self.getAuthSession(participateSessionKey, true).userProfileId;
+            deviceId = self.getAuthSession(participateSessionKey, true).deviceId;
         }
 
         $.ajax({
@@ -65,7 +65,7 @@ var actiongolfLanding = {
                             return;
                         }
 
-                        if (self.getAuthSession(participateSessionKey)) {
+                        if (self.getAuthSession(participateSessionKey, true)) {
                             window.location.href = "./participate.html";
                         } else {
                             $('.otp-validation-slide').toggleClass('open');
@@ -136,7 +136,7 @@ var actiongolfLanding = {
             var value = JSON.parse(stringValue),
                 expirationDate = new Date(value.expirationDate);
 
-            if (noExpiry || stringValueSession != null) {
+            if (noExpiry || stringValueLocal != null) {
                 return value.value;
             }
 
@@ -199,7 +199,7 @@ var actiongolfLanding = {
         details.webPageBlob = details.webPageBlob.replace('[[STARTDATEYEAR]]', this.dateConversion(data.tournamentInfo.startDate, true));
         details.webPageBlob = details.webPageBlob.replace('[[ENDDATEYEAR]]', this.dateConversion(data.tournamentInfo.endDate, true));
 
-        participateAgLoginAuth = this.getAuthSession(participateSessionKey);
+        participateAgLoginAuth = this.getAuthSession(participateSessionKey, true);
 
         details.paricipateBtn = 'Register Here';
 
