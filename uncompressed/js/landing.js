@@ -46,41 +46,6 @@ var actiongolfLanding = {
                     } else {
                         self.updateData(xhr);
                     }
-
-                    var otpValidationParticipate = $('.otp-validation-slide').length;
-
-                    self.setAuthSession('landingPage', {
-                        href: window.location.href
-                    }, true);
-
-                    self.setAuthSession('tournamentDetails', {
-                        tournamentId: xhr.tournamentInfo.tournamentId,
-                        friendlyName: xhr.tournamentInfo.friendlyName,
-                        teamSize: xhr.tournamentInfo.teamSize
-                    }, true);
-
-
-
-                    $('#participate-submit, #participate-submit-header').on('click', function(event) {
-                        event.preventDefault();
-
-                        if (!otpValidationParticipate) {
-                            return;
-                        }
-
-                        if (self.getAuthSession(participateSessionKey, true)) {
-                            window.location.href = "./participate.html";
-                        } else {
-                            $('.otp-validation-slide').toggleClass('open');
-                            $('#modal-shade').toggle();
-                        }
-                    });
-
-                    $('.modal-slide-close').on('click', function(event) {
-                        event.preventDefault();
-                        $('.otp-validation-slide').toggleClass('open');
-                        $('#modal-shade').toggle();
-                    });
                 } else {
                     $('.landing-content').hide();
                     $('.screen-message').removeClass('hide');
@@ -180,7 +145,8 @@ var actiongolfLanding = {
                 titleBackgroundImage: (data.tournamentInfo.titleBackgroundHQImage || data.tournamentInfo.titleBackgroundImage),
                 learnMore: 'Learn More',
                 singleDay: data && this.dateConversion(data.tournamentInfo.startDate, true) === this.dateConversion(data.tournamentInfo.endDate, true)
-            };
+            },
+            self = this;
 
         if (data.tournamentImages && data.tournamentImages.length) {
             data.tournamentImages.forEach(function(img){
@@ -234,6 +200,39 @@ var actiongolfLanding = {
 
         $('title').html(details.webPageTitle.replaceAll('<br>', ''));
         $('.landing-content').html(landingTemplate(details));
+
+        var otpValidationParticipate = $('.otp-validation-slide').length;
+
+        self.setAuthSession('landingPage', {
+            href: window.location.href
+        }, true);
+
+        self.setAuthSession('tournamentDetails', {
+            tournamentId: data.tournamentInfo.tournamentId,
+            friendlyName: data.tournamentInfo.friendlyName,
+            teamSize: data.tournamentInfo.teamSize
+        }, true);
+
+        $('#participate-submit, #participate-submit-header').on('click', function(event) {
+            event.preventDefault();
+
+            if (!otpValidationParticipate) {
+                return;
+            }
+
+            if (self.getAuthSession(participateSessionKey, true)) {
+                window.location.href = "./participate.html";
+            } else {
+                $('.otp-validation-slide').toggleClass('open');
+                $('#modal-shade').toggle();
+            }
+        });
+
+        $('.modal-slide-close').on('click', function(event) {
+            event.preventDefault();
+            $('.otp-validation-slide').toggleClass('open');
+            $('#modal-shade').toggle();
+        });
     },
 
     getApiUrl: function(source) {
