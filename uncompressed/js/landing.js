@@ -174,12 +174,12 @@ var actiongolfLanding = {
                 images: 'images/noprofitlogos.jpg',
                 webPageTitle: data.tournamentInfo.webPageTitle,
                 webPageBlob: data.tournamentInfo.webPageBlob,
-                startDate: this.dateConversion(data.tournamentInfo.startDate),
-                endDate: this.dateConversion(data.tournamentInfo.endDate),
+                startDate: this.dateConversion(data.tournamentInfo.startDate, true),
+                endDate: this.dateConversion(data.tournamentInfo.endDate, true),
                 golfCourseName : data.tournamentInfo.golfCourseName,
                 titleBackgroundImage: (data.tournamentInfo.titleBackgroundHQImage || data.tournamentInfo.titleBackgroundImage),
                 learnMore: 'Learn More',
-                singleDay: data && this.dateConversion(data.tournamentInfo.startDate) === this.dateConversion(data.tournamentInfo.endDate)
+                singleDay: data && this.dateConversion(data.tournamentInfo.startDate, true) === this.dateConversion(data.tournamentInfo.endDate, true)
             };
 
         if (data.tournamentImages && data.tournamentImages.length) {
@@ -214,7 +214,7 @@ var actiongolfLanding = {
             } else if (participateStep == 3) {
                 details.paricipateBtn = 'View Team';
             } else if (participateStep == 0) {
-                details.paricipateBtn = false;
+                details.paricipateBtn = 'Add Members';
             } else {
                 details.paricipateBtn = 'Register Here';
             }

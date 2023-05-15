@@ -181,13 +181,13 @@ var actiongolfCL = {
             details = {
                 logoImages: logoImages,
                 webPageTitle: '',
-                startDate: data && this.dateConversion(data.tournamentInfo.startDate),
-                endDate: data && this.dateConversion(data.tournamentInfo.endDate),
+                startDate: data && this.dateConversion(data.tournamentInfo.startDate, true),
+                endDate: data && this.dateConversion(data.tournamentInfo.endDate, true),
                 golfCourseName: data && data.tournamentInfo.golfCourseName,
                 learnMore: 'Learn More',
                 titleBackgroundImage: titleBackgroundImage ||data && data.tournamentInfo.titleBackgroundImage,
                 titleBackgroundMediaId: data && data.tournamentInfo.titleBackgroundMediaId,
-                singleDay: data && this.dateConversion(data.tournamentInfo.startDate) === this.dateConversion(data.tournamentInfo.endDate)
+                singleDay: data && this.dateConversion(data.tournamentInfo.startDate, true) === this.dateConversion(data.tournamentInfo.endDate, true)
             };
 
             details.webPageBlob = webPageBlobContent;
