@@ -180,7 +180,7 @@ var actiongolfLanding = {
             } else if (participateStep == 3) {
                 details.paricipateBtn = 'View Team';
             } else if (participateStep == 0) {
-                details.paricipateBtn = 'Add Members';
+                details.paricipateBtn = 'View Details';
             } else {
                 details.paricipateBtn = 'Register Here';
             }
