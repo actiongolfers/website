@@ -2408,15 +2408,15 @@ footer {
                     border-radius: 0 0 20px 20px;
 
                     h5 {
-                        font-size: 20px;
+                        font-size: 16px;
                         font-family: @actionGolfRegular;
                         max-width: 100%;
                         margin: 0;
-                        padding: 0 20px 20px;
+                        padding: 14px 20px 20px;
                         text-align: left;
 
                         @media screen and (min-width:768px) {
-                            font-size: 25px;
+                            font-size: 22px;
                             padding: 0 30px 20px;
                         }
                     }
@@ -2534,6 +2534,20 @@ footer {
 
         ul li {
             list-style-type: disc;
+        }
+    }
+
+    .youtube-video {
+        margin: 0 0 42px;
+        padding: 30px;
+
+        iframe {
+            max-width: 100%;
+            height: auto;
+
+            @media screen and (min-width:560px) {
+                height: 315px;
+            }
         }
     }
 
