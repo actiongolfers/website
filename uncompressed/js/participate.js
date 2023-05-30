@@ -236,6 +236,8 @@ var actiongolfLogin = {
                         $('[name=firstName]').val(loginUserData.firstName || '');
                         $('[name=lastName]').val(loginUserData.lastName || '');
                         $('[name=email]').val(loginUserData.email || '');
+                        $('[name=phone-added]').val(loginUserData.phoneNumber || '');
+                        $('[name=phone-added]').addClass('js-added');
 
                         $('#participate-complete-registration').on('click', function(event) {
                             event.preventDefault();

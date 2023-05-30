@@ -1422,7 +1422,8 @@ footer {
                 background: none;
 
                 &:focus,
-                &:valid {
+                &:valid,
+                &.js-added {
                     ~ label {
                         color: @bgrey;
                         top: -24px;
@@ -1432,12 +1433,18 @@ footer {
                     }
                 }
 
-                &:valid ~ label {
-                    font-size: 12px;
+                &:valid,
+                &.js-added  {
+                    ~ label {
+                        font-size: 12px;
+                    }
                 }
 
-                &:focus ~ label {
-                    color: @brandColor;
+                &:focus,
+                &.js-added {
+                    ~ label {
+                        color: @brandColor;
+                    }
                 }
             }
 
