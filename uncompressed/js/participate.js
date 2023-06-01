@@ -350,8 +350,7 @@ var actiongolfLogin = {
                 _this.setAuthSession('memberList', addMemberObj.addedMembers, true);
                 _this.paymentBlock();
             }
-        }
-        if (!participating) {
+        } else if (!participating) {
             addMemberObj.addedMembers.push(
                 {
                     firstName: loginUserData.firstName,
