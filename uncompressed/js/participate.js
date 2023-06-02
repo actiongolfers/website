@@ -759,17 +759,17 @@ var actiongolfLogin = {
                         if (xhr && xhr.messages && xhr.messages.resultCode === 'Ok' && xhr.refId === requestData.createTransactionRequest.refId && xhr.transactionResponse.responseCode === '1' && xhr.transactionResponse.transId) {
                             _this.updatePayment(xhr, amount);
                         } else if (xhr && xhr.messages && xhr.messages.resultCode === 'Ok' && xhr.refId === requestData.createTransactionRequest.refId && xhr.transactionResponse.responseCode === '2' && xhr.transactionResponse.transId) {
-                            this.reportFailure(xhr, status);
+                            _this.reportFailure(xhr, status);
                             $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
                             $('#participate-pay-button').parent('.button-wrapper').find('.red').removeClass('hide').html(xhr.transactionResponse.errors[1].errorText);
                         }
                         else {
-                            this.reportFailure(xhr, status);
+                            _this.reportFailure(xhr, status);
                             $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
                         }
                     }.bind(this),
                     error:  function(xhr, status, error) {
-                        this.reportFailure(xhr, status, error);
+                        _this.reportFailure(xhr, status, error);
                         $('.screen-message.error-message').removeClass('hide');
                         $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
                         $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
