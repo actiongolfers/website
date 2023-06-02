@@ -238,6 +238,7 @@ var actiongolfLogin = {
                         $('[name=email]').val(loginUserData.email || '');
                         $('[name=phone-added]').val(loginUserData.phoneNumber || '');
                         $('[name=phone-added]').addClass('js-added');
+                        $('#title_phno').html(loginUserData.phoneNumber || '');
 
                         $('#participate-complete-registration').on('click', function(event) {
                             event.preventDefault();
@@ -758,16 +759,17 @@ var actiongolfLogin = {
                         if (xhr && xhr.messages && xhr.messages.resultCode === 'Ok' && xhr.refId === requestData.createTransactionRequest.refId && xhr.transactionResponse.responseCode === '1' && xhr.transactionResponse.transId) {
                             _this.updatePayment(xhr, amount);
                         } else if (xhr && xhr.messages && xhr.messages.resultCode === 'Ok' && xhr.refId === requestData.createTransactionRequest.refId && xhr.transactionResponse.responseCode === '2' && xhr.transactionResponse.transId) {
-                            if (xhr.transactionResponse.errors[1].errorCode === '2') {
-                                $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
-                                $('#participate-pay-button').parent('.button-wrapper').find('.red').removeClass('hide').html(xhr.transactionResponse.errors[1].errorText);
-                            }
+                            this.reportFailure(xhr, status);
+                            $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
+                            $('#participate-pay-button').parent('.button-wrapper').find('.red').removeClass('hide').html(xhr.transactionResponse.errors[1].errorText);
                         }
                         else {
+                            this.reportFailure(xhr, status);
                             $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
                         }
                     }.bind(this),
                     error:  function(xhr, status, error) {
+                        this.reportFailure(xhr, status, error);
                         $('.screen-message.error-message').removeClass('hide');
                         $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
                         $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
@@ -775,6 +777,33 @@ var actiongolfLogin = {
                 });
             }
 
+        });
+    },
+
+    reportFailure: function(xhr, status, error) {
+        var requestData = {
+            email: loginUserData.email,
+            firstName: loginUserData.firstName,
+            lastName: loginUserData.lastName,
+            title:  "Payment Failure",
+            problemType: "Other",
+            teleNumber: loginUserData.phoneNumber,
+            message: 'Response' + JSON.stringify(xhr) + 'Status' + status + 'Error' + error
+        },
+        ajaxUrl = this.getApiUrl('contact');
+
+        $.ajax({
+            type: "POST",
+            url: ajaxUrl,
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(requestData),
+            success: function() {
+                alert('We have reported this issue with Action Golf, A member of our staff will contact you within the next 24 hours.');
+            }.bind(this),
+            error:  function() {
+
+            }.bind(this)
         });
     },
 
@@ -945,6 +974,7 @@ var actiongolfLogin = {
                     updatePayment: 'https://beta.actiongolfers.com/payment/ag_transaction',
                     getProfile: `https://beta.actiongolfers.com/profile/get/${userProfileId}`,
                     getTournamentDetails: 'https://beta.actiongolfers.com/tournament/get',
+                    contact: 'https://beta.actiongolfers.com/subscription/contact-us/'
                 },
                 prod : {
                     login: 'https://api.actiongolfers.com/auth/verifyRequest',
@@ -958,6 +988,7 @@ var actiongolfLogin = {
                     updatePayment: 'https://api.actiongolfers.com/payment/ag_transaction',
                     getProfile: `https://api.actiongolfers.com/profile/get/${userProfileId}`,
                     getTournamentDetails: 'https://api.actiongolfers.com/tournament/get',
+                    contact: 'https://api.actiongolfers.com/subscription/contact-us/'
                 }
             },
             domain = window.origin === 'https://actiongolfers.com' ? 'prod' : 'test';

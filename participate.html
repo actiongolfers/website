@@ -30,9 +30,9 @@
                         <div id="participate-cnt" class="participate-content">
                             <div id="pageLoad" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                             <div id="participateUserDetails" class="hide participate-user-details"></div>
-                            <form id="ajaxParticipateForm" class="input-container participate-update-form hide"  data-type="participate">
-                                <h3>Please update the user details</h3>
-            
+                            <form id="ajaxParticipateForm" class="participate-update-form hide"  data-type="participate">
+                                <h3>Please enter the user details associated with the phone number (<span id="title_phno"></span>)</h3>
+                                <div class="input-container ">
                                 <div class="col-12">
                                     <div class="col-6">
                                         <div class="styled-input">
@@ -67,7 +67,7 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="styled-input last-row">
+                                        <div class="styled-input last-row hide">
                                             <input type="text" name="phone-added" disabled
                                             />
                                             <label>Phone number <sup>*</sup></label>
@@ -78,6 +78,7 @@
                                 <div class="button-wrapper">
                                     <button id="participate-complete-registration" class="primary-btn">Complete registration</button>
                                     <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                                </div>
                                 </div>
                             </form>
             
