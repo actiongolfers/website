@@ -505,6 +505,7 @@ var actiongolfLogin = {
                         _this.participateSuccess(xhr);
                     }.bind(this),
                     error:  function(xhr, status, error) {
+                        _this.reportFailure('groupParticipate', xhr, status, error);
                         $('.screen-message.error-message').removeClass('hide');
                         $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
                         $('#participate-button').parent('.button-wrapper').removeClass('loading');
@@ -759,17 +760,17 @@ var actiongolfLogin = {
                         if (xhr && xhr.messages && xhr.messages.resultCode === 'Ok' && xhr.refId === requestData.createTransactionRequest.refId && xhr.transactionResponse.responseCode === '1' && xhr.transactionResponse.transId) {
                             _this.updatePayment(xhr, amount);
                         } else if (xhr && xhr.messages && xhr.messages.resultCode === 'Ok' && xhr.refId === requestData.createTransactionRequest.refId && xhr.transactionResponse.responseCode === '2' && xhr.transactionResponse.transId) {
-                            _this.reportFailure(xhr, status);
+                            _this.reportFailure('payment', xhr, status);
                             $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
                             $('#participate-pay-button').parent('.button-wrapper').find('.red').removeClass('hide').html(xhr.transactionResponse.errors[1].errorText);
                         }
                         else {
-                            _this.reportFailure(xhr, status);
+                            _this.reportFailure('payment', xhr, status);
                             $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
                         }
                     }.bind(this),
                     error:  function(xhr, status, error) {
-                        _this.reportFailure(xhr, status, error);
+                        _this.reportFailure('payment', xhr, status, error);
                         $('.screen-message.error-message').removeClass('hide');
                         $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
                         $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
@@ -780,12 +781,12 @@ var actiongolfLogin = {
         });
     },
 
-    reportFailure: function(xhr, status, error) {
+    reportFailure: function(type, xhr, status, error) {
         var requestData = {
             email: loginUserData.email,
             firstName: loginUserData.firstName,
             lastName: loginUserData.lastName,
-            title:  "Payment Failure",
+            title:  "API Failure - " + type,
             problemType: "Other",
             teleNumber: loginUserData.phoneNumber,
             message: 'Response' + JSON.stringify(xhr) + 'Status' + status + 'Error' + error
@@ -847,6 +848,7 @@ var actiongolfLogin = {
                     window.location.reload();
                 }.bind(this),
                 error:  function(xhr, status, error) {
+                    _this.reportFailure('payment/ag_transaction', xhr, status, error);
                     $('.screen-message.error-message').removeClass('hide');
                     $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
                     $('#payment-complete').parent('.button-wrapper').removeClass('loading');
@@ -882,12 +884,14 @@ var actiongolfLogin = {
                 if (xhr && xhr.IsSuccess) {
                     window.location.reload();
                 } else if (xhr && xhr.errorCode === 1644) {
+                    _this.reportFailure('tournament/createTeamV2', xhr, status);
                     $('#create-team-form-submit').parent('.button-wrapper').removeClass('loading');
                     $('.screen-message.error-message').html(xhr.errorMsg).removeClass('hide');
                     $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
                 }
             }.bind(this),
             error:  function(xhr, status, error) {
+                _this.reportFailure('tournament/createTeamV2', xhr, status, error);
                 $('.screen-message.error-message').removeClass('hide');
                 $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
                 $('#create-team-form-submit').parent('.button-wrapper').removeClass('loading');
