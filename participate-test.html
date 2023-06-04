@@ -159,10 +159,10 @@
                                             <div class="col-12">
                                                 <div class="col-6">
                                                     <div class="styled-input">
-                                                        <input type="text" name="amount" id="amount"
+                                                        <input type="number" name="amount" id="amount"
                                                             required
                                                             class="number-only"
-                                                            maxlength="4"
+                                                            step="0.01"
                                                             data-required="Amount is required."
                                                             data-invalid="Please enter a valid Amount."
                                                         />
@@ -171,11 +171,12 @@
                                                     </div>
             
                                                     <div class="styled-input">
-                                                        <input type="text"
+                                                        <input type="number"
                                                             name="cardNumber" id="cardNumber"
                                                             required
                                                             class="number-only"
                                                             maxlength="16"
+                                                            step="1"
                                                             data-required="Card Number is required."
                                                             data-invalid="Please enter a valid Card Number."
                                                         />
@@ -185,11 +186,12 @@
                                                     <div class="card-exp-cvv">
                                                         <div class="card-fields">
                                                             <div class="styled-input">
-                                                                <input type="text"
+                                                                <input type="number"
                                                                     name="expMonth" id="expMonth"
                                                                     required
                                                                     class="number-only exp"
                                                                     maxlength="2"
+                                                                    step="1"
                                                                     data-required="expiry is required."
                                                                     data-invalid="Please enter a valid expiry date (MM)."
                                                                 />
@@ -198,11 +200,12 @@
                                                         </div>
                                                         <div class="card-fields">
                                                             <div class="styled-input">
-                                                                <input type="text"
+                                                                <input type="number"
                                                                     name="expYear" id="expYear"
                                                                     required
                                                                     class="number-only exp"
                                                                     maxlength="4"
+                                                                    step="1"
                                                                     data-required="expiry is required."
                                                                     data-invalid="Please enter a valid expiry date (YYYY)."
                                                                 />
@@ -211,11 +214,12 @@
                                                         </div>
                                                         <div class="card-fields">
                                                             <div class="styled-input cvv">
-                                                                <input type="text"
+                                                                <input type="number"
                                                                     name="cardCode" id="cardCode"
                                                                     required
                                                                     class="number-only"
                                                                     maxlength="3"
+                                                                    step="1"
                                                                     data-required="CVV is required."
                                                                     data-invalid="Please enter a valid CVV."
                                                                 />

@@ -644,7 +644,7 @@ var actiongolfLogin = {
             }
         }
 
-        $('#pay-now-form .number-only').off().on('keypress', function(event) {
+        $('#pay-now-form .number-only').on('keypress', function(event) {
             var charCode = (event.which) ? event.which : event.keyCode,
                 element = $(event.target),
                 maxlength = element.attr('maxlength');
@@ -653,16 +653,13 @@ var actiongolfLogin = {
                 return false;
             }
 
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            }
         }.bind(this));
 
-        $('#pay-now-form .number-only').off().on('keyup', function(event) {
+        $('#pay-now-form .numberamount-only').on('keyup', function(event) {
             validatePaymentFields();
         });
 
-        $('#pay-now-form input[name=expMonth]').off().on('blur', function(event) {
+        $('#pay-now-form input[name=expMonth]').on('blur', function(event) {
             if ($(this).val().toString().length == 1) {
                 $(this).val('0' + $(this).val());
             }
