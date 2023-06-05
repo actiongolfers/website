@@ -505,7 +505,7 @@ var actiongolfLogin = {
                         _this.participateSuccess(xhr);
                     }.bind(this),
                     error:  function(xhr, status, error) {
-                        _this.reportFailure('groupParticipate', requestData, xhr, status, error);
+                        _this.reportFailure('groupParticipate', ajaxUrl, requestData, xhr, status, error);
                         $('.screen-message.error-message').removeClass('hide');
                         $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
                         $('#participate-button').parent('.button-wrapper').removeClass('loading');
@@ -653,6 +653,10 @@ var actiongolfLogin = {
                 return false;
             }
 
+            if (charCode === 69 || charCode === 101 || charCode === 43 || charCode === 45) {
+                return false;
+            }
+
         }.bind(this));
 
         $('#pay-now-form .number-only').on('keyup', function(event) {
@@ -692,15 +696,15 @@ var actiongolfLogin = {
             function responseHandler(response) {
                 if (response.messages.resultCode === "Error") {
                     $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
-                    $('.screen-message.error-message').removeClass('hide');
-                    $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
 
                     var i = 0;
+                    $('#participate-pay-button').parent('.button-wrapper').find('.red').removeClass('hide').html('');
                     while (i < response.messages.message.length) {
                         console.log(
                             response.messages.message[i].code + ": " +
                             response.messages.message[i].text
                         );
+                        $('#participate-pay-button').parent('.button-wrapper').find('.red').removeClass('hide').html(response.messages.message[i].code + ": " + response.messages.message[i].text);
                         i = i + 1;
                     }
                 } else {
@@ -757,17 +761,17 @@ var actiongolfLogin = {
                         if (xhr && xhr.messages && xhr.messages.resultCode === 'Ok' && xhr.refId === requestData.createTransactionRequest.refId && xhr.transactionResponse.responseCode === '1' && xhr.transactionResponse.transId) {
                             _this.updatePayment(xhr, amount);
                         } else if (xhr && xhr.messages && xhr.messages.resultCode === 'Ok' && xhr.refId === requestData.createTransactionRequest.refId && xhr.transactionResponse.responseCode === '2' && xhr.transactionResponse.transId) {
-                            _this.reportFailure('payment', requestData, xhr, status);
+                            _this.reportFailure('authorizePayment', ajaxUrl, requestData, xhr, status);
                             $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
                             $('#participate-pay-button').parent('.button-wrapper').find('.red').removeClass('hide').html(xhr.transactionResponse.errors[1].errorText);
                         }
                         else {
-                            _this.reportFailure('payment', requestData, xhr, status);
+                            _this.reportFailure('authorizePayment', ajaxUrl, requestData, xhr, status);
                             $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
                         }
                     }.bind(this),
                     error:  function(xhr, status, error) {
-                        _this.reportFailure('payment', requestData, xhr, status, error);
+                        _this.reportFailure('authorizePayment', ajaxUrl, requestData, xhr, status, error);
                         $('.screen-message.error-message').removeClass('hide');
                         $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
                         $('#participate-pay-button').parent('.button-wrapper').removeClass('loading');
@@ -778,7 +782,7 @@ var actiongolfLogin = {
         });
     },
 
-    reportFailure: function(type, api_requestData, xhr, status, error) {
+    reportFailure: function(type, api_url, api_requestData, xhr, status, error) {
         var requestData = {
             email: loginUserData.email,
             firstName: loginUserData.firstName,
@@ -786,7 +790,7 @@ var actiongolfLogin = {
             title:  "API Failure - " + type,
             problemType: "Other",
             teleNumber: loginUserData.phoneNumber,
-            message: 'Request' + JSON.stringify(api_requestData) + 'Response' + JSON.stringify(xhr) + 'Status' + status + 'Error' + error
+            message: '### Url' + api_url + '###  RequestData' + JSON.stringify(api_requestData) + '###  Response' + JSON.stringify(xhr) + '###  Status' + status + '### Error' + error
         },
         ajaxUrl = this.getApiUrl('contact');
 
@@ -806,54 +810,51 @@ var actiongolfLogin = {
     },
 
     updatePayment: function(xhr, amount) {
-        $('#pay-now-form').addClass('hide');
-        $('#payment-title').addClass('hide');
-        $('#transID').html(xhr.transactionResponse.transId);
-        $('#pay-now-success').removeClass('hide');
-        $('body').addClass('fixed-popup-body');
-        $('.pay-now-block').addClass('fixed-popup');
+        var ajaxUrl = _this.getApiUrl('updatePayment'),
+            requestData = {},
+            paymentTransactionId = xhr.transactionResponse.transId;
 
-        $('#payment-complete').on('click', function() {
-            $('#payment-complete').parent('.button-wrapper').addClass('loading');
-            $('.screen-message.error-message').addClass('hide');
+        requestData.fromAccountTail = xhr.transactionResponse.accountNumber;
+        requestData.paymentTransactionId = xhr.transactionResponse.transId;
+        requestData.currencyCode = 'USD';
+        requestData.paymentProcessor = 'Authorize.Net';
+        requestData.fromAccountType = xhr.transactionResponse.accountType;
+        requestData.deviceData = deviceId;
+        requestData.profileId = userProfileId;
+        requestData.paymentAmount = amount;
 
-            var ajaxUrl = _this.getApiUrl('updatePayment'),
-                requestData = {};
-
-            requestData.fromAccountTail = xhr.transactionResponse.accountNumber;
-            requestData.paymentTransactionId = xhr.transactionResponse.transId;
-            requestData.currencyCode = 'USD';
-            requestData.paymentProcessor = 'Authorize.Net';
-            requestData.fromAccountType = xhr.transactionResponse.accountType;
-            requestData.deviceData = deviceId;
-            requestData.profileId = userProfileId;
-            requestData.paymentAmount = amount;
-
-            $.ajax({
-                type: "POST",
-                url: ajaxUrl,
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify(requestData),
-                timeout: 0,
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Authorization", "Basic " + auth),
-                    xhr.setRequestHeader("userProfileId", userProfileId),
-                    xhr.setRequestHeader("deviceId", deviceId)
-                },
-                success: function(xhr, status) {
+        $.ajax({
+            type: "POST",
+            url: ajaxUrl,
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(requestData),
+            timeout: 0,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Basic " + auth),
+                xhr.setRequestHeader("userProfileId", userProfileId),
+                xhr.setRequestHeader("deviceId", deviceId)
+            },
+            success: function(xhr, status) {
+                $('#pay-now-form').addClass('hide');
+                $('#payment-title').addClass('hide');
+                $('#transID').html(paymentTransactionId);
+                $('#pay-now-success').removeClass('hide');
+                $('body').addClass('fixed-popup-body');
+                $('.pay-now-block').addClass('fixed-popup');
+                $('.screen-message.error-message').addClass('hide');
+                $('#payment-complete').on('click', function() {
                     window.location.reload();
-                }.bind(this),
-                error:  function(xhr, status, error) {
-                    _this.reportFailure('payment/ag_transaction',requestData, xhr, status, error);
-                    $('.screen-message.error-message').removeClass('hide');
-                    $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
-                    $('#payment-complete').parent('.button-wrapper').removeClass('loading');
-                    $('#payment-complete').addClass('disabled-btn');
-                    $('#payment-complete').parent('.button-wrapper').find('.red').removeClass('hide');
-                }.bind(this)
-            });
-
+                });
+            }.bind(this),
+            error:  function(xhr, status, error) {
+                _this.reportFailure('payment/ag_transaction', ajaxUrl, requestData, xhr, status, error);
+                $('.screen-message.error-message').removeClass('hide');
+                $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
+                $('#payment-complete').parent('.button-wrapper').removeClass('loading');
+                $('#payment-complete').addClass('disabled-btn');
+                $('#payment-complete').parent('.button-wrapper').find('.red').removeClass('hide');
+            }.bind(this)
         });
     },
 
@@ -881,14 +882,14 @@ var actiongolfLogin = {
                 if (xhr && xhr.IsSuccess) {
                     window.location.reload();
                 } else if (xhr && xhr.errorCode === 1644) {
-                    _this.reportFailure('tournament/createTeamV2', requestData, xhr, status);
+                    _this.reportFailure('tournament/createTeamV2', ajaxUrl, requestData, xhr, status);
                     $('#create-team-form-submit').parent('.button-wrapper').removeClass('loading');
                     $('.screen-message.error-message').html(xhr.errorMsg).removeClass('hide');
                     $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
                 }
             }.bind(this),
             error:  function(xhr, status, error) {
-                _this.reportFailure('tournament/createTeamV2', requestData, xhr, status, error);
+                _this.reportFailure('tournament/createTeamV2', ajaxUrl, requestData, xhr, status, error);
                 $('.screen-message.error-message').removeClass('hide');
                 $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
                 $('#create-team-form-submit').parent('.button-wrapper').removeClass('loading');
