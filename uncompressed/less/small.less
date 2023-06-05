@@ -3572,6 +3572,37 @@ footer {
             }
 
             .col-12 .styled-input {
+                &.styled-input-amount {
+                    .dollar-currency {
+                        width: 17px;
+                        padding: 14px 0;
+                        justify-content: center;
+                        position: absolute;
+                        text-align: center;
+                        display: block;
+                        left: 6px;
+                        background: transparent;
+                        pointer-events: none;
+                    }
+
+                    .number-only {
+                        padding-left: 25px;
+
+                        ~label {
+                            left: 20px;
+                            top: 12px;
+                        }
+
+                        &:valid,
+                        &:focus {
+                            ~label {
+                                top: -24px;
+                                left: 0;
+                            }
+                        }
+                    }
+                }
+
                 width: 100%;
                 max-width: 400px;
 
