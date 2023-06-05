@@ -704,7 +704,7 @@ var actiongolfLogin = {
                             response.messages.message[i].code + ": " +
                             response.messages.message[i].text
                         );
-                        $('#participate-pay-button').parent('.button-wrapper').find('.red').removeClass('hide').html(response.messages.message[i].code + ": " + response.messages.message[i].text);
+                        $('#participate-pay-button').parent('.button-wrapper').find('.red').removeClass('hide').html(response.messages.message[i].text);
                         i = i + 1;
                     }
                 } else {
