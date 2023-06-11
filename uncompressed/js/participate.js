@@ -369,6 +369,7 @@ var actiongolfLogin = {
 
         function validateAddMembersFields() {
             if (!$('#addMembers input[name=fname]').val().trim() || !$('#addMembers input[name=lname]').val().trim() || $('#addMembers input[name=phoneNumber]').val().toString().length != $('#addMembers input[name=phoneNumber]').attr('maxlength') ) {
+                $('.add-member-phone').removeClass('error');
                 $('#add-member-button').attr('disabled', true).addClass('disabled-btn');
             } else {
                 $('#add-member-button').removeAttr('disabled', true).removeClass('disabled-btn');
@@ -412,6 +413,15 @@ var actiongolfLogin = {
             aMLastName = $('#addMembers .add-members-input[name=lname]').val();
             aMCallingCode = $('#addMembers .add-members-input[name=callingCode]').val() || '+1';
             aMPhoneNumber = $('#addMembers .add-members-input[name=phoneNumber]').val();
+
+            const isDuplicatePhone = addMemberObj.addedMembers.some(el => el.tele === aMCallingCode + ' ' + aMPhoneNumber);
+
+            if (isDuplicatePhone) {
+                $('.add-member-phone').addClass('error');
+                return;
+            }
+
+            $('.add-member-phone').removeClass('error');
 
             addMemberData(aMFistName, aMLastName, aMCallingCode + ' ' + aMPhoneNumber);
             $('#addMembers .add-members-input[name=fname]').val('');
