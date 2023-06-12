@@ -88,6 +88,14 @@ var actiongolfLogin = {
         var participateConfirmTemplate = Handlebars.compile($("[data-template='participateConfirmTemplate']").html());
         $('.participate_confirm').html(participateConfirmTemplate(response));
 
+
+        $('.added-got-it-btn').off().on('click', function() {
+            $(this).parents('.member-item').remove();
+            if (!$('.member-item').length) {
+                $('#participateConfirm').addClass('hide');
+            }
+        });
+
         if (!teamCreated) {
             $('#createTeam').removeClass('hide');
             _this.openParticipantsDetails();

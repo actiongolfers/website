@@ -361,9 +361,6 @@
                 <div class="added-members-list-cnt">
                 <h3>Participation member details</h3>
                     <div class="member-list">
-                        <div class="member-item member-item-head">
-                            <span>Name</span> <span>Phone Number</span>
-                        </div>
                         {{#each addedMembers}}
                         <div class="member-item">
                             <span>{{firstName}} {{lastName}}</span> <span>{{tele}}</span> {{#if currentUser}} <a class="member-delete"></a> {{else}} <a data-pid="{{tele}}" class="member-delete member-delete-active"></a> {{/if}}
@@ -400,15 +397,15 @@
             <script type="text/x-handlebars-template" data-template="participateConfirmTemplate">
                 {{#if participants}}
                 <div class="participate_confirm-cnt">
-                    <h3>Thank you for participation, please find the status of member paricipation</h3>
+                    <h3>Thank you for participation, please find the status of member participation</h3>
                     <div class="member-list">
-                        <div class="member-item member-item-head">
-                            <span>Name</span> <span>Phone Number</span>
-                            <span class="status"></span>
-                        </div>
                         {{#each participants}}
                         <div class="member-item">
-                            <span>{{firstName}} {{lastName}}</span> <span>{{phoneNumber}}</span> <span class="status {{#if isParticipant}} already {{else}} added {{/if}}">{{#if isParticipant}} Already participated {{else}} Added {{/if}}</span>
+                            <span>{{firstName}} {{lastName}}</span> <span>{{phoneNumber}}</span> <div class="status {{#if isParticipant}} already {{else}} added {{/if}}">{{#if isParticipant}} This phone number is already participating in the tournament.
+                            <div class="button-wrapper">
+                                <button  class="primary-btn added-got-it-btn">Got it</button>
+                            </div>
+                             {{else}} Added {{/if}}</div>
                         </div>
                         {{/each}}
                     </div>
