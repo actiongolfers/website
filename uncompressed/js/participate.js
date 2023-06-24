@@ -459,6 +459,16 @@ var actiongolfLogin = {
             var addedMembersListTemplate = Handlebars.compile($("[data-template='addedMembersListTemplate']").html());
             $('.added-members-list').html(addedMembersListTemplate(addMemberObj));
 
+            if (tournamentConfig.seatsLeft > 0 && (addMemberObj.addedMembers.length === tournamentConfig.seatsLeft)) {
+                $('#addMemberHeader').addClass('hide');
+                $('#maxCapError').removeClass('hide');
+                $('#add-member-expand').addClass('hide');
+            } else {
+                $('#addMemberHeader').removeClass('hide');
+                $('#maxCapError').addClass('hide');
+                $('#add-member-expand').removeClass('hide');
+            }
+
             if (addMemberObj.entryFee > loginUserData.balanceAmount) {
                 _this.setAuthSession('memberList', addMemberObj.addedMembers, true);
                 _this.paymentBlock();
@@ -488,6 +498,16 @@ var actiongolfLogin = {
 
                 var addedMembersListTemplate = Handlebars.compile($("[data-template='addedMembersListTemplate']").html());
                 $('.added-members-list').html(addedMembersListTemplate(addMemberObj));
+
+                if (tournamentConfig.seatsLeft > 0 && (addMemberObj.addedMembers.length === tournamentConfig.seatsLeft)) {
+                    $('#addMemberHeader').addClass('hide');
+                    $('#maxCapError').removeClass('hide');
+                    $('#add-member-expand').addClass('hide');
+                } else {
+                    $('#addMemberHeader').removeClass('hide');
+                    $('#maxCapError').addClass('hide');
+                    $('#add-member-expand').removeClass('hide');
+                }
 
                 if (addMemberObj.entryFee > loginUserData.balanceAmount) {
                     _this.paymentBlock();
@@ -622,6 +642,12 @@ var actiongolfLogin = {
                 if (tournamentConfig.seatsAvailable) {
                     $('#addMembers').removeClass('hide');
                     _this.addMemberJS(xhr.participating, xhr.entryFee);
+                } else {
+                    if (!xhr.participating) {
+                        $('#noSeatsAvailable').removeClass('hide');
+                    } else {
+                        $('#noSeatsAvailable').html('No Seats available to add new members').removeClass('hide');
+                    }
                 }
 
                 $('#currentBalance').html('$' + tournamentDetails.balanceAmount);

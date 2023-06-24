@@ -86,11 +86,15 @@
                                 <h3>Thank you, you are now participating in this <span id="tournamentCategoryDesc"></span></h3>
                             </div>
             
+                            <div id="noSeatsAvailable" class="participate-now hide">
+                                <h3>Sorry you are late, No Seats Available</h3>
+                            </div>
+            
                             <div id="addMembers" class="add-members hide">
                                 <div id="addedMemberList" class="added-members-list"></div>
                                 <div id="participateConfirm" class="participate_confirm hide"></div>
             
-                                <h3>Would you like to add your friends to this tournament (payment necessary)? <a id="add-member-expand-btn" class="link-btn" >Add members</a></h3>
+                                <h3 id="addMemberHeader">Would you like to add your friends to this tournament (payment necessary)? <a id="add-member-expand-btn" class="link-btn" >Add members</a></h3>
                                 <div class="input-container add-member-input-wrapper hide" id="add-member-expand">
                                     <div class="add-member-input">
                                         <div class="col-12">
@@ -386,6 +390,7 @@
                         <span class="red">(Insufficient Balance) <a id="add-amount-scroll" class="link-btn" >Add to wallet</a>
                         </span>
                         {{/unless}}
+                        <div id="maxCapError" class="red hide">You have reached the maximum seat Available</div>
                     </h4>
             
                     <div class="button-wrapper">
