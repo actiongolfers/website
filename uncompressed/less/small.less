@@ -248,6 +248,12 @@ header {
                     font-size: 16px;
                     cursor: pointer;
 
+                    &.sold-out {
+                        background: @red;
+                        color: @white;
+                        pointer-events: none;
+                    }
+
                     &:hover,
                     &:focus {
                         opacity: 0.8;
@@ -2354,6 +2360,11 @@ footer {
             margin: 20px 0 0;
             text-shadow: none !important;
 
+            &.sold-out {
+                background: @red;
+                pointer-events: none;
+            }
+
             &:hover {
                 text-decoration: none !important;
                 transform: scale(1.05);
@@ -3190,6 +3201,7 @@ footer {
         display: flex;
         justify-content: space-between;
         padding: 0 0 5px;
+        line-height: 1;
     }
 
     .usection-fee {
@@ -3197,10 +3209,15 @@ footer {
         min-width: 130px;
         line-height: 18px;
         text-align: right;
+        height: 20px;
 
         span {
             color: @brandColor;
             font-family: @actionGolfSemiBold;
+        }
+
+        > div {
+            margin-bottom: 8px;
         }
     }
 

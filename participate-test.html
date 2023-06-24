@@ -332,7 +332,20 @@
             </script>
             
             <script type="text/x-handlebars-template" data-template="userTournamentDetailsTemplate">
-                <div class="usection usection-name"><span>{{tournamentName}}</span>  <div class="usection-fee">Entry Fee: <span>{{entryFee}}</span></div></div>
+                <div class="usection usection-name">
+                    <span>{{tournamentName}}</span>
+                    <div class="usection-fee">
+                        <div>Entry Fee: <span>{{entryFee}}</span></div>
+                        <div>
+                            {{#if seatsLeft}}
+                            Available slots: <span>{{seatsLeft}}</span>
+                            {{/if}}
+                            {{#if capFull}}
+                            No Slots Available
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
                 <div class="user-tournament-details">
                     <div class="tournament-details">
                         <div class="usection usection-category"><strong>Category:</strong>  <span>{{tournamentCategory}}</span></div>

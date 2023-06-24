@@ -61,7 +61,9 @@
                                             </div>
                                         </div>
                                         <div class="content-dts-r">
-                                            <a id="participate-submit" class="landing-primary-btn" title="{{paricipateBtn}}">{{paricipateBtn}}</a>
+                                            {{#if paricipateBtn}}
+                                            <a id="participate-submit" class="landing-primary-btn {{soldOut}}" title="{{paricipateBtn}}">{{paricipateBtn}}</a>
+                                            {{/if}}
                                         </div>
                                     </div>
                                 </div>

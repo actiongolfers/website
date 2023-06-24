@@ -4,6 +4,7 @@ let tournamentId,
     selectedMembers = [],
     loginUserData,
     tournamentDetails,
+    tournamentConfig,
     participateAgLoginAuth,
     teamSize,
     auth = 'YWdkZXY6cGFzc3dvcmQ=',
@@ -534,7 +535,7 @@ var actiongolfLogin = {
     },
 
     tournamentDetails: function() {
-        var ajaxUrl = _this.getApiUrl('getTournamentDetails');
+        var ajaxUrl = _this.getApiUrl('getTournamentDetailsWithConfig');
 
         $('#pageLoad').show();
         var requestData = {};
@@ -558,7 +559,7 @@ var actiongolfLogin = {
             },
             success: function(xhr, status) {
                 tournamentDetails = xhr.tournamentDetail;
-
+                tournamentConfig = xhr.tournamentConfig || {};
                 $('#ajaxParticipateForm').addClass('hide');
                 $('#participateUserDetails').removeClass('hide');
 
@@ -575,6 +576,17 @@ var actiongolfLogin = {
                 userTournamentData.entryFee = (tournamentDetails.entryFee === 0) ? 'Free' :  ('$' + tournamentDetails.entryFee);
                 userTournamentData.tournamentCategory = tournamentDetails.tournamentCategoryDesc || '';
                 userTournamentData.teamSize = tournamentDetails.teamSize || '';
+
+                if (tournamentConfig && tournamentConfig.seatsLeft < 0) {
+                    tournamentConfig.seatsAvailable = true;
+                } else if (tournamentConfig && tournamentConfig.seatsLeft === 0) {
+                    userTournamentData.capFull = true;
+                } else if (tournamentConfig && tournamentConfig.seatsLeft > 0) {
+                    userTournamentData.seatsLeft = tournamentConfig.seatsLeft;
+                    tournamentConfig.seatsAvailable = true;
+                } else {
+                    tournamentConfig.seatsAvailable = true;
+                }
 
                 $('.participate-user-details').html(userTournamentDetailsTemplate(userTournamentData));
                 _this.getPartcipateStatus();
@@ -606,8 +618,12 @@ var actiongolfLogin = {
                 participateAgLoginAuth.tournamentId = tournamentId;
 
                 $('#pageLoad').hide();
-                $('#addMembers').removeClass('hide');
-                _this.addMemberJS(xhr.participating, xhr.entryFee);
+
+                if (tournamentConfig.seatsAvailable) {
+                    $('#addMembers').removeClass('hide');
+                    _this.addMemberJS(xhr.participating, xhr.entryFee);
+                }
+
                 $('#currentBalance').html('$' + tournamentDetails.balanceAmount);
 
                 if (xhr && xhr.tournamentTeam && xhr.tournamentTeam.tournamentTeamMembers && xhr.tournamentTeam.tournamentTeamMembers.length) {
@@ -624,9 +640,9 @@ var actiongolfLogin = {
 
                     $('.list-team-wrapper').html(listTeamsTemplate(xhr.tournamentTeam));
 
-                } else if (xhr && !xhr.participating && xhr.entryFee > loginUserData.balanceAmount) {
+                } else if (xhr && !xhr.participating && xhr.entryFee > loginUserData.balanceAmount && tournamentConfig.seatsAvailable) {
                     _this.paymentBlock();
-                } else if (xhr && !xhr.participating) {
+                } else if (xhr && !xhr.participating && tournamentConfig.seatsAvailable) {
                     //already handled
                 } else if (xhr && xhr.participating) {
 
@@ -994,6 +1010,7 @@ var actiongolfLogin = {
                     updatePayment: 'https://beta.actiongolfers.com/payment/ag_transaction',
                     getProfile: `https://beta.actiongolfers.com/profile/get/${userProfileId}`,
                     getTournamentDetails: 'https://beta.actiongolfers.com/tournament/get',
+                    getTournamentDetailsWithConfig: 'https://beta.actiongolfers.com/tournament/getDetailsWithConfig',
                     contact: 'https://beta.actiongolfers.com/subscription/contact-us/'
                 },
                 prod : {
@@ -1008,6 +1025,7 @@ var actiongolfLogin = {
                     updatePayment: 'https://api.actiongolfers.com/payment/ag_transaction',
                     getProfile: `https://api.actiongolfers.com/profile/get/${userProfileId}`,
                     getTournamentDetails: 'https://api.actiongolfers.com/tournament/get',
+                    getTournamentDetailsWithConfig: 'https://api.actiongolfers.com/tournament/getDetailsWithConfig',
                     contact: 'https://api.actiongolfers.com/subscription/contact-us/'
                 }
             },
