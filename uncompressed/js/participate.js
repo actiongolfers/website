@@ -646,7 +646,8 @@ var actiongolfLogin = {
                     if (!xhr.participating) {
                         $('#noSeatsAvailable').removeClass('hide');
                     } else {
-                        $('#noSeatsAvailable').html('No Seats available to add new members').removeClass('hide');
+                        $('#noSeatsAvailable').find('h3').html('No Slots available to add new members');
+                        $('#noSeatsAvailable').removeClass('hide');
                     }
                 }
 

@@ -3327,6 +3327,11 @@ footer {
                 margin: 0 0 40px;
             }
             padding: 0;
+
+            &.red {
+                color: @red;
+                animation: shake 1s ease-in-out 0.2s 2;
+            }
         }
     }
 
@@ -3366,6 +3371,7 @@ footer {
 
         .red {
             color: @red;
+            animation: shake 1s ease-in-out 0.2s 2;
         }
 
         .add-member-input-wrapper.input-container {
@@ -3546,6 +3552,7 @@ footer {
     .pay-now {
         .red {
             color: @red;
+            animation: shake 1s ease-in-out 0.2s 2;
         }
 
         .button-wrapper {
@@ -3731,6 +3738,14 @@ footer {
             font-size: 18px;
             padding: 0 0 15px;
             margin: 0;
+        }
+
+        .teamname {
+            color: @white;
+            font-size: 20px;
+            background: @brandColor;
+            padding: 4px 10px;
+            border-radius: 22px;
         }
 
         @media screen and (min-width:768px) {

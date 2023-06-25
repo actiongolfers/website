@@ -24,6 +24,8 @@ var activeTournaments = {
             $('.page-header-link').on('click', function() {
                 window.localStorage.removeItem('tournamentDetails');
                 window.localStorage.removeItem(sessionKey);
+                window.sessionStorage.removeItem('tournamentDetails');
+                window.sessionStorage.removeItem(sessionKey);
 
                 window.location.href = "./login.html";
             });

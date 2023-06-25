@@ -87,7 +87,7 @@
                             </div>
             
                             <div id="noSeatsAvailable" class="participate-now hide">
-                                <h3>Sorry you are late, No Seats Available</h3>
+                                <h3 class="red">Sorry you are late, No Slots Available</h3>
                             </div>
             
                             <div id="addMembers" class="add-members hide">
@@ -318,7 +318,7 @@
             <script type="text/x-handlebars-template" data-template="listTeamsTemplate">
                 <h3>Your Team</h3>
                 {{#if tournamentTeamMembers}}
-                    Team Name - {{teamName}}
+                    Team Name <span class="teamname">{{teamName}}</span>
                     <div class="list-participates">
                         {{#each tournamentTeamMembers}}
                             <div class="participates-item {{#if isLead}} lead {{/if}}">
