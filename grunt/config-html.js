@@ -245,6 +245,17 @@ module.exports = function ( grunt ) {
                 basePath: '/'
             }
         },
+        tournamentSettings: {
+            files: {
+                'tournament-settings.html': 'pages/tournament-settings.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
+        },
     });
 
   grunt.loadNpmTasks( 'grunt-handlebars-layouts' );

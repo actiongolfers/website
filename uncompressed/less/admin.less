@@ -3438,10 +3438,10 @@ footer {
                                 content: '';
                                 display: block;
                                 position: absolute;
-                                top: 12px;
+                                top: 11px;
                                 left: 11px;
-                                width: 18px;
-                                height: 18px;
+                                width: 20px;
+                                height: 20px;
                             }
 
                             &.create-website {
@@ -3461,6 +3461,13 @@ footer {
                             &.create-teams {
                                 &::after {
                                     background: url(@createTeams) no-repeat 0 0;
+                                    background-size: contain;
+                                }
+                            }
+
+                            &.tournament-settings {
+                                &::after {
+                                    background: url(@settings) no-repeat 0 0;
                                     background-size: contain;
                                 }
                             }
@@ -3488,7 +3495,7 @@ input[type=number] {
 
 @media screen and (min-width:1024px) {
     .get-teams {
-        margin-top: 28px;
+        margin-top: 9px;
     }
 }
 
@@ -3885,4 +3892,74 @@ input[type=number] {
 
 .tox-statusbar {
     display: none !important;
+}
+
+.tournament-settings-wrapper {
+    .input-container {
+        padding: 0;
+    }
+
+    .tournament-settings-details {
+        .tournament-details {
+            h3 {
+                font-size: 20px;
+                color: @brandColor;
+
+                @media screen and (min-width: 768px) {
+                    font-size: 30px;
+                }
+            }
+
+            .tournament-details-category {
+                font-size: 12px;
+                padding: 6px 0;
+
+                @media screen and (min-width: 768px) {
+                    display: flex;
+                    gap: 86px;
+                }
+            }
+
+            padding: 0 0 20px;
+        }
+
+        .form-field {
+            border: 3px solid @brandColor;
+            border-radius: 20px;
+
+            .screen-message {
+                margin: 0;
+                border-radius: 16px 16px 0 0;
+            }
+
+            .form-field-settings {
+                padding: 15px;
+
+                @media screen and (min-width: 768px) {
+                    padding: 30px;
+                }
+            }
+        }
+
+        .col-12 {
+            display: flex;
+            gap: 24px;
+            margin: 0 0 20px;
+            align-items: center;
+            flex-direction: row;
+
+            .styled-input {
+                margin: 0;
+                max-width: 60px;
+
+                #memberCountCap {
+                    width: 58px;
+                }
+
+                .error-message {
+                    width: 210px;
+                }
+            }
+        }
+    }
 }

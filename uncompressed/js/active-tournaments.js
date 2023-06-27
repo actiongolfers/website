@@ -103,6 +103,16 @@ var activeTournaments = {
 
                             window.location.href = "./tournament-teams.html";
                         }.bind(this));
+
+                        $('.tournament-settings').on('click', function(e) {
+                            var tournamentId = $(e.target).data('tournamentId');
+
+                            this.setAuthSession('tournamentDetails', {
+                                tournamentId: tournamentId
+                            });
+
+                            window.location.href = "./tournament-settings.html";
+                        }.bind(this));
                     } else {
                         $('.loading').hide();
                         $('.screen-message').removeClass('hide');

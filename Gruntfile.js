@@ -45,6 +45,8 @@ module.exports = function ( grunt ) {
        'concat:tournamentDetails',
        'uglify:participate',
        'concat:participate',
+       'uglify:tournamentSettings',
+       'concat:tournamentSettings',
        'clean:vendor',
        'handlebarslayouts'
     ]);
