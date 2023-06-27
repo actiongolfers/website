@@ -416,14 +416,19 @@ var actiongolfLogin = {
             var aMFistName,
                 aMLastName,
                 aMCallingCode,
-                aMPhoneNumber;
+                aMPhoneNumber,
+                isDuplicatePhone;
 
             aMFistName = $('#addMembers .add-members-input[name=fname]').val();
             aMLastName = $('#addMembers .add-members-input[name=lname]').val();
             aMCallingCode = $('#addMembers .add-members-input[name=callingCode]').val() || '+1';
             aMPhoneNumber = $('#addMembers .add-members-input[name=phoneNumber]').val();
 
-            const isDuplicatePhone = addMemberObj.addedMembers.some(el => el.tele === aMCallingCode + ' ' + aMPhoneNumber);
+            isDuplicatePhone = addMemberObj.addedMembers.some(el => el.tele === aMCallingCode + ' ' + aMPhoneNumber);
+
+            if (!isDuplicatePhone) {
+                isDuplicatePhone = addMemberObj.addedMembers.some(el => el.tele === aMPhoneNumber);
+            }
 
             if (isDuplicatePhone) {
                 $('.add-member-phone').addClass('error');
