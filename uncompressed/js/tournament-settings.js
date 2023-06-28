@@ -13,7 +13,7 @@ var actiongolfCL = {
         _this = this;
 
          if (!_this.getAuthSession(sessionKey) && !localDevelopment) {
-            window.sessionStorage.setItem('agReDirectPage', './tournamet-settings.html');
+            window.sessionStorage.setItem('agReDirectPage', './active-tournaments.html');
             window.location.href = "./login.html";
 
              return;
@@ -26,7 +26,7 @@ var actiongolfCL = {
             tournamentId = tournamentDetails.tournamentId;
 
             if (!tournamentDetails || !tournamentDetails.tournamentId) {
-                    window.location.href = "./active-tournaments.html";
+                window.location.href = "./active-tournaments.html";
 
                 return;
             }
