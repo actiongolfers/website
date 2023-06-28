@@ -3895,14 +3895,20 @@ input[type=number] {
 }
 
 .tournament-settings-wrapper {
-    .input-container {
-        padding: 0;
-    }
-
     .tournament-settings-details {
+        .input-container {
+            padding: 0;
+            width: 100%;
+
+            @media screen and (min-width: 1024px) {
+                width: calc(50% + 50px);
+            }
+        }
+
         .tournament-details {
             h3 {
                 font-size: 20px;
+                line-height: 1.2;
                 color: @brandColor;
 
                 @media screen and (min-width: 768px) {

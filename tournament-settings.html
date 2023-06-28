@@ -27,9 +27,7 @@
                     </h2>
 
                     <div class="tournament-settings-wrapper">
-                        <div class="col-6 input-container">
-                            <div class="tournament-settings-details"></div>
-                        </div>
+                        <div class="tournament-settings-details"></div>
                     </div>
 
                 </div>
@@ -70,56 +68,58 @@
                     <div>Category: <span>{{tournamentCategory}}</span></div>
                 </div>
             </div>
-            <div class="form-field">
-                <div class="screen-message error-message hide">
-                    Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
-                </div>
+            <div class="col-6 input-container">
+                <div class="form-field">
+                    <div class="screen-message error-message hide">
+                        Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+                    </div>
 
-                <div class="screen-message success-message hide">
-                    Tournament settings updated
-                </div>
+                    <div class="screen-message success-message hide">
+                        Tournament settings updated
+                    </div>
 
-                <div class="form-field-settings">
-                    <div class="col-12">
-                        <div class="col-6">
-                            <label class="bold">Random Score Entry Allowed</label>
-                        </div>
-                        <div class="col-6">
-                            <div class="slider-checkbox">
-                                <input type="checkbox" id="isRandomScoreEntryAllowed" name="isRandomScoreEntryAllowed"
-                                {{#if isRandomScoreEntryAllowed}} checked {{else}}  {{/if}}
-                                />
-                                <label class="label" for="isRandomScoreEntryAllowed"> </label>
+                    <div class="form-field-settings">
+                        <div class="col-12">
+                            <div class="col-6">
+                                <label class="bold">Random Score Entry Allowed</label>
+                            </div>
+                            <div class="col-6">
+                                <div class="slider-checkbox">
+                                    <input type="checkbox" id="isRandomScoreEntryAllowed" name="isRandomScoreEntryAllowed"
+                                    {{#if isRandomScoreEntryAllowed}} checked {{else}}  {{/if}}
+                                    />
+                                    <label class="label" for="isRandomScoreEntryAllowed"> </label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="col-6">
-                            <label class="bold">Allow member cap</label>
-                        </div>
-                        <div class="col-6">
-                            <div class="slider-checkbox">
-                                <input type="checkbox" id="allowMemberCapToggle" name="allowMemberCapToggle"
-                                {{#if allowMemberCountCap}} checked {{else}}  {{/if}}
-                                />
-                                <label class="label" for="allowMemberCapToggle"> </label>
+                        <div class="col-12">
+                            <div class="col-6">
+                                <label class="bold">Allow member cap</label>
+                            </div>
+                            <div class="col-6">
+                                <div class="slider-checkbox">
+                                    <input type="checkbox" id="allowMemberCapToggle" name="allowMemberCapToggle"
+                                    {{#if allowMemberCountCap}} checked {{else}}  {{/if}}
+                                    />
+                                    <label class="label" for="allowMemberCapToggle"> </label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="allowMemberCountDiv" class="col-12 {{#unless allowMemberCountCap}} hide{{/unless}}">
-                        <div class="col-6">
-                            <label class="bold">Maximum count cap</label>
-                        </div>
-                        <div class="col-6">
-                            <div class="styled-input">
-                                <input id="memberCountCap" type="number" name="memberCountCap" maxlength="2" value="{{memberCountCap}}" />
-                                <span id="memberCountCapError" class="error-message"></span>
+                        <div id="allowMemberCountDiv" class="col-12 {{#unless allowMemberCountCap}} hide{{/unless}}">
+                            <div class="col-6">
+                                <label class="bold">Maximum count cap</label>
+                            </div>
+                            <div class="col-6">
+                                <div class="styled-input">
+                                    <input id="memberCountCap" type="number" name="memberCountCap" maxlength="2" value="{{memberCountCap}}" />
+                                    <span id="memberCountCapError" class="error-message"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="button-wrapper">
-                        <button class="primary-btn" id="update-tournament-settings-btn">Update</button>
-                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        <div class="button-wrapper">
+                            <button class="primary-btn" id="update-tournament-settings-btn">Update</button>
+                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        </div>
                     </div>
                 </div>
             </div>
