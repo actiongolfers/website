@@ -117,9 +117,9 @@ var actiongolfCL = {
             requestData.isRandomScoreEntryAllowed = $('#isRandomScoreEntryAllowed').prop('checked');
 
             if ($('#allowMemberCapToggle').prop('checked')) {
-                requestData.memberCountCap = $('#memberCountCap').val() || -1;
+                requestData.memberCountCap = $('#memberCountCap').val() || 0;
             } else {
-                requestData.memberCountCap = -1;
+                requestData.memberCountCap = 0;
             }
 
             $('#memberCountCapError').html('');
