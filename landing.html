@@ -49,7 +49,7 @@
                                 >
                                 <div class="content-dts-parent">
                                     <h5>{{{webPageTitle}}}</h5>
-                                    <div class="content-dts">
+                                    <div class="content-dts {{#if paricipateBtn}}{{#if soldOut}} sold-out-msg-padding {{/if}}{{/if}}">
                                         <div class="content-dts-l">
                                             <div class="subdetails">
                                                 {{#if singleDay}}
@@ -62,10 +62,22 @@
                                         </div>
                                         <div class="content-dts-r">
                                             {{#if paricipateBtn}}
-                                            <a id="participate-submit" class="landing-primary-btn {{soldOut}}" title="{{paricipateBtn}}">{{paricipateBtn}}</a>
+                                            <a id="participate-submit" class="landing-primary-btn {{#if soldOut}}sold-out{{/if}}" title="{{paricipateBtn}}">{{paricipateBtn}}</a>
+                                            {{#if soldOut}}
+                                            <div class="sold-out-msg sold-out-msg-l">
+                                                The tournament is now full.<br/> We are unable to accept your registration at this time.
+                                            </div>
+                                            {{/if}}
                                             {{/if}}
                                         </div>
                                     </div>
+                                        {{#if paricipateBtn}}
+                                            {{#if soldOut}}
+                                            <div class="sold-out-msg sold-out-msg-s">
+                                            The tournament is now full.<br/>  We are unable to accept your registration at this time.
+                                            </div>
+                                            {{/if}}
+                                        {{/if}}
                                 </div>
                                 </div>
                             </div>

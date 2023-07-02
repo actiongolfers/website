@@ -171,7 +171,7 @@ var actiongolfLanding = {
         participateAgLoginAuth = this.getAuthSession(participateSessionKey, true);
 
         details.paricipateBtn = 'Register Here';
-        details.soldOut = '';
+        details.soldOut = false;
 
         if (participateAgLoginAuth && participateAgLoginAuth.userProfileId) {
             if (participateStep == 1) {
@@ -193,9 +193,9 @@ var actiongolfLanding = {
         }
 
         if (data && participateStep === 1 && (data.tournamentConfig && data.tournamentConfig.seatsLeft === 0)) {
-            details.soldOut = 'sold-out';
+            details.soldOut = true;
             details.paricipateBtn = 'Sold Out';
-            $('#participate-submit-header').html(details.paricipateBtn).attr('title', details.paricipateBtn).addClass('sold-out').removeClass('hide');
+            $('#participate-submit-header').html(details.paricipateBtn).attr('title', details.paricipateBtn).addClass('sold-out').addClass('hide');
         }
 
         if (data.sponsorers && data.sponsorers.length) {
@@ -224,7 +224,7 @@ var actiongolfLanding = {
         $('#participate-submit, #participate-submit-header').on('click', function(event) {
             event.preventDefault();
 
-            if (!otpValidationParticipate || data.tournamentConfig && data.tournamentConfig.seatsLeft === 0) {
+            if (!otpValidationParticipate || (participateStep === 1 && data.tournamentConfig && data.tournamentConfig.seatsLeft === 0)) {
                 return;
             }
 
