@@ -17,7 +17,7 @@ var actiongolfLB = {
         scrollInterval = setInterval(function () {
             if (_this.totalScroll < _this.scrollVal) {
                 _this.scrollVal = 0;
-                $("html, body").animate({ scrollTop: _this.scrollVal }, 10000);
+                $("html, body").animate({ scrollTop: _this.scrollVal }, 5000);
                 _this.leaderBoardCall();
                 
             } else {
