@@ -1,17 +1,30 @@
 var localDevelopment = false,
     tournamentId,
-    _this;
+    _this,
+    scrollInterval;
 
 var actiongolfLB = {
     init: function () {
         _this = this;
+        _this.scrollVal = 0;
+        
         tournamentId = window.location.hash ? window.location.hash.substring(1) : '';
 
         _this.leaderBoardCall();
+    },
 
-        setInterval(function () {
-            _this.leaderBoardCall();
-        }, 60000);
+    autoScroll: function() {
+        scrollInterval = setInterval(function () {
+            if (_this.totalScroll < _this.scrollVal) {
+                _this.scrollVal = 0;
+                $("html, body").animate({ scrollTop: _this.scrollVal }, 10000);
+                _this.leaderBoardCall();
+                
+            } else {
+                _this.scrollVal = _this.scrollVal + window.innerHeight/2;
+                $("html, body").animate({ scrollTop: _this.scrollVal }, 10000);
+            }
+        }, 15000);
     },
 
     leaderBoardCall: function() {
@@ -41,7 +54,7 @@ var actiongolfLB = {
                             } else if (item.rank && item.rank === 3) {
                                 item.prize = 'bronze';
                             } else {
-                                item.prize = '';
+                                item.prize = 'medal';
                             }
                         });
                     }
@@ -49,11 +62,15 @@ var actiongolfLB = {
 
                 $('#leaderboardDetails').html(leaderboardDetailsTemplate(leaderboardDetailsData));
 
-                document.querySelectorAll('.photo img').forEach(function(img){
+                document.querySelectorAll('.photo img').forEach(function(img) {
                     img.onerror = function(){
                         this.parentElement.classList.add('icon');
                     };
                  })
+
+                 _this.totalScroll = document.body.scrollHeight;
+                 clearInterval(scrollInterval);
+                 _this.autoScroll();
 
             }.bind(this),
             error:  function(xhr, status, error) {

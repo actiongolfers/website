@@ -66,12 +66,7 @@
 
 @media screen and (min-width:1024px) {
     section {
-        max-width: none !important;
-    }
-    
-    nav .logo,
-    footer section {
-        margin-left: 20px;
+        max-width: 768px !important;
     }
 }
 
@@ -168,7 +163,7 @@
                 width: 100%;
                 box-shadow: 2px 2px 6px #b5d3c5;
                 margin: 0 0 20px;
-                padding: 24px 12px 30px;
+                padding: 24px 12px 16px;
                 border-radius: 12px;
                 position: relative;
                 min-height: 150px;
@@ -200,7 +195,23 @@
                     justify-content: center;
                     align-items: flex-start;
                     font-size: 12px;
+                    padding-top: 2px;
 
+                    @media screen and (min-width: 768px) {
+                        width: 60px;
+                        height: 40px;
+                        font-size: 16px;
+                    }
+
+                    &.medal {
+                        padding-top: 0;
+                        width: 30px;
+                        height: 30px;
+                        align-items: center;
+                        background: #56bc7b;
+                        border-radius: 50%;
+                        margin-left: 16px;
+                    }
 
                     &.gold {
                         background: url(@gold) no-repeat center top;
@@ -221,6 +232,10 @@
                     display: flex;
                     flex-direction: column;
 
+                    @media screen and (min-width: 768px) {
+                        margin: 0 0 0 60px;
+                    }
+
                     .photo-name-status-total {
                         justify-content: space-between;
                         display: flex;
@@ -233,21 +248,25 @@
                             .name-status {
                                 .name {
                                     padding: 0 0 4px;
-                                    font-size: 16px;
+                                    font-size: 20px;
                                     font-family: @actionGolfSemiBold;
                                 }
             
                                 .status {
                                     color: @brandColor;
-                                    font-size: 12px;
+                                    font-size: 14px;
                                 }
                             }
     
                             .photo {
-                                width: 70px;
+                                width: 60px;
                                 aspect-ratio: 1 / 1;
                                 margin-right: 8px;
                                 position: relative;
+
+                                @media screen and (min-width: 768px) {
+                                    margin-right: 16px;
+                                }
     
                                 img {
                                     border-radius: 8px;
@@ -290,10 +309,12 @@
                             width: calc(50% - 8px);
                             display: flex;
                             align-items: center;
+                            margin-bottom: 8px;
                         }
 
                         .photo {
                             width: 30px;
+                            height: 30px;
                             aspect-ratio: 1 / 1;
                             margin-right: 8px;
                             position: relative;
@@ -326,10 +347,7 @@
 
                         .name {
                             padding: 0;
-                            font-size: 13px;
-                            white-space: nowrap;
-                            text-overflow: ellipsis;
-                            overflow: hidden;
+                            font-size: 14px;
                         }
                     }
                 }
@@ -342,19 +360,19 @@
                     background-color: @black;
                 }
         
-                @media screen and (min-width: 768px) {
-                    width: calc(50% - 10px);
-                }
+                // @media screen and (min-width: 768px) {
+                //     width: calc(50% - 10px);
+                // }
         
-                @media screen and (min-width:1024px) {
-                    width: calc(33.333% - 16px);
-                    margin-right: 24px;
-                    margin-bottom: 24px;
+                // @media screen and (min-width:1024px) {
+                //     width: calc(33.333% - 16px);
+                //     margin-right: 24px;
+                //     margin-bottom: 24px;
 
-                    &:nth-child(3n) {
-                        margin-right: 0;
-                    }
-                }
+                //     &:nth-child(3n) {
+                //         margin-right: 0;
+                //     }
+                // }
             }
         }
     }
