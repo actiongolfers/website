@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html lang="en" class="slim-header">
+    <head>
+        <title>ActionGolfers | Leaderboard</title>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/png" href="images/fav.png">
+        <link rel="apple-touch-icon" href="images/fav.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="library/css/leaderboard.css" />
+    </head>
+    <body>
+        <main>
+
+            <header>
+                <section>
+                    <nav>
+                        <a class="logo" href="./" title="ActionGolfers">ActionGolfers</a>
+                    </nav>
+                </section>
+            </header>
+            <section>
+                <div class="leaderboard-container">
+                    <h2 class="page-header loading">Leaderboard <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></span></h2>
+                    <div class="screen-message error-message hide">
+                        Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+                    </div>
+                    <div class="col-12">
+                        <div id="leaderboard-cnt" class="leaderboard-content">
+                            <div id="pageLoad" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                            <div id="leaderboardDetails" class="leaderboard-details"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <script type="text/x-handlebars-template" data-template="leaderboardDetailsTemplate">
+                {{#if playerLeaderBoardList.length}}
+                    <div class="list-teams">
+                        {{#each playerLeaderBoardList}}
+                        <div class="team-item">
+                            <div class="rank {{prize}}">
+                               {{#if rank}} {{rank}} {{else}} NA {{/if}}
+                            </div>
+                            <div class="item-details">
+                                <div class="photo-name-status-total">
+                                    <div class="photo-name-status">
+                                        <div class="photo {{#unless imageUrl}}icon{{/unless}}"><img src="{{imageUrl}}" /></div>
+                                        <div class="name-status">
+                                            <div class="name">{{firstName}} {{lastName}} </div>
+                                            <div class="status">{{participationStatus}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="total-score">{{totalScore}}</div>
+                                </div>
+                                {{#if members.length}}
+                                <div class="member-list">
+                                    {{#each members}}
+                                    <div class="member">
+                                        <div class="photo {{#unless imageUrl}}icon{{/unless}}"><img src="{{imageUrl}}" /></div>
+                                        <div class="name" title="{{firstName}} {{lastName}}">{{firstName}} {{lastName}} </div>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                                {{/if}}
+                            </div>
+            
+                        </div>
+                        {{/each}}
+                    </div>
+                {{else}}
+                    No active players found..
+                {{/if}}
+            </script>
+            
+
+            <div class="download-app-section">
+                <section>
+                    <h3>Download the App.<br/> Join the Family!</h3>
+                    <div class="download-buttons">
+                        <a target="_blank" title="Download on Apple Store" class="app-store" href="https://apps.apple.com/us/app/actiongolfers/id1580939995">Apple Store</a>
+                        <a target="_blank" title="Download on Google Play" class="google-play" href="https://play.google.com/store/apps/details?id=com.actiongolfers.actiongolf">Google Play</a>
+                    </div>
+                </section>
+            </div>
+            <footer>
+                <section>
+                    <div class="footer-right">
+            
+                    </div>
+                    <div class="footer-left">
+                        <span class="logo">ActionGolfers</span>
+                        <h5>Tournament Golf On-Demand</h5>
+                        <p>© Copyright 2021 ActionGolfers LLC <br/>All Rights Reserved.</p>
+                        <div class="footer-links">
+                            <ul class="social-links">
+                                <li><a class="facebook" title="Facebook" href="https://www.facebook.com/ActionGolfers/" target="_blank"><span>facebook</span></a></li>
+                                <li><a class="instagram" title="Instagram" href="https://www.instagram.com/actiongolfers/
+                                    " target="_blank"><span>instagram</span></a></li>
+                                <li><a class="twitter" title="Twitter" href="https://twitter.com/action_golfers" target="_blank"><span>twitter</span></a></li>
+                                <li><a class="youtube" title="Youtube" href="https://www.youtube.com/channel/UCOJRzam4OGFvEYxtKW27JbA" target="_blank"><span>youtube</span></a></li>
+                            </ul>
+                            <ul class="page-links">
+                                <li><a href="terms-of-use.html" title="Terms of Use">Terms of Use</a></li>
+                                <li><a href="privacy-policy.html" title="Privacy Policy">Privacy Policy</a></li>
+                                <li><a href="contact-us.html" title="Contact Us">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </footer>            
+
+        </main>
+        <script  src="library/js/leaderboard.js"></script>
+    </body>
+</html>

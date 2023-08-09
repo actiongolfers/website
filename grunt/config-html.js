@@ -256,6 +256,17 @@ module.exports = function ( grunt ) {
                 basePath: '/'
             }
         },
+        leaderboard: {
+            files: {
+                'leaderboard.html': 'pages/leaderboard.hbs'
+            },
+            options: {
+                partials: [
+                    'pages/partials/*.hbs'
+                ],
+                basePath: '/'
+            }
+        },
     });
 
   grunt.loadNpmTasks( 'grunt-handlebars-layouts' );

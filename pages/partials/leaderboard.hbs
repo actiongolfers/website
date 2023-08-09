@@ -1,0 +1,54 @@
+<section>
+    <div class="leaderboard-container">
+        <h2 class="page-header loading">Leaderboard <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></span></h2>
+        <div class="screen-message error-message hide">
+            Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+        </div>
+        <div class="col-12">
+            <div id="leaderboard-cnt" class="leaderboard-content">
+                <div id="pageLoad" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                <div id="leaderboardDetails" class="leaderboard-details"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/x-handlebars-template" data-template="leaderboardDetailsTemplate">
+    \{{#if playerLeaderBoardList.length}}
+        <div class="list-teams">
+            \{{#each playerLeaderBoardList}}
+            <div class="team-item">
+                <div class="rank \{{prize}}">
+                   \{{#if rank}} \{{rank}} \{{else}} NA \{{/if}}
+                </div>
+                <div class="item-details">
+                    <div class="photo-name-status-total">
+                        <div class="photo-name-status">
+                            <div class="photo \{{#unless imageUrl}}icon\{{/unless}}"><img src="\{{imageUrl}}" /></div>
+                            <div class="name-status">
+                                <div class="name">\{{firstName}} \{{lastName}} </div>
+                                <div class="status">\{{participationStatus}}</div>
+                            </div>
+                        </div>
+                        <div class="total-score">\{{totalScore}}</div>
+                    </div>
+                    \{{#if members.length}}
+                    <div class="member-list">
+                        \{{#each members}}
+                        <div class="member">
+                            <div class="photo \{{#unless imageUrl}}icon\{{/unless}}"><img src="\{{imageUrl}}" /></div>
+                            <div class="name" title="\{{firstName}} \{{lastName}}">\{{firstName}} \{{lastName}} </div>
+                        </div>
+                        \{{/each}}
+                    </div>
+                    \{{/if}}
+                </div>
+
+            </div>
+            \{{/each}}
+        </div>
+    \{{else}}
+        No active players found..
+    \{{/if}}
+</script>
+

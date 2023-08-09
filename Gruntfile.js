@@ -23,6 +23,7 @@ module.exports = function ( grunt ) {
        'clean:live',
        'less:actiongolf',
        'less:admin',
+       'less:leaderboard',
        'cssmin:live',
        'requirejs:live',
        'uglify:actiongolf',
@@ -47,6 +48,8 @@ module.exports = function ( grunt ) {
        'concat:participate',
        'uglify:tournamentSettings',
        'concat:tournamentSettings',
+       'uglify:leaderboard',
+       'concat:leaderboard',
        'clean:vendor',
        'handlebarslayouts'
     ]);

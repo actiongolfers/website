@@ -65,7 +65,37 @@ module.exports = function( grunt ) {
                     }
                 }
             ]
-        }
+        },
+        leaderboard: {
+            options: {
+                sourceMap: true,
+                strictMath: true,
+                relativeUrls: true
+            },
+            files: [
+                {
+                    expand: true,
+                    cwd: 'uncompressed',
+                    src: [
+                        '**/leaderboard.less'
+                    ],
+                    dest: 'library',
+                    ext: '.css',
+
+                    // Set the destination to a directory named "css"
+                    rename: function( dest, src ) {
+
+                        var path = require( 'path' ),
+                            splitDirs = src.split( '/' )
+                            ;
+
+                        splitDirs[ splitDirs.indexOf( 'less' ) ] = 'css';
+
+                        return path.join( dest, splitDirs.join( '/' ) );
+                    }
+                }
+            ]
+        },
     });
 
     grunt.loadNpmTasks( 'grunt-contrib-less' );

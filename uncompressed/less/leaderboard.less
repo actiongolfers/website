@@ -1,0 +1,362 @@
+@import (reference) 'variables.less';
+@import url( 'small.less' );
+@import url( 'medium.less' ) screen and ( min-width:768px );
+@import url( 'large.less' ) screen and ( min-width:1024px );
+
+@media screen and (min-width:1156px) {
+    header nav,
+    header .header-banner,
+    section .steps .content,
+    .admin-container,
+    .content-container,
+    .slim-header header nav,
+    footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    header .header-banner h1 {
+        font-size: 80px;
+    }
+
+    section .steps.reverse .mobile-frame-wrapper {
+        margin-right: 71px;
+    }
+}
+
+@media screen and (min-width:1200px) {
+    section .steps .mobile-frame-wrapper {
+        margin-left: 0;
+        margin-right: 104px;
+    }
+
+    .organiser-blocks {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media screen and (min-width:1440px) {
+    header {
+        background-position: 0 center;
+    }
+}
+
+@media screen and (min-width:1024px) and (min-height:738px) {
+    header {
+        min-height: calc(100vh - 10px);
+
+        .header-banner {
+            padding-top: calc(50vh - 280px);
+        }
+    }
+
+    .slim-header header{
+        min-height: initial;
+    }
+}
+
+@media screen and (max-width:359px) {
+    body {
+        footer .footer-links .page-links li {
+            font-size: 12px;
+        }
+    }
+}
+
+@media screen and (min-width:1024px) {
+    section {
+        max-width: none !important;
+    }
+    
+    nav .logo,
+    footer section {
+        margin-left: 20px;
+    }
+}
+
+.leaderboard-container {
+    padding: 30px 20px 40px;
+
+    @media screen and (min-width: 768px) {
+        padding: 40px 40px 50px;
+    }
+
+    @media screen and (min-width: 1024px) {
+        padding: 60px 20px 70px;
+    }
+
+    .page-header {
+        position: relative;
+        margin: 0 0 30px;
+        padding: 0 0 2px;
+        line-height: 40px;
+        font-family: @actionGolfSemiBold;
+        font-size: 32px;
+        font-weight: 100;
+        position: relative;
+        display: inline-block;
+        padding-right: 86px;
+
+        .lds-ellipsis {
+            top: 5px;
+
+            @media screen and (min-width: 1024px) {
+                top: 14px;
+            }
+        }
+
+        @media screen and (min-width: 1024px) {
+            line-height: 52px;
+            font-size: 42px;
+            padding-right: 100px;
+        }
+    }
+
+    .screen-message {
+        padding: 20px 15px 20px 50px;
+        margin: 20px 0;
+        border-radius: 4px;
+        position: relative;
+        overflow: hidden;
+    
+        &::after {
+            width: 60px;
+            height: 60px;
+            content: '';
+            display: block;
+            position: absolute;
+            background-size: cover;
+            top: -12px;
+            left: -12px;
+            opacity: 0.1;
+        }
+    
+        &.success-message {
+            background-color: @successBg;
+            border-color: @successBorder;
+            color: @green;
+    
+            &::after {
+                background-image: url(@successMessage);
+            }
+        }
+    
+        &.error-message {
+            background-color: @errorBg;
+            border-color: @errorBorder;
+            color: @red;
+    
+            &::after {
+                background-image: url(@errorMessage);
+            }
+        }
+    }
+
+    .leaderboard-details {
+        .list-teams {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+
+            @media screen and (min-width:1024px) {
+                justify-content: flex-start;
+            }
+        
+            .team-item {
+                width: 100%;
+                box-shadow: 2px 2px 6px #b5d3c5;
+                margin: 0 0 20px;
+                padding: 24px 12px 30px;
+                border-radius: 12px;
+                position: relative;
+                min-height: 150px;
+        
+                &.active {
+                    transition: all 1s;
+        
+                    div.item {
+                        opacity: 0.3;
+                    }
+                }
+        
+                &.loading {
+                    .item {
+                        opacity: 0.5;
+                    }
+        
+                    .lds-ellipsis {
+                        display: block;
+                    }
+                }
+
+                .rank {
+                    position: absolute;
+                    left: 5px;
+                    width: 40px;
+                    height: 30px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-start;
+                    font-size: 12px;
+
+
+                    &.gold {
+                        background: url(@gold) no-repeat center top;
+                    }
+
+                    &.silver {
+                        background: url(@silver) no-repeat center top;
+                    }
+
+                    &.bronze {
+                        background: url(@bronze) no-repeat center top;
+                    }
+                }
+
+                .item-details {
+                    position: relative;
+                    margin: 0 0 0 40px;
+                    display: flex;
+                    flex-direction: column;
+
+                    .photo-name-status-total {
+                        justify-content: space-between;
+                        display: flex;
+                        padding: 0 0 12px;
+
+                        .photo-name-status {
+                            display: flex;
+                            padding-right: 8px;
+    
+                            .name-status {
+                                .name {
+                                    padding: 0 0 4px;
+                                    font-size: 16px;
+                                    font-family: @actionGolfSemiBold;
+                                }
+            
+                                .status {
+                                    color: @brandColor;
+                                    font-size: 12px;
+                                }
+                            }
+    
+                            .photo {
+                                width: 70px;
+                                aspect-ratio: 1 / 1;
+                                margin-right: 8px;
+                                position: relative;
+    
+                                img {
+                                    border-radius: 8px;
+                                    width: 100%;
+                                    height: 100%;
+                                }
+        
+                                &.icon {
+                                    img {
+                                        visibility: hidden;
+                                    }
+        
+                                    &::after {
+                                        content: '';
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
+                                        background: url(@playerIcon) no-repeat 0 0;
+                                        width: 100%;
+                                        aspect-ratio: 1 / 1;
+                                        background-size: cover;
+                                        border-radius: 8px;
+                                    }
+                                }
+        
+                            }
+                        }
+    
+                        .total-score {
+                            font-family: @actionGolfSemiBold;
+                        }
+                    }
+
+                    .member-list {
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: space-between;
+
+                        .member {
+                            width: calc(50% - 8px);
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .photo {
+                            width: 30px;
+                            aspect-ratio: 1 / 1;
+                            margin-right: 8px;
+                            position: relative;
+
+                            img {
+                                border-radius: 50%;
+                                width: 100%;
+                                height: 100%;
+                            }
+    
+                            &.icon {
+                                img {
+                                    visibility: hidden;
+                                }
+    
+                                &::after {
+                                    content: '';
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    background: url(@playerIcon) no-repeat 0 0;
+                                    width: 100%;
+                                    aspect-ratio: 1 / 1;
+                                    background-size: cover;
+                                    border-radius: 50%;
+                                }
+                            }
+    
+                        }
+
+                        .name {
+                            padding: 0;
+                            font-size: 13px;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                        }
+                    }
+                }
+
+                &:nth-child(2n) .player::after{
+                    background-color: #0000ff;
+                }
+
+                &:nth-child(3n) .player::after{
+                    background-color: @black;
+                }
+        
+                @media screen and (min-width: 768px) {
+                    width: calc(50% - 10px);
+                }
+        
+                @media screen and (min-width:1024px) {
+                    width: calc(33.333% - 16px);
+                    margin-right: 24px;
+                    margin-bottom: 24px;
+
+                    &:nth-child(3n) {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+
+}
