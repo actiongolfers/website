@@ -70,21 +70,176 @@
     }
 }
 
-.leaderboard-container {
-    padding: 30px 20px 40px;
+@media screen and (min-width:768px) {
+    .slim-header header {
+        position: fixed;
+        width: 100%;
+        z-index: 9999;
+        height: 80px;
 
-    @media screen and (min-width: 768px) {
-        padding: 40px 40px 50px;
+        @media screen and (min-width:1024px) {
+            height: 100px !important;
+        }
+    }
+}
+
+.leaderboard-container {
+    padding: 20px;
+
+    @media screen and (min-width:768px) {
+        padding-top: 96px;
     }
 
-    @media screen and (min-width: 1024px) {
-        padding: 60px 20px 70px;
+    @media screen and (min-width:1024px) {
+        padding-top: 130px !important;
+    }
+
+    .slider-checkbox {
+        display: none;
+        position: relative;
+        height: 26px;
+
+        @media screen and (min-width:768px) {
+            display: block;
+        }
+
+        input {
+            margin: 0;
+            margin-top: 1px;
+            cursor: pointer;
+            opacity: 0;
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background: red;
+            width: 40px;
+            height: 20px;
+
+            &:checked + .label {
+                &:before {
+                    background-color: @brandColor;
+                    content: "";
+                    padding-left: 6px;
+                }
+                &:after {
+                    left: 21px;
+                }
+            }
+        }
+        .label {
+            position: relative;
+            padding: 2px 0 0 48px;
+            font-size: 12px;
+
+            &:before, &:after {
+                position: absolute;
+                border-radius: 10px;
+                transition: background-color 0.3s, left 0.3s;
+            }
+
+            &:before {
+                content: "";
+                color: @white;
+                box-sizing: border-box;
+                font-family: 'FontAwesome', sans-serif;
+                padding-left: 23px;
+                font-size: 12px;
+                line-height: 20px;
+                background-color: @greyButton;
+                left: 0;
+                top: 0;
+                height: 20px;
+                width: 40px;
+                border-radius: 10px;
+            }
+
+            &:after {
+                content: "";
+                letter-spacing: 20px;
+                background: @white;
+                left: 1px;
+                top: 1px;
+                height: 18px;
+                width: 18px;
+            }
+        }
+    }
+
+    .tournament-header {
+        background: @white;
+        width: 100%;
+        margin-bottom: 14px;
+
+        .tournament-h-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            background: @white;
+            width: 100%;
+
+            .tournament-l-cnt {
+
+            }
+    
+            .tournament-r-cnt {
+                display: flex;
+
+                .total-teams {
+                    padding: 2px 12px 0 24px;
+                    position: relative;
+                    font-size: 12px;
+
+                    &::after {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        top: 3px;
+                        left: 0;
+                        width: 20px;
+                        height: 20px;
+                        background: url(@teams) no-repeat 0 0;
+                        background-size: contain;
+                    }
+                }
+            }
+        }
+
+        @media screen and (min-width:768px) {
+            left: 0;
+            z-index: 888;
+
+            position: sticky;
+            top: 80px;
+
+            @media screen and (min-width:1024px) {
+                top: 100px;
+            }
+
+            .tournament-h-details {
+                margin: 0 auto;
+                width: calc(768px - 40px);
+                max-width: 768px !important;
+
+                &::after {
+                    content: '';
+                    width: calc(100% + 20px);
+                    position: absolute;
+                    left: -10px;
+                    top: 0;
+                    height: 100%;
+                    z-index: -1;
+                    background: @white;
+                }
+            }
+        }
     }
 
     .page-header {
         position: relative;
-        margin: 0 0 30px;
-        padding: 0 0 2px;
+        margin: 0;
+        padding: 0;
         line-height: 40px;
         font-family: @actionGolfSemiBold;
         font-size: 32px;
@@ -154,7 +309,6 @@
             flex-wrap: wrap;
             justify-content: space-between;
 
-
             @media screen and (min-width:1024px) {
                 justify-content: flex-start;
             }
@@ -210,7 +364,11 @@
                         align-items: center;
                         background: #56bc7b;
                         border-radius: 50%;
-                        margin-left: 16px;
+                        margin-left: 6px;
+
+                        @media screen and (min-width: 768px) {
+                            margin-left: 16px;
+                        }
                     }
 
                     &.gold {

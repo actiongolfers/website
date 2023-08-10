@@ -1,14 +1,16 @@
 var localDevelopment = false,
     tournamentId,
     _this,
-    scrollInterval;
+    scrollInterval,
+    autoScrollFlag;
 
 var actiongolfLB = {
     init: function () {
         _this = this;
         _this.scrollVal = 0;
         
-        tournamentId = window.location.hash ? window.location.hash.substring(1) : '';
+        tournamentId = this.getParameterByName('id');
+        autoScrollFlag = this.getParameterByName('autoscroll') === 'yes' && window.innerWidth >= 768;
 
         _this.leaderBoardCall();
     },
@@ -25,6 +27,15 @@ var actiongolfLB = {
                 $("html, body").animate({ scrollTop: _this.scrollVal }, 10000);
             }
         }, 15000);
+    },
+
+    getParameterByName: function(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
     },
 
     leaderBoardCall: function() {
@@ -44,6 +55,7 @@ var actiongolfLB = {
 
                 var leaderboardDetailsTemplate = Handlebars.compile($("[data-template='leaderboardDetailsTemplate']").html()),
                     leaderboardDetailsData = xhr;
+                    leaderboardDetailsData.autoScroll = autoScrollFlag;
 
                     if (leaderboardDetailsData && leaderboardDetailsData.playerLeaderBoardList && leaderboardDetailsData.playerLeaderBoardList.length) {
                         leaderboardDetailsData.playerLeaderBoardList.map(function(item) {
@@ -70,7 +82,21 @@ var actiongolfLB = {
 
                  _this.totalScroll = document.body.scrollHeight;
                  clearInterval(scrollInterval);
-                 _this.autoScroll();
+
+                 if (autoScrollFlag) {
+                    _this.autoScroll();
+                 }
+
+                 $('#autoScrollCheck').off().on('change', function() {
+                    autoScrollFlag = !autoScrollFlag;
+
+                    clearInterval(scrollInterval);
+                    
+                    if (autoScrollFlag) {
+                        _this.scrollVal = window.pageYOffset;
+                        _this.autoScroll();
+                    }
+                 });
 
             }.bind(this),
             error:  function(xhr, status, error) {

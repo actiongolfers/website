@@ -35,6 +35,23 @@
             
             <script type="text/x-handlebars-template" data-template="leaderboardDetailsTemplate">
                 {{#if playerLeaderBoardList.length}}
+                <div class="tournament-header">
+                    <div class="tournament-h-details">
+                        <div class="tournament-l-cnt">
+                            Tournament Details
+                        </div>
+                        <div class="tournament-r-cnt">
+                            <div class="total-teams"> {{totalPlayers}} teams</div>
+                            <div class="slider-checkbox">
+                                <input type="checkbox" id="autoScrollCheck" name="autoScrollCheck"
+                                {{#if autoScroll}} checked {{else}}  {{/if}}
+                                />
+                                <label class="label" for="autoScrollCheck">Auto Scroll</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
                     <div class="list-teams">
                         {{#each playerLeaderBoardList}}
                         <div class="team-item">
