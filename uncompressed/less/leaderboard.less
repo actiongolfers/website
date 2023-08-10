@@ -70,18 +70,20 @@
     }
 }
 
-@media screen and (min-width:768px) {
-    .slim-header header {
+
+.slim-header header {
+    @media screen and (min-width:768px) {
         position: fixed;
         width: 100%;
         z-index: 9999;
         height: 80px;
+    }
 
-        @media screen and (min-width:1024px) {
-            height: 100px !important;
-        }
+    @media screen and (min-width:1024px) {
+        height: 100px !important;
     }
 }
+
 
 .leaderboard-container {
     padding: 20px;
@@ -213,15 +215,7 @@
             position: sticky;
             top: 80px;
 
-            @media screen and (min-width:1024px) {
-                top: 100px;
-            }
-
             .tournament-h-details {
-                margin: 0 auto;
-                width: calc(768px - 40px);
-                max-width: 768px !important;
-
                 &::after {
                     content: '';
                     width: calc(100% + 20px);
@@ -232,6 +226,16 @@
                     z-index: -1;
                     background: @white;
                 }
+            }
+        }
+
+        @media screen and (min-width:1024px) {
+            top: 100px;
+        
+            .tournament-h-details {
+                margin: 0 auto;
+                width: calc(768px - 40px);
+                max-width: 768px !important;
             }
         }
     }
