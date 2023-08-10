@@ -13,11 +13,15 @@ var actiongolfLB = {
         autoScrollFlag = this.getParameterByName('autoscroll') === 'yes' && window.innerWidth >= 768;
 
         _this.leaderBoardCall();
+
+        window.on('scroll', function() {
+            _this.scrollVal = window.pageYOffset;
+        });
     },
 
     autoScroll: function() {
         scrollInterval = setInterval(function () {
-            if (_this.totalScroll < _this.scrollVal) {
+            if (_this.totalScroll <= _this.scrollVal) {
                 _this.scrollVal = 0;
                 $("html, body").animate({ scrollTop: _this.scrollVal }, 5000);
                 _this.leaderBoardCall();
