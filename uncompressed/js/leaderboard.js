@@ -1,5 +1,5 @@
 var localDevelopment = false,
-    tournamentId,
+    friendlyName,
     _this,
     scrollInterval,
     autoScrollFlag;
@@ -9,14 +9,10 @@ var actiongolfLB = {
         _this = this;
         _this.scrollVal = 0;
         
-        tournamentId = this.getParameterByName('id');
-        autoScrollFlag = this.getParameterByName('autoscroll') === 'yes' && window.innerWidth >= 768;
+        friendlyName = this.getParameterByName('friendlyName');
+        autoScrollFlag = this.getParameterByName('autoscroll') === 'yes' && window.innerWidth >= 1024;
 
         _this.leaderBoardCall();
-
-        window.on('scroll', function() {
-            _this.scrollVal = window.pageYOffset;
-        });
     },
 
     autoScroll: function() {
@@ -24,7 +20,7 @@ var actiongolfLB = {
             if (_this.totalScroll <= _this.scrollVal) {
                 _this.scrollVal = 0;
                 $("html, body").animate({ scrollTop: _this.scrollVal }, 5000);
-                _this.leaderBoardCall();
+                _this.leaderBoardCall(true);
                 
             } else {
                 _this.scrollVal = _this.scrollVal + window.innerHeight/2;
@@ -42,9 +38,8 @@ var actiongolfLB = {
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     },
 
-    leaderBoardCall: function() {
+    leaderBoardCall: function(reload) {
         var ajaxUrl = _this.getApiUrl('leaderBoard');
-
         $('.page-header').addClass('loading');
 
         $.ajax({
@@ -54,10 +49,11 @@ var actiongolfLB = {
             dataType: "json",
             timeout: 0,
             success: function(xhr, status) {
-                $('.page-header').removeClass('loading');
                 $('#leaderboardDetails').html('');
 
                 var leaderboardDetailsTemplate = Handlebars.compile($("[data-template='leaderboardDetailsTemplate']").html()),
+                    leaderboardAdDetailsTemplate  = Handlebars.compile($("[data-template='leaderboardAdDetailsTemplate']").html()),
+                    leaderboardListDetailsTemplate  = Handlebars.compile($("[data-template='leaderboardListDetailsTemplate']").html()),
                     leaderboardDetailsData = xhr;
                     leaderboardDetailsData.autoScroll = autoScrollFlag;
 
@@ -72,11 +68,48 @@ var actiongolfLB = {
                             } else {
                                 item.prize = 'medal';
                             }
+
+                            if (!item.rank || item.rank === 9999) {
+                                item.rank = 'NA';
+                            }
+
+                            if (!item.totalScore || item.totalScore === 9999) {
+                                item.totalScore = 'NA';
+                            }
                         });
                     }
 
 
                 $('#leaderboardDetails').html(leaderboardDetailsTemplate(leaderboardDetailsData));
+
+                if (window.innerWidth >= 1024 && !reload) {
+                    const sponsorListCount = (leaderboardDetailsData.sponsorList && leaderboardDetailsData.sponsorList.length) || 0;
+
+                    if (sponsorListCount) {
+                        const availableHeight = window.innerHeight - 122 - (sponsorListCount * 6);
+                        let imgHeight = availableHeight/sponsorListCount;
+
+                        if (imgHeight < 40) {
+                            imgHeight = imgHeight * 2;
+                            leaderboardDetailsData.twoLayout = true;
+                        }
+
+                        leaderboardDetailsData.imgHeight = imgHeight;
+
+                        $('#leaderboardAdDetails').css({
+                            width: $('#leaderboardAdDetails').parent('.col-3').width()
+                        });
+
+                        $('#leaderboardAdDetails').html(leaderboardAdDetailsTemplate(leaderboardDetailsData));
+                    }
+
+                    if (leaderboardDetailsData && leaderboardDetailsData.playerLeaderBoardList && leaderboardDetailsData.playerLeaderBoardList.length) {
+                        $('#leaderboardListDetails').css({
+                            width: $('#leaderboardListDetails').parent('.col-3').width()
+                        })
+                        $('#leaderboardListDetails').html(leaderboardListDetailsTemplate(leaderboardDetailsData));
+                    }
+                } 
 
                 document.querySelectorAll('.photo img').forEach(function(img) {
                     img.onerror = function(){
@@ -84,28 +117,28 @@ var actiongolfLB = {
                     };
                  })
 
-                 _this.totalScroll = document.body.scrollHeight;
-                 clearInterval(scrollInterval);
-
-                 if (autoScrollFlag) {
-                    _this.autoScroll();
-                 }
-
-                 $('#autoScrollCheck').off().on('change', function() {
-                    autoScrollFlag = !autoScrollFlag;
-
+                 if (leaderboardDetailsData && leaderboardDetailsData.playerLeaderBoardList && leaderboardDetailsData.playerLeaderBoardList.length && document.body.scrollHeight > window.innerHeight && autoScrollFlag) {
+                    _this.totalScroll = document.body.scrollHeight;
                     clearInterval(scrollInterval);
-                    
+   
                     if (autoScrollFlag) {
-                        _this.scrollVal = window.pageYOffset;
-                        _this.autoScroll();
+                       _this.autoScroll();
                     }
-                 });
+                 }
 
             }.bind(this),
             error:  function(xhr, status, error) {
-                $('.page-header').removeClass('loading');
-                $('.screen-message.error-message').removeClass('hide');
+                var leaderboardDetailsTemplate = Handlebars.compile($("[data-template='leaderboardDetailsTemplate']").html()),
+                    leaderboardDetailsData = {
+                        error: true
+                    };
+
+                if (xhr && xhr.responseJSON && xhr.responseJSON.message) {
+                    leaderboardDetailsData.message = xhr.responseJSON.message
+                } else {
+                    leaderboardDetailsData.message = 'Something went wrong. We are working on getting this fixed as soon as we can. Please try later.';
+                }
+                $('#leaderboardDetails').html(leaderboardDetailsTemplate(leaderboardDetailsData));
                 $("html, body").animate({ scrollTop: $('.screen-message.error-message').offset().top - 50 });
             }.bind(this)
         });
@@ -114,10 +147,10 @@ var actiongolfLB = {
     getApiUrl: function(source) {
         var apiUrls = {
                 test : {
-                    leaderBoard: `https://beta.actiongolfers.com/website/tournaments/${tournamentId}/leaderboard`
+                    leaderBoard: `https://beta.actiongolfers.com/website/tournament/leaderboard?friendlyName=${friendlyName}`
                 },
                 prod : {
-                    leaderBoard: `https://api.actiongolfers.com/website/tournaments/${tournamentId}/leaderboard`
+                    leaderBoard: `https://api.actiongolfers.com/website/tournament/leaderboard?friendlyName=${friendlyName}`
                 },
             },
             domain = window.origin === 'https://actiongolfers.com' ? 'prod' : (localDevelopment ? 'local' : 'test');

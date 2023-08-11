@@ -20,43 +20,50 @@
             </header>
             <section>
                 <div class="leaderboard-container">
-                    <h2 class="page-header loading">Leaderboard <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></span></h2>
-                    <div class="screen-message error-message hide">
-                        Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
-                    </div>
                     <div class="col-12">
-                        <div id="leaderboard-cnt" class="leaderboard-content">
-                            <div id="pageLoad" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-                            <div id="leaderboardDetails" class="leaderboard-details"></div>
+                        <div class="col-3">
+                            <div id="leaderboardAdDetails" class="leaderboard-ad-details"></div>
+                        </div>
+                        <div class="col-6">
+                            <div id="leaderboard-cnt" class="leaderboard-content">
+                                <div id="pageLoad" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                                <div  id="leaderboardDetails" class="leaderboard-details">
+                                    <h2 class="page-header loading">Leaderboard <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></span></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div id="leaderboardListDetails" class="leaderboard-list-details"></div>
                         </div>
                     </div>
                 </div>
             </section>
             
             <script type="text/x-handlebars-template" data-template="leaderboardDetailsTemplate">
-                {{#if playerLeaderBoardList.length}}
                 <div class="tournament-header">
+                    <h2 class="page-header">Leaderboard <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></span></h2>
+                    {{#if error}}
+                    <div class="screen-message error-message">
+                        {{message}}
+                    </div>
+                    {{else}}
                     <div class="tournament-h-details">
                         <div class="tournament-l-cnt">
-                            Tournament Details
+                            <div class="t-name">{{tournamentDetails.tournamentName}}</div>
                         </div>
                         <div class="tournament-r-cnt">
                             <div class="total-teams"> {{totalPlayers}} teams</div>
-                            <div class="slider-checkbox">
-                                <input type="checkbox" id="autoScrollCheck" name="autoScrollCheck"
-                                {{#if autoScroll}} checked {{else}}  {{/if}}
-                                />
-                                <label class="label" for="autoScrollCheck">Auto Scroll</label>
-                            </div>
                         </div>
                     </div>
+                    {{/if}}
                 </div>
-            
+                {{#unless error}}
+                {{#if playerLeaderBoardList.length}}
                     <div class="list-teams">
                         {{#each playerLeaderBoardList}}
                         <div class="team-item">
                             <div class="rank {{prize}}">
-                               {{#if rank}} {{rank}} {{else}} NA {{/if}}
+                                {{rank}}
                             </div>
                             <div class="item-details">
                                 <div class="photo-name-status-total">
@@ -87,6 +94,38 @@
                 {{else}}
                     No active players found..
                 {{/if}}
+                {{/unless}}
+            </script>
+            
+            <script type="text/x-handlebars-template" data-template="leaderboardAdDetailsTemplate">
+            {{#if sponsorList.length}}
+            <div class="ad-title">A Big <span>THANK YOU</span> to our Sponsors!</div>
+            <div class="img-ad-p">
+                {{#each sponsorList}}
+                    <div class="img-ad {{#if ../twoLayout}} two-layout{{/if}}">
+                     <img src="{{sponsorImageURL}}" height="{{../imgHeight}}" />
+                    </div>
+                {{/each}}
+            </div>
+            {{/if}}
+            </script>
+            
+            <script type="text/x-handlebars-template" data-template="leaderboardListDetailsTemplate">
+            {{#if playerLeaderBoardList.length}}
+            <div class="positions-title">Leaderboard Snapshot</div>
+                <div class="list-positions">
+                    <div class="lt head">
+                        <div>Pos</div>
+                        <div>Name</div>
+                    </div>
+                    {{#each playerLeaderBoardList}}
+                    <div class="lt">
+                        <div>{{rank}}</div>
+                        <div>{{firstName}} {{lastName}}</div>
+                    </div>
+                    {{/each}}
+                </div>
+            {{/if}}
             </script>
             
             
