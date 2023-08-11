@@ -506,7 +506,11 @@
     .leaderboard-ad-details {
         position: fixed;
         top:  100px;
-        width: 300px;
+        width: calc(25% - 10px);
+
+        @media screen and (max-width: 1024px) {
+            display: none;
+        }
 
         .ad-title {
             font-size: 30px;
@@ -531,6 +535,10 @@
 
                 img {
                     float: left;
+                    max-width: 100%;
+                    height: auto;
+                    width: auto;
+                    max-height: 40px;
                 }
             }
         }
@@ -539,7 +547,11 @@
     .leaderboard-list-details {
         position: fixed;
         top:  100px;
-        width: 300px;
+        width: calc(25% - 10px);
+
+        @media screen and (max-width: 1024px) {
+            display: none;
+        }
 
         .positions-title {
             font-size: 20px;

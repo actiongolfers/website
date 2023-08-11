@@ -10,7 +10,7 @@ var actiongolfLB = {
         _this.scrollVal = 0;
         
         friendlyName = this.getParameterByName('friendlyName');
-        autoScrollFlag = this.getParameterByName('autoscroll') === 'yes' && window.innerWidth >= 1024;
+        autoScrollFlag = this.getParameterByName('autoscroll') !== 'false' && window.innerWidth >= 1024;
 
         _this.leaderBoardCall();
     },
@@ -86,27 +86,10 @@ var actiongolfLB = {
                     const sponsorListCount = (leaderboardDetailsData.sponsorList && leaderboardDetailsData.sponsorList.length) || 0;
 
                     if (sponsorListCount) {
-                        const availableHeight = window.innerHeight - 122 - (sponsorListCount * 6);
-                        let imgHeight = availableHeight/sponsorListCount;
-
-                        if (imgHeight < 40) {
-                            imgHeight = imgHeight * 2;
-                            leaderboardDetailsData.twoLayout = true;
-                        }
-
-                        leaderboardDetailsData.imgHeight = imgHeight;
-
-                        $('#leaderboardAdDetails').css({
-                            width: $('#leaderboardAdDetails').parent('.col-3').width()
-                        });
-
                         $('#leaderboardAdDetails').html(leaderboardAdDetailsTemplate(leaderboardDetailsData));
                     }
 
                     if (leaderboardDetailsData && leaderboardDetailsData.playerLeaderBoardList && leaderboardDetailsData.playerLeaderBoardList.length) {
-                        $('#leaderboardListDetails').css({
-                            width: $('#leaderboardListDetails').parent('.col-3').width()
-                        })
                         $('#leaderboardListDetails').html(leaderboardListDetailsTemplate(leaderboardDetailsData));
                     }
                 } 
