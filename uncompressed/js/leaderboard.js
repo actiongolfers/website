@@ -24,15 +24,13 @@ var actiongolfLB = {
         }, 15000);
 
         scrollIntervalCheck = setInterval(function () {
-            setTimeout(function() {
-                if (document.getElementById('scrollCheck').getBoundingClientRect().top == window.innerHeight) {
-                    _this.scrollVal = 0;
-                    clearInterval(scrollInterval);
-                    clearInterval(scrollIntervalCheck);
-                    $("html, body").animate({ scrollTop: _this.scrollVal }, 1000);
-                    _this.leaderBoardCall(true);
-                }
-            }, 1000);
+            if (document.getElementById('scrollCheck').getBoundingClientRect().top == window.innerHeight) {
+                _this.scrollVal = 0;
+                clearInterval(scrollInterval);
+                clearInterval(scrollIntervalCheck);
+                $("html, body").animate({ scrollTop: _this.scrollVal }, 5000);
+                _this.leaderBoardCall(true);
+            }
         }, 1000);
     },
 
