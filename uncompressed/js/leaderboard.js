@@ -2,6 +2,8 @@ var localDevelopment = false,
     friendlyName,
     _this,
     scrollInterval,
+    scrollIntervalCheck,
+    scrollStart = false,
     autoScrollFlag;
 
 var actiongolfLB = {
@@ -17,16 +19,21 @@ var actiongolfLB = {
 
     autoScroll: function() {
         scrollInterval = setInterval(function () {
-            if (_this.totalScroll <= _this.scrollVal) {
-                _this.scrollVal = 0;
-                $("html, body").animate({ scrollTop: _this.scrollVal }, 5000);
-                _this.leaderBoardCall(true);
-                
-            } else {
-                _this.scrollVal = _this.scrollVal + window.innerHeight/2;
-                $("html, body").animate({ scrollTop: _this.scrollVal }, 10000);
-            }
+            _this.scrollVal = _this.scrollVal + window.innerHeight/2;
+            $("html, body").animate({ scrollTop: _this.scrollVal }, 10000);
         }, 15000);
+
+        scrollIntervalCheck = setInterval(function () {
+            setTimeout(function() {
+                if (document.getElementById('scrollCheck').getBoundingClientRect().top == window.innerHeight) {
+                    _this.scrollVal = 0;
+                    clearInterval(scrollInterval);
+                    clearInterval(scrollIntervalCheck);
+                    $("html, body").animate({ scrollTop: _this.scrollVal }, 5000);
+                    _this.leaderBoardCall(true);
+                }
+            }, 200);
+        }, 1000);
     },
 
     getParameterByName: function(name, url = window.location.href) {
@@ -57,42 +64,44 @@ var actiongolfLB = {
                     leaderboardDetailsData = xhr;
                     leaderboardDetailsData.autoScroll = autoScrollFlag;
 
-                    if (leaderboardDetailsData && leaderboardDetailsData.playerLeaderBoardList && leaderboardDetailsData.playerLeaderBoardList.length) {
-                        leaderboardDetailsData.playerLeaderBoardList.map(function(item) {
-                            if (item.rank && item.rank === 1) {
-                                item.prize = 'gold';
-                            } else if (item.rank && item.rank === 2) {
-                                item.prize = 'silver';
-                            } else if (item.rank && item.rank === 3) {
-                                item.prize = 'bronze';
-                            } else {
-                                item.prize = 'medal';
-                            }
+                if (leaderboardDetailsData && leaderboardDetailsData.playerLeaderBoardList && leaderboardDetailsData.playerLeaderBoardList.length) {
+                    leaderboardDetailsData.playerLeaderBoardList.map(function(item) {
+                        if (item.rank && item.rank === 1) {
+                            item.prize = 'gold';
+                        } else if (item.rank && item.rank === 2) {
+                            item.prize = 'silver';
+                        } else if (item.rank && item.rank === 3) {
+                            item.prize = 'bronze';
+                        } else {
+                            item.prize = 'medal';
+                        }
 
-                            if (!item.rank || item.rank === 9999) {
-                                item.rank = 'NA';
-                            }
+                        if (!item.rank || item.rank === 9999) {
+                            item.rank = 'NA';
+                        }
 
-                            if (!item.totalScore || item.totalScore === 9999) {
-                                item.totalScore = 'NA';
-                            }
-                        });
-                    }
-
+                        if (!item.totalScore || item.totalScore === 9999) {
+                            item.totalScore = 'NA';
+                        }
+                    });
+                }
 
                 $('#leaderboardDetails').html(leaderboardDetailsTemplate(leaderboardDetailsData));
 
-                if (window.innerWidth >= 1024 && !reload) {
-                    const sponsorListCount = (leaderboardDetailsData.sponsorList && leaderboardDetailsData.sponsorList.length) || 0;
-
-                    if (sponsorListCount) {
-                        $('#leaderboardAdDetails').html(leaderboardAdDetailsTemplate(leaderboardDetailsData));
+                if (window.innerWidth >= 1024 ) {
+                    if (!reload) {
+                        const sponsorListCount = (leaderboardDetailsData.sponsorList && leaderboardDetailsData.sponsorList.length) || 0;
+    
+                        if (sponsorListCount) {
+                            $('#leaderboardAdDetails').html(leaderboardAdDetailsTemplate(leaderboardDetailsData));
+                        }
                     }
-
+    
                     if (leaderboardDetailsData && leaderboardDetailsData.playerLeaderBoardList && leaderboardDetailsData.playerLeaderBoardList.length) {
                         $('#leaderboardListDetails').html(leaderboardListDetailsTemplate(leaderboardDetailsData));
                     }
-                } 
+                }
+
 
                 document.querySelectorAll('.photo img').forEach(function(img) {
                     img.onerror = function(){

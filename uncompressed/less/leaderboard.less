@@ -107,7 +107,7 @@
 
 
 .leaderboard-container {
-    padding: 20px;
+    padding: 20px 20px 0;
 
     .leaderboard-content {
         width: 100%;
@@ -139,6 +139,7 @@
                 .t-name {
                     font-size: 20px;
                     line-height: 36px;
+                    color: @brandColor;
 
                     @media screen and (min-width:1024px) {
                         font-size: 25px;
@@ -507,6 +508,10 @@
         position: fixed;
         top:  100px;
         width: calc(25% - 10px);
+        left: 0;
+        padding-left: 20px;
+        background: #abe9cb;
+        height: 100%;
 
         @media screen and (max-width: 1024px) {
             display: none;
@@ -525,6 +530,8 @@
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+            background: @white;
+            margin-right: 20px;
 
             .img-ad {
                 padding: 3px 10px;
@@ -548,6 +555,10 @@
         position: fixed;
         top:  100px;
         width: calc(25% - 10px);
+        height: 100%;
+        padding-left: 20px;
+        background: #abe9cb;
+        right: 0;
 
         @media screen and (max-width: 1024px) {
             display: none;
