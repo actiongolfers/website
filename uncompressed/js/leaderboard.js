@@ -28,10 +28,10 @@ var actiongolfLB = {
                 _this.scrollVal = 0;
                 clearInterval(scrollInterval);
                 clearInterval(scrollIntervalCheck);
-                $("html, body").animate({ scrollTop: _this.scrollVal }, 5000);
+                $("html, body").animate({ scrollTop: _this.scrollVal }, 4000);
                 _this.leaderBoardCall(true);
             }
-        }, 1000);
+        }, 5000);
     },
 
     getParameterByName: function(name, url = window.location.href) {
