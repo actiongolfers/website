@@ -124,8 +124,18 @@
     .tournament-header {
         background: @white;
         width: 100%;
-        margin-bottom: 14px;
+        margin-bottom: 20px;
+        box-shadow: -1px 1px 10px -2px @brandColor;
 
+        &::after {
+            content: '';
+            background: @white;
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+        }
 
         .tournament-h-details {
             display: flex;
@@ -510,7 +520,7 @@
         width: calc(25% - 10px);
         left: 0;
         padding-left: 20px;
-        background: #abe9cb;
+        border: 2px solid #abe9cb;
         height: 100%;
 
         @media screen and (max-width: 1024px) {
@@ -524,6 +534,9 @@
 
             span {
                 font-family: @actionGolfSemiBold;
+                background: @brandColor;
+                color: @white;
+                padding: 0 5px;
             }
         }
         .img-ad-p {
@@ -557,7 +570,6 @@
         width: calc(25% - 10px);
         height: 100%;
         padding-left: 20px;
-        background: #abe9cb;
         right: 0;
 
         @media screen and (max-width: 1024px) {
@@ -567,25 +579,42 @@
         .positions-title {
             font-size: 20px;
             line-height: 32px;
-            padding: 20px 0;
+            padding: 20px 20px 10px;
+            background: #abe9cb;
+            margin: 20px 20px 0 0;
+            border-radius: 20px 20px 0 0;
+            border: 1px solid @brandColor;
+            border-bottom: 2px solid @white;
+            border-bottom-color: #fff !important;
         }
 
-        .lt {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            font-size: 14px;
+        .list-positions {
+            padding: 10px 20px 20px;
+            background: #abe9cb;
+            border-radius: 0 0 20px 20px;
+            margin-right: 20px;
+            border: 1px solid @brandColor;
 
-            div:first-child {
-                width: 10%;
-            }
+            .lt {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                font-size: 14px;
 
-            div:last-child {
-                width: 80%;
-            }
-            .head {
-                font-family: @actionGolfSemiBold;
+                &.head {
+                    padding-bottom: 5px;
+                    font-family: @actionGolfSemiBold;
+                }
+    
+                div:first-child {
+                    width: 10%;
+                    text-align: center;
+                }
+    
+                div:last-child {
+                    width: 80%;
+                }
             }
         }
     }
