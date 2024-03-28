@@ -2782,6 +2782,30 @@ footer {
                 color: @brandColor;
                 text-align: center;
             }
+
+            &.delete-account-content {
+                text-align: left;
+
+                .button-wrapper {
+                    min-height: 38px;
+                }
+
+                h3 {
+                    padding: 0 0 2px;
+                    line-height: 40px;
+                    font-family: SFProDisplaySemibold, sans-serif;
+                    font-size: 32px;
+                    font-weight: 100;
+                }
+
+                p {
+                    padding: 14px 0 30px;
+                    font-size: 16px;
+                    line-height: 20px;
+                    color: @black;
+                    text-align: left;
+                }
+            }
         }
     }
 }
@@ -2835,7 +2859,8 @@ footer {
     }
 
     .primary-btn,
-    .secondary-btn {
+    .secondary-btn,
+    .alert-btn {
         border-radius: 4px;
         padding: 0 20px;
         line-height: 38px;
@@ -2866,6 +2891,10 @@ footer {
 
     .secondary-btn {
         background: @bgrey;
+    }
+
+    .alert-btn {
+        background: @red;
     }
 }
 

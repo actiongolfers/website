@@ -14,6 +14,40 @@
                 <section>
                     <nav>
                         <a class="logo" href="./" title="ActionGolfers">ActionGolfers</a>
+            
+                        <div class="menu">
+                            <div class="menu-links">
+                                <a id="delete-account-btn" class="landing-secondary-btn" title="Delete Account">Delete Account</a>
+                            </div>
+                        </div>
+            
+                        <div id="modal-shade"></div>
+                        <div class="modal" id="delete-confirmation-message">
+                            <div class="modal-dialog">
+                                <a class="close-modal"></a>
+                                <div class="modal-dialog-content delete-account-content">
+                                    <h3>
+                                        <span>Delete Account</span>
+                                    </h3>
+                                    <div class="delete-account-info">
+                                        <p>Once you delete your account, there is no going back. Please be certain.</p>
+                                        <div class="button-wrapper">
+                                            <button class="alert-btn" id="delete-account-submit">Confirm</button>
+                                            <button class="secondary-btn" id="delete-account-cancel">Cancel</button>
+                                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                                        </div>
+                                    </div>
+            
+                                    <div class="screen-message success-message hide">
+                                        Your Account is deleted..
+                                    </div>
+            
+                                    <div class="screen-message error-message hide">
+                                        Something went wrong. We are working on getting this fixed as soon as we can. Please try later.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </nav>
                 </section>
             </header>
