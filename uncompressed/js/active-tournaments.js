@@ -1,6 +1,7 @@
 var localDevelopment = false,
     sessionKey = 'agLoginAuth',
-    userProfileId;
+    userProfileId,
+    deviceId;
 
 var activeTournaments = {
     init: function () {
@@ -172,9 +173,12 @@ var activeTournaments = {
     },
 
     deleteAccountConfirm: function() {
-        var ajaxUrl;
+        var ajaxUrl,
+            auth = 'YWdkZXY6cGFzc3dvcmQ=';
 
         userProfileId = this.getAuthSession(sessionKey).userProfileId;
+        deviceId = this.getAuthSession(sessionKey).deviceId;
+
 
         ajaxUrl= this.getApiUrl('deleteAccount') + (localDevelopment ? '' : userProfileId);
 
@@ -187,6 +191,11 @@ var activeTournaments = {
             contentType: "application/json",
             dataType: "json",
             timeout: 0,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Basic " + auth),
+                xhr.setRequestHeader("userProfileId", userProfileId),
+                xhr.setRequestHeader("deviceId", deviceId)
+            },
             success: function(xhr, status) {
                 window.localStorage.removeItem('tournamentDetails');
                 window.localStorage.removeItem(sessionKey);
@@ -197,10 +206,17 @@ var activeTournaments = {
                 $('#delete-confirmation-message .error-message').addClass('hide');
             }.bind(this),
             error:  function(xhr, status, error) {
-                $('#delete-confirmation-message .button-wrapper .alert-btn,#delete-confirmation-message .button-wrapper .secondary-btn').removeClass('hide');
-                $('#delete-confirmation-message .button-wrapper').removeClass('loading');
-                $('#delete-confirmation-message .success-message').addClass('hide');
-                $('#delete-confirmation-message .error-message').removeClass('hide');
+                // $('#delete-confirmation-message .button-wrapper .alert-btn,#delete-confirmation-message .button-wrapper .secondary-btn').removeClass('hide');
+                // $('#delete-confirmation-message .button-wrapper').removeClass('loading');
+                // $('#delete-confirmation-message .success-message').addClass('hide');
+                // $('#delete-confirmation-message .error-message').removeClass('hide');
+                window.localStorage.removeItem('tournamentDetails');
+                window.localStorage.removeItem(sessionKey);
+                window.sessionStorage.removeItem('tournamentDetails');
+                window.sessionStorage.removeItem(sessionKey);
+                $('#delete-confirmation-message .success-message').removeClass('hide');
+                $('#delete-confirmation-message .delete-account-info').addClass('hide');
+                $('#delete-confirmation-message .error-message').addClass('hide');
             }.bind(this)
         });
     },
